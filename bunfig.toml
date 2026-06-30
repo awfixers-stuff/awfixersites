@@ -1,0 +1,43 @@
+[install]
+minimumReleaseAge = 259200
+minimumReleaseAgeExcludes = [
+  "lucide-react",
+  "@types/bun",
+  "typescript",
+  "motion",
+  "tailwindcss",
+  "@tailwindcss/node",
+  "@tailwindcss/oxide",
+  "@tailwindcss/oxide-linux-x64-gnu",
+  "@typescript/native-preview",
+  "@typescript/native-preview-linux-x64",
+  "@typescript/native-preview-darwin-x64",
+  "@typescript/native-preview-linux-arm64",
+  "@typescript/native-preview-darwin-arm64",
+  "@typescript/native-preview-linux-arm",
+  "@typescript/native-preview-win32-arm64",
+  "@typescript/native-preview-win32-x64",
+  "shadcn",
+  "resend",
+  "railway",
+  "framer-motion",
+  "motion-dom",
+]
+optional = false
+peer = false
+exact = true
+ignoreScripts = true
+auto = "disable"
+prefer = "offline"
+linkWorkspacePackages = true
+
+
+[run]
+shell = "bun"
+noOrphans = true
+
+[test]
+coverageThreshold = 0.9
+
+[install.security]
+scanner = "@socketsecurity/bun-security-scanner"

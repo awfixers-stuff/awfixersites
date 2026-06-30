@@ -1,0 +1,4 @@
+{
+  "extends": "@awfixersites/typescript-config/base.json",
+  "ignorePatterns": ["old-sites/**"],
+}
