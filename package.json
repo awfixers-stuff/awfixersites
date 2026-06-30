@@ -32,10 +32,12 @@
     ],
     "catalog": {
       "@vercel/analytics": "2.0.1",
+      "@vercel/speed-insights": "2.0.0",
       "@tailwindcss/postcss": "4.3.1",
       "class-variance-authority": "0.7.1",
       "clsx": "2.1.1",
       "lucide-react": "1.22.0",
+      "motion": "12.42.0",
       "next": "16.2.9",
       "next-themes": "0.4.6",
       "radix-ui": "1.6.0",
@@ -80,6 +82,7 @@
     "@vitest/utils": "4.1.9",
     "oxfmt": "0.56.0",
     "oxlint": "1.71.0",
+    "vercel": "54.18.0",
     "vitest": "4.1.9"
   },
   "devEngines": {
