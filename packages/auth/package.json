@@ -8,8 +8,12 @@
     "./server": "./src/server.ts",
     "./client": "./src/client.ts",
     "./next-js": "./src/next-js.ts",
+    "./auth-api-route": "./src/auth-api-route.ts",
     "./prisma": "./src/prisma.ts",
-    "./session": "./src/session.ts"
+    "./session": "./src/session.ts",
+    "./server-session": "./src/server-session.ts",
+    "./idp": "./src/idp.ts",
+    "./oauth-login": "./src/oauth-login.ts"
   },
   "scripts": {
     "generate": "prisma generate",
@@ -24,6 +28,7 @@
     "pg": "catalog:"
   },
   "devDependencies": {
+    "next": "catalog:",
     "@types/node": "catalog:",
     "@types/pg": "catalog:",
     "prisma": "catalog:",

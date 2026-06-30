@@ -33,15 +33,20 @@
   },
   "dependencies": {
     "@awfixersites/ui": "catalog:",
+    "@hookform/resolvers": "catalog:",
     "@next/swc-linux-x64-gnu": "catalog:",
     "@tailwindcss/oxide-linux-x64-gnu": "catalog:",
+    "@vercel/analytics": "catalog:",
     "lightningcss": "catalog:",
     "lightningcss-linux-x64-gnu": "catalog:",
     "lucide-react": "catalog:",
     "next": "catalog:",
     "next-themes": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "react-hook-form": "catalog:",
+    "resend": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

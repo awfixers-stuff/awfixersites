@@ -5,20 +5,25 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./provider": "./src/provider.tsx",
-    "./hooks": "./src/hooks.ts",
-    "./api": "./convex/_generated/api.js",
-    "./dataModel": "./convex/_generated/dataModel.d.ts"
+    "./prisma": "./src/prisma.ts",
+    "./enlistments": "./src/enlistments.ts",
+    "./hooks": "./src/hooks.ts"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "push": "prisma db push"
   },
   "dependencies": {
-    "convex": "catalog:"
+    "@awfixersites/ui": "catalog:",
+    "@prisma/adapter-pg": "catalog:",
+    "@prisma/client": "catalog:",
+    "@prisma/client-runtime-utils": "catalog:",
+    "pg": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
+    "@types/pg": "catalog:",
+    "prisma": "catalog:",
     "typescript": "catalog:"
   }
 }

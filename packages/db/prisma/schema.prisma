@@ -1,0 +1,64 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EnlistmentStatus {
+  pending
+  reviewed
+  rejected
+}
+
+model Enlistment {
+  id                   String           @id @default(cuid())
+  age                  Int
+  isUsCitizen          Boolean
+  isSecondGeneration   Boolean
+  onRegistry           Boolean
+  isVeteran            Boolean
+  branch               String
+  militaryRank         String
+  militaryUnit         String
+  militarySpecialty    String
+  yearsOfService       String
+  dischargeType        String
+  combatDeployments    String
+  hasPublicService     Boolean
+  publicServiceTypes   String[]
+  policeAgencyType     String
+  policeYears          String
+  policeStatus         String
+  policeTraining       String
+  fireDepartmentType   String
+  fireYears            String
+  fireCertifications   String
+  federalAgency        String
+  federalYears         String
+  federalClearance     String
+  emsCertification     String
+  emsYears             String
+  correctionsAgency    String
+  correctionsYears     String
+  otherPublicService   String
+  callsign             String
+  email                String
+  state                String
+  specialty            String
+  rank                 String
+  message              String
+  submittedAt          DateTime         @default(now())
+  status               EnlistmentStatus @default(pending)
+  idpUserId            String?
+
+  @@index([email])
+  @@index([callsign])
+  @@index([idpUserId])
+  @@index([status])
+  @@index([submittedAt])
+  @@map("enlistment")
+}

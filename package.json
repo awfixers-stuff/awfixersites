@@ -43,7 +43,6 @@
       "@prisma/client": "7.8.0",
       "@prisma/client-runtime-utils": "7.8.0",
       "better-auth": "1.6.18",
-      "convex": "1.32.0",
       "pg": "8.16.3",
       "remark-gfm": "4.0.1",
       "class-variance-authority": "0.7.1",
@@ -59,6 +58,9 @@
       "tailwind-merge": "3.6.0",
       "tailwindcss": "4.3.2",
       "tw-animate-css": "1.4.0",
+      "resend": "6.16.0",
+      "react-hook-form": "7.80.0",
+      "@hookform/resolvers": "5.4.0",
       "zod": "4.4.3",
       "@awfixersites/ui": "workspace:*",
       "@awfixersites/auth": "workspace:*",
@@ -82,7 +84,8 @@
   "scripts": {
     "lint": "oxlint -c ./src/lint.json . --fix",
     "format": "oxfmt -c ./src/fmt.json . --write",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsgo --noEmit",
+    "test:browser": "vitest"
   },
   "dependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260630.1",
@@ -97,11 +100,14 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "6.0.3",
+    "@vitest/browser-playwright": "4.1.9",
     "@vitest/utils": "4.1.9",
     "oxfmt": "0.56.0",
     "oxlint": "1.71.0",
     "vercel": "54.18.0",
-    "vitest": "4.1.9"
+    "vitest": "4.1.9",
+    "vitest-browser-react": "2.2.0"
   },
   "devEngines": {
     "packageManager": {

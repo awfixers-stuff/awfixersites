@@ -10,10 +10,10 @@
     "./types": "./mdx.d.ts"
   },
   "dependencies": {
+    "@awfixersites/ui": "catalog:",
     "@mdx-js/loader": "catalog:",
     "@mdx-js/react": "catalog:",
     "@next/mdx": "catalog:",
-    "@awfixersites/ui": "catalog:",
     "remark-gfm": "catalog:"
   },
   "devDependencies": {

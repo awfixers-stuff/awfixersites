@@ -1,7 +1,6 @@
 import { Barlow_Condensed, Geist, Geist_Mono } from "next/font/google";
 
 import "@awfixersites/ui/globals.css";
-import { ConvexProvider } from "@/components/convex-client-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SplashProvider } from "@/components/splash-provider";
 import { SiteFooter } from "@/components/site-footer";
@@ -39,17 +38,15 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-svh">
-        <ConvexProvider>
-          <ThemeProvider>
-            <SplashProvider>
-              <div className="flex min-h-svh flex-col">
-                <SiteHeader />
-                <div className="flex-1">{children}</div>
-                <SiteFooter />
-              </div>
-            </SplashProvider>
-          </ThemeProvider>
-        </ConvexProvider>
+        <ThemeProvider>
+          <SplashProvider>
+            <div className="flex min-h-svh flex-col">
+              <SiteHeader />
+              <div className="flex-1">{children}</div>
+              <SiteFooter />
+            </div>
+          </SplashProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

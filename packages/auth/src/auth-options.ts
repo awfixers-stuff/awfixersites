@@ -2,8 +2,10 @@ import type { BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { username } from "better-auth/plugins/username";
 import { passkey } from "@better-auth/passkey";
+import { oidcProvider } from "better-auth/plugins/oidc-provider";
 import type { PrismaClient } from "../generated/prisma/client";
 
+import { createOAuthClientPlugin } from "./client-options";
 import {
   getAuthBaseUrl,
   getAuthSecret,
@@ -12,9 +14,14 @@ import {
   getTrustedOrigins,
   internalUserEmail,
 } from "./config";
+import { getAuthDeploymentRole, type AuthDeploymentRole } from "./deployment";
 import { findOrCreateUserForPasskey } from "./passkey-users";
+import { getTrustedOidcClients } from "./oauth-clients";
 
-export function createAuthOptions(prisma: PrismaClient): BetterAuthOptions {
+function sharedOptions(prisma: PrismaClient): Pick<
+  BetterAuthOptions,
+  "appName" | "baseURL" | "secret" | "trustedOrigins" | "database" | "advanced"
+> {
   return {
     appName: getPasskeyRpName(),
     baseURL: getAuthBaseUrl(),
@@ -23,6 +30,15 @@ export function createAuthOptions(prisma: PrismaClient): BetterAuthOptions {
     database: prismaAdapter(prisma, {
       provider: "postgresql",
     }),
+    advanced: {
+      cookiePrefix: "awfixer_auth",
+    },
+  };
+}
+
+function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
+  return {
+    ...sharedOptions(prisma),
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: false,
@@ -34,9 +50,6 @@ export function createAuthOptions(prisma: PrismaClient): BetterAuthOptions {
       deleteUser: {
         enabled: true,
       },
-    },
-    advanced: {
-      cookiePrefix: "awfixer_auth",
     },
     plugins: [
       username({
@@ -66,6 +79,12 @@ export function createAuthOptions(prisma: PrismaClient): BetterAuthOptions {
           },
         },
       }),
+      oidcProvider({
+        loginPage: "/",
+        trustedClients: getTrustedOidcClients(),
+        scopes: ["openid", "profile", "email", "offline_access"],
+        __skipDeprecationWarning: true,
+      }),
     ],
     databaseHooks: {
       user: {
@@ -94,4 +113,24 @@ export function createAuthOptions(prisma: PrismaClient): BetterAuthOptions {
       },
     },
   };
+}
+
+function createOAuthRelyingPartyOptions(prisma: PrismaClient): BetterAuthOptions {
+  return {
+    ...sharedOptions(prisma),
+    emailAndPassword: {
+      enabled: false,
+    },
+    plugins: [createOAuthClientPlugin()],
+  };
+}
+
+export function createAuthOptions(
+  prisma: PrismaClient,
+  role: AuthDeploymentRole = getAuthDeploymentRole(),
+): BetterAuthOptions {
+  if (role === "idp") {
+    return createIdpAuthOptions(prisma);
+  }
+  return createOAuthRelyingPartyOptions(prisma);
 }

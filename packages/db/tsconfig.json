@@ -4,9 +4,10 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "paths": {
-      "@awfixersites/db/*": ["./src/*"]
+      "@awfixersites/db/*": ["./src/*"],
+      "@awfixersites/ui/*": ["../ui/src/*"]
     }
   },
-  "include": ["src", "convex"],
+  "include": ["src", "prisma.config.ts", "generated"],
   "exclude": ["node_modules"]
 }

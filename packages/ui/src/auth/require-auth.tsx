@@ -11,7 +11,8 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isPending && !isAuthenticated) {
-      router.push(`/sign-in?returnTo=${encodeURIComponent(pathname)}`);
+      const returnTo = pathname;
+      router.push(`/sign-in?returnTo=${encodeURIComponent(returnTo)}`);
     }
   }, [isAuthenticated, isPending, pathname, router]);
 

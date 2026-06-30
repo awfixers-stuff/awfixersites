@@ -32,6 +32,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@awfixersites/auth": "catalog:",
     "@awfixersites/ui": "catalog:",
     "@next/swc-linux-x64-gnu": "catalog:",
     "@tailwindcss/oxide-linux-x64-gnu": "catalog:",

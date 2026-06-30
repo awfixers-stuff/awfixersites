@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
+
 import { Geist, Geist_Mono } from "next/font/google";
 
-import "@awfixersites/ui/globals.css";
+import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@awfixersites/ui/lib/utils";
 
@@ -10,6 +12,11 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 });
+
+export const metadata: Metadata = {
+  title: "AWFixer News - Coming Soon",
+  description: "AWFixer News is coming soon. Follow @AWFixerNews on X for updates.",
+};
 
 export default function RootLayout({
   children,

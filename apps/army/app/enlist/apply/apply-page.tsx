@@ -24,7 +24,7 @@ function ApplyPageInner() {
 
   const handleSubmit = useCallback(
     async (values: EnlistFormValues) => {
-      await submitEnlistment({ enlistment: values });
+      await submitEnlistment(values);
     },
     [submitEnlistment],
   );

@@ -1,19 +1,28 @@
-import { Button } from "@awfixersites/ui/components/button";
+import { TipForm } from "@/components/tip-form";
 
-export default function Page() {
+export default function Home() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <main className="bg-background min-h-screen px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl">
+        <div className="mb-12 text-center">
+          <h1 className="mb-4 font-mono text-4xl font-bold tracking-tight sm:text-5xl">
+            AWFixer Tips
+          </h1>
+          <p className="text-muted-foreground font-mono text-lg">
+            Submit your tips anonymously. We take your information seriously.
+          </p>
         </div>
-        <div className="text-muted-foreground font-mono text-xs">
-          (Press <kbd>d</kbd> to toggle dark mode)
+
+        <TipForm />
+
+        <div className="text-muted-foreground mt-12 space-y-2 text-center font-mono text-sm">
+          <p>
+            All submissions are forwarded to{" "}
+            <span className="font-bold">tips@updates.awfixer.me</span>
+          </p>
+          <p>Your privacy is protected. We do not store or log submissions.</p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

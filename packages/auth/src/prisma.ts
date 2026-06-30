@@ -8,12 +8,33 @@ const globalForPrisma = globalThis as unknown as {
   pool: Pool | undefined;
 };
 
-function createPrismaClient() {
-  const connectionString = process.env.AUTH_DATABASE_URL ?? process.env.AUTH_PRISMA_DATABASE_URL;
+function getAuthDatabaseUrl() {
+  const role = process.env.AUTH_DEPLOYMENT_ROLE?.trim().toLowerCase();
+  if (role === "client") {
+    const siteKey = process.env.AUTH_OAUTH_SITE_KEY?.trim().toUpperCase();
+    const siteUrl =
+      siteKey && process.env[`AUTH_${siteKey}_SESSION_DATABASE_URL`]
+        ? process.env[`AUTH_${siteKey}_SESSION_DATABASE_URL`]
+        : undefined;
+    const clientUrl = process.env.AUTH_CLIENT_DATABASE_URL ?? siteUrl;
+    if (!clientUrl) {
+      throw new Error(
+        "Missing AUTH_CLIENT_DATABASE_URL (or AUTH_<SITE>_SESSION_DATABASE_URL) for OAuth client apps.",
+      );
+    }
+    return clientUrl;
+  }
 
+  const connectionString =
+    process.env.AUTH_DATABASE_URL ?? process.env.AUTH_PRISMA_DATABASE_URL;
   if (!connectionString) {
     throw new Error("Missing AUTH_DATABASE_URL (or AUTH_PRISMA_DATABASE_URL).");
   }
+  return connectionString;
+}
+
+function createPrismaClient() {
+  const connectionString = getAuthDatabaseUrl();
 
   const pool = globalForPrisma.pool ?? new Pool({ connectionString });
   const adapter = new PrismaPg(pool);
@@ -25,8 +46,25 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+function getPrismaClient(): PrismaClient {
+  if (globalForPrisma.prisma) {
+    return globalForPrisma.prisma;
+  }
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  const client = createPrismaClient();
+
+  if (process.env.NODE_ENV !== "production") {
+    globalForPrisma.prisma = client;
+  }
+
+  return client;
 }
+
+/** Lazy Prisma client — no DB URL required until first query. */
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop, receiver) {
+    const client = getPrismaClient();
+    const value = Reflect.get(client, prop, receiver);
+    return typeof value === "function" ? value.bind(client) : value;
+  },
+});

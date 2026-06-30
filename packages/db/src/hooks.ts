@@ -1,13 +1,28 @@
 "use client";
 
-import type { FunctionArgs } from "convex/server";
-import { useMutation } from "convex/react";
+import { useCallback } from "react";
 
-import { api } from "../convex/_generated/api";
+import type { EnlistmentInput } from "./enlistments";
 
-export type SubmitEnlistmentArgs = FunctionArgs<typeof api.enlistments.submit>;
-export type EnlistmentInput = SubmitEnlistmentArgs["enlistment"];
+export type { EnlistmentInput, SubmitEnlistmentArgs } from "./enlistments";
 
 export function useSubmitEnlistment() {
-  return useMutation(api.enlistments.submit);
+  return useCallback(async (enlistment: EnlistmentInput) => {
+    const response = await fetch("/api/enlistments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ enlistment }),
+    });
+
+    const payload = (await response.json().catch(() => null)) as {
+      enlistmentId?: string;
+      error?: string;
+    } | null;
+
+    if (!response.ok) {
+      throw new Error(payload?.error ?? "Failed to submit enlistment.");
+    }
+
+    return payload as { enlistmentId: string };
+  }, []);
 }

@@ -1,19 +1,22 @@
 "use client";
 
 import { createAuthClient } from "better-auth/react";
-import { usernameClient } from "better-auth/client/plugins";
+import { usernameClient, genericOAuthClient } from "better-auth/client/plugins";
 import { passkeyClient } from "@better-auth/passkey/client";
 
-import type { auth } from "./server";
+import type { Auth } from "./server";
 import { internalUserEmail } from "./config";
+import { isAuthClientDeployment } from "./deployment";
+
+const baseURL = process.env.NEXT_PUBLIC_APP_URL;
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL,
-  plugins: [usernameClient(), passkeyClient()],
+  baseURL,
+  plugins: isAuthClientDeployment() ? [genericOAuthClient()] : [usernameClient(), passkeyClient()],
 });
 
 export type AuthClient = typeof authClient;
-export type AuthSession = typeof authClient.$Infer.Session;
+export type AuthSession = Auth["$Infer"]["Session"];
 
 export async function signUpWithUsername(input: {
   username: string;
