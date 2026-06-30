@@ -1,0 +1,21 @@
+{
+  "name": "@awfixersites/content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./about": "./src/about/index.ts",
+    "./ranks": "./src/ranks/index.ts",
+    "./aac": "./src/aac/index.ts",
+    "./aacj": "./src/aacj/index.ts"
+  },
+  "dependencies": {
+    "remark-gfm": "catalog:"
+  },
+  "devDependencies": {
+    "@awfixersites/mdx": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  }
+}

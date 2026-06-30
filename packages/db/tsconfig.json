@@ -1,0 +1,12 @@
+{
+  "extends": "../../packages/typescript-config/react-library.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@awfixersites/db/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "convex"],
+  "exclude": ["node_modules"]
+}

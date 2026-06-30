@@ -2,8 +2,8 @@
   "name": "@awfixersites/army",
   "version": "0.0.1",
   "private": true,
-  "description": "the website for",
-  "homepage": "",
+  "description": "AWFixer's Army — legal militia site",
+  "homepage": "https://awfixer.army",
   "author": {
     "name": "AWFixer LLC",
     "email": "developers@awfixer.llc",
@@ -32,23 +32,41 @@
     "start": "next start"
   },
   "dependencies": {
+    "@awfixersites/auth": "catalog:",
+    "@awfixersites/content": "catalog:",
+    "@awfixersites/db": "catalog:",
+    "@awfixersites/mdx": "catalog:",
     "@awfixersites/ui": "catalog:",
     "@next/swc-linux-x64-gnu": "catalog:",
     "@tailwindcss/oxide-linux-x64-gnu": "catalog:",
+    "@vercel/analytics": "catalog:",
+    "@vercel/speed-insights": "catalog:",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "convex": "catalog:",
     "lightningcss": "catalog:",
     "lightningcss-linux-x64-gnu": "catalog:",
     "lucide-react": "catalog:",
+    "motion": "catalog:",
     "next": "catalog:",
     "next-themes": "catalog:",
+    "radix-ui": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "remark-gfm": "catalog:",
+    "shadcn": "catalog:",
+    "tailwind-merge": "catalog:",
+    "tw-animate-css": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
+    "@tailwindcss/typography": "catalog:",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
   "devEngines": {

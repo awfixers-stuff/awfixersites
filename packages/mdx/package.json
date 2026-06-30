@@ -1,0 +1,27 @@
+{
+  "name": "@awfixersites/mdx",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components": "./src/components.tsx",
+    "./next": "./src/next.ts",
+    "./types": "./mdx.d.ts"
+  },
+  "dependencies": {
+    "@mdx-js/loader": "catalog:",
+    "@mdx-js/react": "catalog:",
+    "@next/mdx": "catalog:",
+    "@awfixersites/ui": "catalog:",
+    "remark-gfm": "catalog:"
+  },
+  "devDependencies": {
+    "@types/mdx": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  }
+}

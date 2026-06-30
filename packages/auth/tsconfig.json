@@ -1,0 +1,14 @@
+{
+  "extends": "../../packages/typescript-config/react-library.json",
+  "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@awfixersites/auth/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "prisma.config.ts", "generated"],
+  "exclude": ["node_modules"]
+}

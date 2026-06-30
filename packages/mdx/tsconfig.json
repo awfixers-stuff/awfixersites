@@ -1,0 +1,9 @@
+{
+  "extends": "../../packages/typescript-config/react-library.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
+  },
+  "include": ["src", "mdx.d.ts"],
+  "exclude": ["node_modules"]
+}

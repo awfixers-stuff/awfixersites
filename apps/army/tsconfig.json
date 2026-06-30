@@ -20,7 +20,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "allowJs": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "noEmit": true,
     "plugins": [
       {
@@ -31,13 +31,37 @@
       "@/*": [
         "./*"
       ],
+      "@awfixersites/auth": [
+        "../../packages/auth/src/index.ts"
+      ],
+      "@awfixersites/auth/*": [
+        "../../packages/auth/src/*"
+      ],
+      "@awfixersites/db": [
+        "../../packages/db/src/index.ts"
+      ],
+      "@awfixersites/db/*": [
+        "../../packages/db/src/*",
+        "../../packages/db/convex/_generated/*"
+      ],
       "@awfixersites/ui/*": [
         "../../packages/ui/src/*"
+      ],
+      "@awfixersites/mdx": [
+        "../../packages/mdx/src/index.ts"
+      ],
+      "@awfixersites/mdx/*": [
+        "../../packages/mdx/src/*",
+        "../../packages/mdx/*"
+      ],
+      "@awfixersites/content/*": [
+        "../../packages/content/src/*"
       ]
     }
   },
   "include": [
     "next-env.d.ts",
+    "../../packages/mdx/mdx.d.ts",
     "next.config.ts",
     "**/*.ts",
     "**/*.tsx",
