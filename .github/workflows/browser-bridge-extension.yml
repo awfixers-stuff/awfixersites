@@ -1,0 +1,135 @@
+name: Browser Bridge Extension
+
+on:
+  push:
+    branches: [master, main]
+    tags: [browser-bridge-v*]
+    paths:
+      - browser-bridge/**
+      - .github/workflows/browser-bridge-extension.yml
+  pull_request:
+    paths:
+      - browser-bridge/**
+      - .github/workflows/browser-bridge-extension.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-bridge-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build extension
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: ./.github/actions/checkout
+
+      - uses: ./.github/actions/setup-bun
+
+      - name: Resolve version
+        id: meta
+        working-directory: browser-bridge
+        run: |
+          set -euo pipefail
+          version=$(jq -r .version extension/manifest.json)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        working-directory: browser-bridge
+        run: bun install
+
+      - name: Build extension
+        working-directory: browser-bridge
+        run: bun run build:extension
+
+      - name: Verify build output
+        working-directory: browser-bridge
+        run: |
+          set -euo pipefail
+          test -f extension/dist/manifest.json
+          test -f extension/dist/background.js
+          test -f extension/dist/content-script.js
+          test -f extension/dist/popup/popup.html
+
+      - name: Add job summary
+        run: |
+          version="${{ steps.meta.outputs.version }}"
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          ## AWFixer Browser Bridge v${version}
+
+          Build succeeded. Push a \`browser-bridge-v*\` tag to publish a GitHub release with the packaged zip.
+
+          ### Install (Chrome / Chromium)
+
+          1. Build locally: \`cd browser-bridge && bun install && bun run build:extension\`
+          2. Open \`chrome://extensions\`
+          3. Enable **Developer mode**
+          4. Click **Load unpacked** and select \`browser-bridge/extension/dist\`
+          5. Generate a token: \`bash browser-bridge/scripts/setup-token.sh\`
+          6. Start the gateway: \`bash browser-bridge/scripts/start-gateway.sh\`
+          7. Paste the token into the extension popup
+
+          See [docs/browser-bridge.md](https://github.com/${{ github.repository }}/blob/${{ github.sha }}/docs/browser-bridge.md) for full setup.
+          EOF
+
+  release:
+    name: Publish release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/browser-bridge-v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: ./.github/actions/checkout
+
+      - uses: ./.github/actions/setup-bun
+
+      - name: Resolve version
+        id: meta
+        working-directory: browser-bridge
+        run: |
+          set -euo pipefail
+          version=$(jq -r .version extension/manifest.json)
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        working-directory: browser-bridge
+        run: bun install
+
+      - name: Build and package extension
+        id: package
+        working-directory: browser-bridge
+        run: |
+          set -euo pipefail
+          bun run build:extension
+          version="${{ steps.meta.outputs.version }}"
+          zip_name="awfixer-browser-bridge-${version}.zip"
+          mkdir -p dist-package
+          (cd extension/dist && zip -r "../dist-package/${zip_name}" .)
+          echo "zip_path=browser-bridge/dist-package/${zip_name}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="${{ steps.meta.outputs.version }}"
+          zip_path="${{ steps.package.outputs.zip_path }}"
+          gh release create "${{ github.ref_name }}" \
+            "${zip_path}" \
+            --generate-notes \
+            --title "AWFixer Browser Bridge v${version}" \
+            --notes "## Install
+
+          1. Download \`awfixer-browser-bridge-${version}.zip\` below
+          2. Unzip it
+          3. Open \`chrome://extensions\`, enable **Developer mode**, click **Load unpacked**, and select the folder
+          4. Run \`bash browser-bridge/scripts/setup-token.sh\` and \`bash browser-bridge/scripts/start-gateway.sh\` from the repo
+          5. Paste the token into the extension popup
+
+          Full docs: [browser-bridge.md](https://github.com/${{ github.repository }}/blob/master/docs/browser-bridge.md)"
