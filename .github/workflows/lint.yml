@@ -52,5 +52,5 @@ jobs:
 
       - name: Lint workspace
         run: |
-          bunx oxlint -c ./src/lint.json "${{ matrix.workspace }}" --no-error-on-unmatched-pattern
-          bunx oxlint -c ./src/lint.security.json "${{ matrix.workspace }}" --no-error-on-unmatched-pattern
+          oxlint -c ./src/lint.json "${{ matrix.workspace }}" --no-error-on-unmatched-pattern
+          oxlint -c ./src/lint.security.json "${{ matrix.workspace }}" --no-error-on-unmatched-pattern

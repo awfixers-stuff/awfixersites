@@ -55,7 +55,7 @@ async function runLint(workspace: string) {
   for (const pass of configs) {
     console.log(`[vercel-check] ${workspace} (${pass.label})`);
     const proc = Bun.spawn(
-      ["bunx", "oxlint", "-c", pass.config, workspace, "--no-error-on-unmatched-pattern"],
+      ["oxlint", "-c", pass.config, workspace, "--no-error-on-unmatched-pattern"],
       {
         cwd: repoRoot,
         env: process.env,
@@ -80,7 +80,7 @@ async function runTypecheck(workspace: string) {
   }
 
   console.log(`[vercel-check] ${workspace} (typecheck)`);
-  const proc = Bun.spawn(["bunx", "tsgo", "-p", tsconfig, "--noEmit", "--pretty"], {
+  const proc = Bun.spawn(["tsgo", "-p", tsconfig, "--noEmit", "--pretty"], {
     cwd: resolve(repoRoot, workspace),
     env: process.env,
     stdout: "inherit",
