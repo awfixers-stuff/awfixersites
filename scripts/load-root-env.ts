@@ -2,14 +2,13 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { rootEnvLocalPath } from "../packages/env/src/index.ts";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(scriptDir, "..");
 
 /** Load repo root `.env.local` without overriding variables already set in the environment. */
 export function loadRootEnvLocal() {
-  const path = existsSync(rootEnvLocalPath) ? rootEnvLocalPath : resolve(repoRoot, ".env.local");
+  const path = resolve(repoRoot, ".env.local");
   if (!existsSync(path)) return;
 
   const text = readFileSync(path, "utf8");

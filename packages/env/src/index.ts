@@ -23,4 +23,3 @@ export function getAuthDatabaseUrl(): string | undefined {
   );
 }
 
-export const rootEnvLocalPath = new URL("../../../.env.local", import.meta.url).pathname;
