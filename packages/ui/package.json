@@ -26,28 +26,28 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
-    "@awfixersites/auth": "catalog:",
-    "class-variance-authority": "catalog:",
-    "clsx": "catalog:",
-    "lucide-react": "catalog:",
-    "motion": "catalog:",
-    "next-themes": "catalog:",
-    "radix-ui": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
+    "@awfixersites/auth": "catalog:workspace",
+    "class-variance-authority": "catalog:css",
+    "clsx": "catalog:css",
+    "lucide-react": "catalog:react",
+    "motion": "catalog:react",
+    "next-themes": "catalog:nextjs",
+    "radix-ui": "catalog:react",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
     "shadcn": "catalog:",
-    "tailwind-merge": "catalog:",
-    "tw-animate-css": "catalog:",
+    "tailwind-merge": "catalog:css",
+    "tw-animate-css": "catalog:css",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "catalog:",
-    "@tailwindcss/typography": "catalog:",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "next": "catalog:",
-    "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "@tailwindcss/postcss": "catalog:css",
+    "@tailwindcss/typography": "catalog:css",
+    "@types/node": "catalog:types",
+    "@types/react": "catalog:types",
+    "@types/react-dom": "catalog:types",
+    "next": "catalog:nextjs",
+    "tailwindcss": "catalog:css",
+    "typescript": "catalog:checking"
   }
 }

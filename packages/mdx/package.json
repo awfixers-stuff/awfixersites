@@ -17,18 +17,18 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
-    "@awfixersites/ui": "catalog:",
-    "@mdx-js/loader": "catalog:",
-    "@mdx-js/react": "catalog:",
-    "@next/mdx": "catalog:",
-    "remark-gfm": "catalog:"
+    "@awfixersites/ui": "catalog:workspace",
+    "@mdx-js/loader": "catalog:markdown",
+    "@mdx-js/react": "catalog:markdown",
+    "@next/mdx": "catalog:nextjs",
+    "remark-gfm": "catalog:markdown"
   },
   "devDependencies": {
-    "@types/mdx": "catalog:",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "next": "catalog:",
-    "react": "catalog:",
-    "typescript": "catalog:"
+    "@types/mdx": "catalog:types",
+    "@types/node": "catalog:types",
+    "@types/react": "catalog:types",
+    "next": "catalog:nextjs",
+    "react": "catalog:react",
+    "typescript": "catalog:checking"
   }
 }

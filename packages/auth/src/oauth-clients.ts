@@ -1,6 +1,13 @@
 import type { Client } from "better-auth/plugins/oidc-provider";
 
-export type OAuthSiteKey = "army" | "church";
+import {
+  getOAuthSiteByKey,
+  isOAuthSiteKey,
+  OAUTH_SITES,
+  type OAuthSiteKey,
+} from "./oauth-sites";
+
+export type { OAuthSiteKey } from "./oauth-sites";
 
 export type OAuthSiteClient = {
   key: OAuthSiteKey;
@@ -28,39 +35,36 @@ function resolveClientSecret(envKey: string, value: string | undefined) {
   throw new Error(`Missing ${envKey} for OAuth client configuration.`);
 }
 
+function envKeyForSite(siteKey: OAuthSiteKey) {
+  return siteKey.toUpperCase().replace(/-/g, "_");
+}
+
+function defaultRedirectUrls(siteKey: OAuthSiteKey) {
+  const site = getOAuthSiteByKey(siteKey);
+  return [
+    `http://localhost:${site.devPort}/api/auth/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`,
+    `https://${site.apex}/api/auth/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`,
+  ];
+}
+
 /** Registered OAuth2/OIDC relying parties for awfixer sites. */
 export function getOAuthSiteClients(): OAuthSiteClient[] {
-  const armyClientId = process.env.AUTH_OAUTH_ARMY_CLIENT_ID ?? "awfixer-army";
-  const churchClientId = process.env.AUTH_OAUTH_CHURCH_CLIENT_ID ?? "awfixer-church";
+  return OAUTH_SITES.map((site) => {
+    const envKey = envKeyForSite(site.key);
+    const clientId = process.env[`AUTH_OAUTH_${envKey}_CLIENT_ID`] ?? `awfixer-${site.key}`;
+    const secretEnvKey = `AUTH_OAUTH_${envKey}_CLIENT_SECRET`;
 
-  return [
-    {
-      key: "army",
-      name: "AWFixer Army",
-      clientId: armyClientId,
-      clientSecret: resolveClientSecret(
-        "AUTH_OAUTH_ARMY_CLIENT_SECRET",
-        process.env.AUTH_OAUTH_ARMY_CLIENT_SECRET,
+    return {
+      key: site.key,
+      name: site.name,
+      clientId,
+      clientSecret: resolveClientSecret(secretEnvKey, process.env[secretEnvKey]),
+      redirectUrls: parseRedirectUrls(
+        process.env[`AUTH_OAUTH_${envKey}_REDIRECT_URLS`],
+        defaultRedirectUrls(site.key),
       ),
-      redirectUrls: parseRedirectUrls(process.env.AUTH_OAUTH_ARMY_REDIRECT_URLS, [
-        "http://localhost:3000/api/auth/oauth2/callback/awfixer-idp",
-        "https://awfixer.army/api/auth/oauth2/callback/awfixer-idp",
-      ]),
-    },
-    {
-      key: "church",
-      name: "AWFixer Church",
-      clientId: churchClientId,
-      clientSecret: resolveClientSecret(
-        "AUTH_OAUTH_CHURCH_CLIENT_SECRET",
-        process.env.AUTH_OAUTH_CHURCH_CLIENT_SECRET,
-      ),
-      redirectUrls: parseRedirectUrls(process.env.AUTH_OAUTH_CHURCH_REDIRECT_URLS, [
-        "http://localhost:3001/api/auth/oauth2/callback/awfixer-idp",
-        "https://awfixer.church/api/auth/oauth2/callback/awfixer-idp",
-      ]),
-    },
-  ];
+    };
+  });
 }
 
 export function getTrustedOidcClients(): (Client & { skipConsent?: boolean })[] {
@@ -88,15 +92,18 @@ export function getOAuthSiteKey(): OAuthSiteKey {
   const key =
     process.env.AUTH_OAUTH_SITE_KEY?.trim().toLowerCase() ??
     process.env.NEXT_PUBLIC_AUTH_OAUTH_SITE_KEY?.trim().toLowerCase();
-  if (key === "army" || key === "church") {
+
+  if (key && isOAuthSiteKey(key)) {
     return key;
   }
+
   throw new Error(
-    'Missing or invalid AUTH_OAUTH_SITE_KEY. Expected "army" or "church" on OAuth client apps.',
+    `Missing or invalid AUTH_OAUTH_SITE_KEY. Expected one of: ${OAUTH_SITES.map((site) => site.key).join(", ")}.`,
   );
 }
 
 export function getOAuthRedirectUri(appBaseUrl: string) {
   return `${appBaseUrl.replace(/\/$/, "")}/api/auth/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`;
 }
+
 export const OAUTH_IDP_PROVIDER_ID = "awfixer-idp";

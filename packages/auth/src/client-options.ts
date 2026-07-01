@@ -43,6 +43,8 @@ export function createOAuthClientPlugin(): BetterAuthPlugin {
             name: typeof profile.name === "string" ? profile.name : undefined,
             image: typeof profile.picture === "string" ? profile.picture : undefined,
             emailVerified: profile.email_verified === true || profile.emailVerified === true,
+            username: typeof profile.username === "string" ? profile.username : undefined,
+            role: typeof profile.role === "string" ? profile.role : "user",
           };
         },
       },

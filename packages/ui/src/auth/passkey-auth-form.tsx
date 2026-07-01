@@ -67,9 +67,13 @@ export function PasskeyAuthForm({
         setLoading(false);
         return;
       }
-      onSuccess?.();
-      onModeChange("sign-in");
-      setLoading(false);
+
+      const params = new URLSearchParams(window.location.search);
+      const returnTo = params.get("returnTo");
+      const setupUrl = returnTo
+        ? `/setup/totp?returnTo=${encodeURIComponent(returnTo)}`
+        : "/setup/totp";
+      window.location.assign(setupUrl);
       return;
     }
 
@@ -80,7 +84,23 @@ export function PasskeyAuthForm({
       return;
     }
 
-    onSuccess?.();
+    const session = await authClient.getSession();
+    const user = session.data?.user as { twoFactorEnabled?: boolean } | undefined;
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = params.get("returnTo");
+
+    if (!user?.twoFactorEnabled) {
+      const setupUrl = returnTo
+        ? `/setup/totp?returnTo=${encodeURIComponent(returnTo)}`
+        : "/setup/totp";
+      window.location.assign(setupUrl);
+      return;
+    }
+
+    const verifyUrl = returnTo
+      ? `/verify/totp?returnTo=${encodeURIComponent(returnTo)}`
+      : "/verify/totp";
+    window.location.assign(verifyUrl);
     setLoading(false);
   }
 

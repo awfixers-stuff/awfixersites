@@ -13,7 +13,14 @@
     "./session": "./src/session.ts",
     "./server-session": "./src/server-session.ts",
     "./idp": "./src/idp.ts",
-    "./oauth-login": "./src/oauth-login.ts"
+    "./oauth-login": "./src/oauth-login.ts",
+    "./account-setup": "./src/account-setup.ts",
+    "./account-setup.server": "./src/account-setup.server.ts",
+    "./idp-prisma": "./src/idp-prisma.ts",
+    "./admin/guard": "./src/admin/guard.ts",
+    "./admin/users": "./src/admin/users.ts",
+    "./admin/oauth-clients": "./src/admin/oauth-clients.ts",
+    "./oauth-sites": "./src/oauth-sites.ts"
   },
   "scripts": {
     "generate": "prisma generate",
@@ -25,19 +32,19 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
-    "@awfixersites/env": "catalog:",
-    "@better-auth/passkey": "catalog:",
-    "@prisma/adapter-pg": "catalog:",
-    "@prisma/client": "catalog:",
-    "@prisma/client-runtime-utils": "catalog:",
-    "better-auth": "catalog:",
-    "pg": "catalog:"
+    "@awfixersites/env": "catalog:workspace",
+    "@better-auth/passkey": "catalog:auth",
+    "@prisma/adapter-pg": "catalog:database",
+    "@prisma/client": "catalog:database",
+    "@prisma/client-runtime-utils": "catalog:database",
+    "better-auth": "catalog:auth",
+    "pg": "catalog:database"
   },
   "devDependencies": {
-    "@types/node": "catalog:",
-    "@types/pg": "catalog:",
-    "next": "catalog:",
-    "prisma": "catalog:",
-    "typescript": "catalog:"
+    "@types/node": "catalog:types",
+    "@types/pg": "catalog:types",
+    "next": "catalog:nextjs",
+    "prisma": "catalog:database",
+    "typescript": "catalog:checking"
   }
 }

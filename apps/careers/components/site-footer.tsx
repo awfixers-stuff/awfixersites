@@ -121,7 +121,7 @@ export function SiteFooter() {
             </Link>
             <span className="w-px h-3 bg-foreground/10" />
             <Link
-              href="https://awfixer.church/donations"
+              href="https://donate.awfixer.church"
               className="hover:text-foreground/70 transition-colors"
             >
               Donations

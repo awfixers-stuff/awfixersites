@@ -1,37 +1,8 @@
 {
-  "name": "prisma-client-4dab4ff03569292fc3f3f2896ac2edca889c2e979c4449a667a5cfe637bef6de",
-  "version": "7.8.0",
-  "sideEffects": false,
+  "name": "prisma-client-72e97706a3ccad39dcf81b32ecc1fbafc7c55087aea7954546a69b7587db2710",
   "main": "index.js",
-  "browser": "default.js",
   "types": "index.d.ts",
-  "imports": {
-    "#wasm-compiler-loader": {
-      "edge-light": "./wasm-edge-light-loader.mjs",
-      "workerd": "./wasm-worker-loader.mjs",
-      "worker": "./wasm-worker-loader.mjs",
-      "default": "./wasm-worker-loader.mjs"
-    },
-    "#main-entry-point": {
-      "require": {
-        "node": "./index.js",
-        "edge-light": "./edge.js",
-        "workerd": "./edge.js",
-        "worker": "./edge.js",
-        "browser": "./index-browser.js",
-        "default": "./index.js"
-      },
-      "import": {
-        "node": "./index.js",
-        "edge-light": "./edge.js",
-        "workerd": "./edge.js",
-        "worker": "./edge.js",
-        "browser": "./index-browser.js",
-        "default": "./index.js"
-      },
-      "default": "./index.js"
-    }
-  },
+  "browser": "default.js",
   "exports": {
     "./client": {
       "require": {
@@ -138,7 +109,36 @@
     },
     "./*": "./*"
   },
+  "version": "7.8.0",
+  "sideEffects": false,
   "dependencies": {
     "@prisma/client-runtime-utils": "7.8.0"
+  },
+  "imports": {
+    "#wasm-compiler-loader": {
+      "edge-light": "./wasm-edge-light-loader.mjs",
+      "workerd": "./wasm-worker-loader.mjs",
+      "worker": "./wasm-worker-loader.mjs",
+      "default": "./wasm-worker-loader.mjs"
+    },
+    "#main-entry-point": {
+      "require": {
+        "node": "./index.js",
+        "edge-light": "./edge.js",
+        "workerd": "./edge.js",
+        "worker": "./edge.js",
+        "browser": "./index-browser.js",
+        "default": "./index.js"
+      },
+      "import": {
+        "node": "./index.js",
+        "edge-light": "./edge.js",
+        "workerd": "./edge.js",
+        "worker": "./edge.js",
+        "browser": "./index-browser.js",
+        "default": "./index.js"
+      },
+      "default": "./index.js"
+    }
   }
 }

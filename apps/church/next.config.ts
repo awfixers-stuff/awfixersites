@@ -11,7 +11,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/donate",
-        destination: "/donations",
+        destination: "https://donate.awfixer.church",
+        permanent: true,
+      },
+      {
+        source: "/donations",
+        destination: "https://donate.awfixer.church",
         permanent: true,
       },
     ];

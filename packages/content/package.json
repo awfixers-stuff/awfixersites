@@ -17,12 +17,12 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
-    "remark-gfm": "catalog:"
+    "remark-gfm": "catalog:markdown"
   },
   "devDependencies": {
-    "@awfixersites/mdx": "catalog:",
-    "@types/react": "catalog:",
-    "react": "catalog:",
-    "typescript": "catalog:"
+    "@awfixersites/mdx": "catalog:workspace",
+    "@types/react": "catalog:types",
+    "react": "catalog:react",
+    "typescript": "catalog:checking"
   }
 }

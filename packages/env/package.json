@@ -14,7 +14,7 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "devDependencies": {
-    "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "@types/node": "catalog:types",
+    "typescript": "catalog:checking"
   }
 }

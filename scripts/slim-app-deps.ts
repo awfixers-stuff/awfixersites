@@ -9,47 +9,62 @@ import { resolve } from "node:path";
 const repoRoot = resolve(import.meta.dir, "..");
 const appsDir = resolve(repoRoot, "apps");
 
+const APP_BINDINGS: Record<string, string> = {
+  "@next/swc-linux-x64-gnu": "catalog:nextjs",
+  "@oxfmt/binding-linux-x64-gnu": "catalog:bindings",
+  "@oxlint-tsgolint/linux-x64": "catalog:bindings",
+  "@oxlint/binding-linux-x64-gnu": "catalog:bindings",
+  "@rolldown/binding-linux-x64-gnu": "catalog:bindings",
+  "@tailwindcss/oxide-linux-x64-gnu": "catalog:css",
+  "@typescript/native-preview-linux-x64": "catalog:bindings",
+  "lightningcss-linux-x64-gnu": "catalog:css",
+};
+
 const BASE_DEPS: Record<string, string> = {
-  "@awfixersites/ui": "catalog:",
-  "@tailwindcss/postcss": "catalog:",
-  "class-variance-authority": "catalog:",
-  clsx: "catalog:",
-  "lucide-react": "catalog:",
-  motion: "catalog:",
-  next: "catalog:",
-  "next-themes": "catalog:",
-  "radix-ui": "catalog:",
-  react: "catalog:",
-  "react-dom": "catalog:",
+  "@awfixersites/ui": "catalog:workspace",
+  ...APP_BINDINGS,
+  "@tailwindcss/postcss": "catalog:css",
+  "class-variance-authority": "catalog:css",
+  clsx: "catalog:css",
+  "lucide-react": "catalog:react",
+  motion: "catalog:react",
+  next: "catalog:nextjs",
+  "next-themes": "catalog:nextjs",
+  "radix-ui": "catalog:react",
+  react: "catalog:react",
+  "react-dom": "catalog:react",
   shadcn: "catalog:",
-  "tailwind-merge": "catalog:",
-  tailwindcss: "catalog:",
-  "tw-animate-css": "catalog:",
+  "tailwind-merge": "catalog:css",
+  tailwindcss: "catalog:css",
+  "tw-animate-css": "catalog:css",
 };
 
 const WORKSPACE_EXTRAS: Record<string, Record<string, string>> = {
+  account: {
+    "@awfixersites/auth": "catalog:workspace",
+  },
   army: {
-    "@awfixersites/auth": "catalog:",
-    "@awfixersites/content": "catalog:",
-    "@awfixersites/db": "catalog:",
-    "@awfixersites/mdx": "catalog:",
+    "@awfixersites/auth": "catalog:workspace",
+    "@awfixersites/content": "catalog:workspace",
+    "@awfixersites/db": "catalog:workspace",
+    "@awfixersites/mdx": "catalog:workspace",
   },
   "auth-app": {
-    "@awfixersites/auth": "catalog:",
+    "@awfixersites/auth": "catalog:workspace",
   },
   auth: {
-    "@awfixersites/auth": "catalog:",
+    "@awfixersites/auth": "catalog:workspace",
   },
   church: {
-    "@awfixersites/auth": "catalog:",
+    "@awfixersites/auth": "catalog:workspace",
   },
   legal: {
-    "@awfixersites/mdx": "catalog:",
-    "@tailwindcss/typography": "catalog:",
+    "@awfixersites/mdx": "catalog:workspace",
+    "@tailwindcss/typography": "catalog:css",
   },
   tips: {
     "@hookform/resolvers": "catalog:",
-    "react-hook-form": "catalog:",
+    "react-hook-form": "catalog:react",
     resend: "catalog:",
     zod: "catalog:",
   },
@@ -62,10 +77,10 @@ function depsForApp(appName: string, pkgName: string): Record<string, string> {
   const deps = { ...BASE_DEPS, ...(WORKSPACE_EXTRAS[appName] ?? WORKSPACE_EXTRAS[pkgName] ?? {}) };
 
   if (ANALYTICS_BOTH.has(appName)) {
-    deps["@vercel/analytics"] = "catalog:";
-    deps["@vercel/speed-insights"] = "catalog:";
+    deps["@vercel/analytics"] = "catalog:vercel";
+    deps["@vercel/speed-insights"] = "catalog:vercel";
   } else if (ANALYTICS_ONLY.has(appName)) {
-    deps["@vercel/analytics"] = "catalog:";
+    deps["@vercel/analytics"] = "catalog:vercel";
   }
 
   const sorted = Object.keys(deps).sort();

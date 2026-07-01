@@ -1,5 +1,6 @@
 import { hashPassword } from "better-auth/crypto";
 
+import { resolveUserRole } from "./account-setup";
 import { internalUserEmail } from "./config";
 import { prisma } from "./prisma";
 
@@ -45,6 +46,7 @@ export async function findOrCreateUserForPasskey(username: string) {
       name: normalized,
       username: normalized,
       displayUsername: normalized,
+      role: resolveUserRole(normalized),
       createdAt: now,
       updatedAt: now,
     },

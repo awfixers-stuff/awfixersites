@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { username } from "better-auth/plugins/username";
+import { twoFactor } from "better-auth/plugins/two-factor";
 import { passkey } from "@better-auth/passkey";
 import { oidcProvider } from "better-auth/plugins/oidc-provider";
 import { genericOAuth } from "better-auth/plugins/generic-oauth";
@@ -20,6 +21,15 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: false,
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "user",
+        input: false,
+      },
+    },
+  },
   plugins: [
     username({
       minUsernameLength: 3,
@@ -28,6 +38,10 @@ export const auth = betterAuth({
     passkey({
       rpID: "localhost",
       rpName: "auth.awfixer.me",
+    }),
+    twoFactor({
+      issuer: "AWFixer",
+      allowPasswordless: true,
     }),
     oidcProvider({
       loginPage: "/",

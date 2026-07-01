@@ -121,7 +121,10 @@ export function SiteFooter() {
               Careers
             </Link>
             <span className="w-px h-3 bg-foreground/10" />
-            <Link href="/donations" className="hover:text-foreground/70 transition-colors">
+            <Link
+              href="https://donate.awfixer.church"
+              className="hover:text-foreground/70 transition-colors"
+            >
               Donations
             </Link>
             <span className="w-px h-3 bg-foreground/10" />

@@ -20,9 +20,12 @@ model User {
   updatedAt       DateTime  @updatedAt
   username        String?
   displayUsername String?
+  twoFactorEnabled Boolean  @default(false)
+  role            String    @default("user")
   sessions        Session[]
   accounts        Account[]
   passkeys        Passkey[]
+  twoFactors      TwoFactor[]
   oauthApplications OauthApplication[]
   oauthAccessTokens OauthAccessToken[]
   oauthConsents     OauthConsent[]
@@ -30,6 +33,19 @@ model User {
   @@unique([email])
   @@unique([username])
   @@map("user")
+}
+
+model TwoFactor {
+  id          String  @id
+  secret      String
+  backupCodes String
+  userId      String
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified    Boolean @default(true)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
 }
 
 model Session {

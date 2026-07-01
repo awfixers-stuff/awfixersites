@@ -1,10 +1,12 @@
 import type { BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { username } from "better-auth/plugins/username";
+import { twoFactor } from "better-auth/plugins/two-factor";
 import { passkey } from "@better-auth/passkey";
 import { oidcProvider } from "better-auth/plugins/oidc-provider";
 import type { PrismaClient } from "../generated/prisma/client";
 
+import { resolveUserRole } from "./account-setup";
 import { createOAuthClientPlugin } from "./client-options";
 import {
   getAuthBaseUrl,
@@ -48,7 +50,13 @@ function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
       maxPasswordLength: 128,
     },
     user: {
-      additionalFields: {},
+      additionalFields: {
+        role: {
+          type: "string",
+          defaultValue: "user",
+          input: false,
+        },
+      },
       deleteUser: {
         enabled: true,
       },
@@ -81,10 +89,18 @@ function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
           },
         },
       }),
+      twoFactor({
+        issuer: "AWFixer",
+        allowPasswordless: true,
+      }),
       oidcProvider({
         loginPage: "/",
         trustedClients: getTrustedOidcClients(),
         scopes: ["openid", "profile", "email", "offline_access"],
+        getAdditionalUserInfoClaim: async (user) => ({
+          username: typeof user.username === "string" ? user.username : undefined,
+          role: typeof user.role === "string" ? user.role : "user",
+        }),
         __skipDeprecationWarning: true,
       }),
     ],
@@ -97,6 +113,16 @@ function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
               typeof body?.username === "string" ? body.username.trim().toLowerCase() : undefined;
 
             if (!usernameValue) {
+              const passkeyUsername =
+                typeof user.name === "string" ? user.name.trim().toLowerCase() : undefined;
+              if (passkeyUsername) {
+                return {
+                  data: {
+                    ...user,
+                    role: resolveUserRole(passkeyUsername),
+                  },
+                };
+              }
               return { data: user };
             }
 
@@ -108,6 +134,7 @@ function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
                 name: usernameValue,
                 username: usernameValue,
                 displayUsername: usernameValue,
+                role: resolveUserRole(usernameValue),
               },
             };
           },

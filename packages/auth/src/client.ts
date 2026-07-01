@@ -1,7 +1,7 @@
 "use client";
 
 import { createAuthClient } from "better-auth/react";
-import { usernameClient, genericOAuthClient } from "better-auth/client/plugins";
+import { usernameClient, genericOAuthClient, twoFactorClient } from "better-auth/client/plugins";
 import { passkeyClient } from "@better-auth/passkey/client";
 
 import type { Auth } from "./server";
@@ -10,9 +10,28 @@ import { isAuthClientDeployment } from "./deployment";
 
 const baseURL = process.env.NEXT_PUBLIC_APP_URL;
 
+function createIdpClientPlugins() {
+  return [
+    usernameClient(),
+    passkeyClient(),
+    twoFactorClient({
+      onTwoFactorRedirect() {
+        if (typeof window !== "undefined") {
+          const params = new URLSearchParams(window.location.search);
+          const returnTo = params.get("returnTo");
+          const destination = returnTo
+            ? `/verify/totp?returnTo=${encodeURIComponent(returnTo)}`
+            : "/verify/totp";
+          window.location.assign(destination);
+        }
+      },
+    }),
+  ];
+}
+
 export const authClient = createAuthClient({
   baseURL,
-  plugins: isAuthClientDeployment() ? [genericOAuthClient()] : [usernameClient(), passkeyClient()],
+  plugins: isAuthClientDeployment() ? [genericOAuthClient()] : createIdpClientPlugins(),
 });
 
 export type AuthClient = typeof authClient;

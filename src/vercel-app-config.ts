@@ -1,6 +1,7 @@
 import { routes } from "@vercel/config/v1";
 import type { HeaderRule, Redirect, VercelConfig } from "@vercel/config/v1/types";
 
+import { donateUrlForApex } from "./donate-domains.ts";
 import { securityHeaders } from "./security-headers.ts";
 
 const APP_BUILD = "bun --bun ../../scripts/vercel-build.ts";
@@ -43,6 +44,16 @@ export const careersAwfixerRedirect = (): Redirect =>
     permanent: true,
   }) as Redirect;
 
+export function donateSubdomainRedirects(apexDomain: string): Redirect[] {
+  const destination = donateUrlForApex(apexDomain);
+  return [
+    routes.redirect("/donate", destination, { permanent: true }) as Redirect,
+    routes.redirect("/donate/:path*", `${destination}/:path*`, { permanent: true }) as Redirect,
+    routes.redirect("/donations", destination, { permanent: true }) as Redirect,
+    routes.redirect("/donations/:path*", `${destination}/:path*`, { permanent: true }) as Redirect,
+  ];
+}
+
 export type AppVercelOptions = {
   /** Vercel project display name */
   name: string;
@@ -50,6 +61,11 @@ export type AppVercelOptions = {
   legalRedirect?: boolean;
   /** When false, skips /careers → careers.awfixer.llc (e.g. the careers site itself). Default true. */
   careersRedirect?: boolean;
+  /**
+   * Apex domain for this property (e.g. `awfixer.church`).
+   * When set, `/donate` and `/donations` redirect to `https://donate.<apex>`.
+   */
+  donateApex?: string;
   /** Include default cleanup cron. Default false for scaffold apps. */
   crons?: boolean;
   extraRedirects?: Redirect[];
@@ -62,6 +78,9 @@ export function createAppVercelConfig(options: AppVercelOptions): VercelConfig {
   }
   if (options.careersRedirect !== false) {
     redirects.push(careersAwfixerRedirect());
+  }
+  if (options.donateApex) {
+    redirects.push(...donateSubdomainRedirects(options.donateApex));
   }
 
   const crons = options.crons ? [{ path: "/api/cleanup", schedule: "0 0 * * *" }] : undefined;

@@ -15,15 +15,12 @@ const failures: string[] = [];
 
 for (const pass of passes) {
   console.log(`[lint] full repo (${pass.name})`);
-  const proc = Bun.spawn(
-    ["oxlint", "-c", pass.config, ".", "--no-error-on-unmatched-pattern"],
-    {
-      cwd: repoRoot,
-      env: process.env,
-      stdout: "inherit",
-      stderr: "inherit",
-    },
-  );
+  const proc = Bun.spawn(["oxlint", "-c", pass.config, ".", "--no-error-on-unmatched-pattern"], {
+    cwd: repoRoot,
+    env: process.env,
+    stdout: "inherit",
+    stderr: "inherit",
+  });
   if ((await proc.exited) !== 0) failures.push(pass.name);
 }
 

@@ -14,6 +14,14 @@ enum EnlistmentStatus {
   rejected
 }
 
+enum DonationStatus {
+  pending
+  processing
+  succeeded
+  failed
+  canceled
+}
+
 model Enlistment {
   id                   String           @id @default(cuid())
   age                  Int
@@ -61,4 +69,26 @@ model Enlistment {
   @@index([status])
   @@index([submittedAt])
   @@map("enlistment")
+}
+
+model Donation {
+  id                    String         @id @default(cuid())
+  stripePaymentIntentId String         @unique
+  amountCents           Int
+  currency              String         @default("usd")
+  status                DonationStatus @default(pending)
+  donorEmail            String
+  donorName             String?
+  tenantId              String
+  tenantHost            String
+  parentUrl             String
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  succeededAt           DateTime?
+
+  @@index([donorEmail])
+  @@index([tenantId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("donation")
 }
