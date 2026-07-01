@@ -4,5 +4,5 @@ export const config = createAppVercelConfig({
   name: "awfixersites-church",
   legalRedirect: true,
   careersRedirect: true,
-  crons: true,
+  crons: false,
 });

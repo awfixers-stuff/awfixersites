@@ -18,10 +18,11 @@
   "scripts": {
     "generate": "prisma generate",
     "push": "prisma db push",
-    "lint": "oxlint -c ../../src/lint.json . --fix",
+    "lint": "oxlint -c ../../src/lint.json .",
     "format": "oxfmt -c ../../src/fmt.json . --check",
     "typecheck": "tsgo -p tsconfig.json --noEmit",
-    "test": "vitest -c vitest.config.ts"
+    "test": "vitest -c vitest.config.ts",
+    "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
     "@awfixersites/env": "catalog:",

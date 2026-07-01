@@ -1,7 +1,11 @@
 import { routes } from "@vercel/config/v1";
-import type { Redirect, VercelConfig } from "@vercel/config/v1/types";
+import type { HeaderRule, Redirect, VercelConfig } from "@vercel/config/v1/types";
+
+import { securityHeaders } from "./security-headers.ts";
 
 const APP_BUILD = "bun --bun ../../scripts/vercel-build.ts";
+/** Install from monorepo root when Vercel Root Directory is `apps/<name>`. */
+const INSTALL_COMMAND = "cd ../.. && bun install --frozen-lockfile";
 const LEGAL_AWFIXER_BASE = "https://legal.awfixer.llc";
 
 /** Legal URL prefixes on satellite apps → same path on legal.awfixer.llc (`/legal` splat flattens). */
@@ -62,24 +66,31 @@ export function createAppVercelConfig(options: AppVercelOptions): VercelConfig {
 
   const crons = options.crons ? [{ path: "/api/cleanup", schedule: "0 0 * * *" }] : undefined;
 
+  const headers: HeaderRule[] = [
+    {
+      source: "/(.*)",
+      headers: [...securityHeaders],
+    },
+    routes.cacheControl("/static/(.*)", {
+      public: true,
+      maxAge: "1 week",
+      immutable: true,
+    }) as HeaderRule,
+  ];
+
   return {
     name: options.name,
     trailingSlash: false,
     cleanUrls: true,
+    bunVersion: "1.x",
     devCommand: "bun --bun run dev",
-    installCommand: "bun install",
+    installCommand: INSTALL_COMMAND,
     buildCommand: APP_BUILD,
     framework: "nextjs",
     fluid: true,
     rewrites: [],
     redirects,
-    headers: [
-      routes.cacheControl("/static/(.*)", {
-        public: true,
-        maxAge: "1 week",
-        immutable: true,
-      }),
-    ],
+    headers,
     ...(crons ? { crons } : {}),
   };
 }

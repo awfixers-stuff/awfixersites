@@ -32,6 +32,15 @@ function sanitizeInput(input: string): string {
     .replace(/on\w+=/gi, "");
 }
 
+function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as {
@@ -72,10 +81,10 @@ ${validatedData.tip}
       html: `
         <div style="font-family: monospace; line-height: 1.6; color: #333;">
           <h2 style="margin-top: 0;">New Tip Submission</h2>
-          <p><strong>Name:</strong> ${validatedData.name}</p>
-          ${validatedData.handle ? `<p><strong>X Handle:</strong> ${validatedData.handle}</p>` : ""}
+          <p><strong>Name:</strong> ${escapeHtml(validatedData.name)}</p>
+          ${validatedData.handle ? `<p><strong>X Handle:</strong> ${escapeHtml(validatedData.handle)}</p>` : ""}
           <h3>Tip:</h3>
-          <pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; overflow-x: auto;">${validatedData.tip}</pre>
+          <pre style="background: #f5f5f5; padding: 12px; border-radius: 4px; overflow-x: auto;">${escapeHtml(validatedData.tip)}</pre>
         </div>
       `,
     });
