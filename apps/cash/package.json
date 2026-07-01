@@ -70,9 +70,7 @@
     "tailwindcss": "catalog:",
     "tw-animate-css": "catalog:",
     "vercel": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
+    "zod": "catalog:",
     "@oxfmt/binding-linux-x64-gnu": "catalog:",
     "@oxlint/binding-linux-x64-gnu": "catalog:",
     "@rolldown/binding-linux-x64-gnu": "catalog:",
