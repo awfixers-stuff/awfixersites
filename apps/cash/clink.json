@@ -11,8 +11,5 @@
       "app": "cash"
     }
   },
-  "exclude": [
-    "mailto:*",
-    "tel:*"
-  ]
+  "exclude": ["mailto:*", "tel:*"]
 }

@@ -11,8 +11,5 @@
       "app": "donate"
     }
   },
-  "exclude": [
-    "mailto:*",
-    "tel:*"
-  ]
+  "exclude": ["mailto:*", "tel:*"]
 }

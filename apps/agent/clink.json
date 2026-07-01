@@ -11,8 +11,5 @@
       "app": "agent"
     }
   },
-  "exclude": [
-    "mailto:*",
-    "tel:*"
-  ]
+  "exclude": ["mailto:*", "tel:*"]
 }

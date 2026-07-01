@@ -11,8 +11,5 @@
       "app": "network"
     }
   },
-  "exclude": [
-    "mailto:*",
-    "tel:*"
-  ]
+  "exclude": ["mailto:*", "tel:*"]
 }

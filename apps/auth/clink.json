@@ -11,8 +11,5 @@
       "app": "auth"
     }
   },
-  "exclude": [
-    "mailto:*",
-    "tel:*"
-  ]
+  "exclude": ["mailto:*", "tel:*"]
 }

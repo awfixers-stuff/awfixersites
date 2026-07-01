@@ -1,0 +1,32 @@
+{
+  "name": "@awfixersites/security",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./arcjet": "./src/arcjet/index.ts",
+    "./arcjet/env": "./src/arcjet/env.ts",
+    "./arcjet/headers": "./src/arcjet/headers.ts",
+    "./arcjet/next": "./src/arcjet/next.ts",
+    "./client": "./src/client.ts",
+    "./middleware": "./src/middleware.ts"
+  },
+  "scripts": {
+    "lint": "oxlint -c ../../src/lint.json .",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts",
+    "lint:fix": "oxlint -c ../../src/lint.json . --fix"
+  },
+  "dependencies": {
+    "@arcjet/env": "catalog:",
+    "@arcjet/headers": "catalog:",
+    "@arcjet/next": "catalog:",
+    "arcjet": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:types",
+    "next": "catalog:nextjs",
+    "typescript": "catalog:checking"
+  }
+}

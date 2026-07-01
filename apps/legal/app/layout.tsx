@@ -71,7 +71,9 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="relative z-10 flex min-h-svh flex-col">
             <SiteHeader />
-            <main className="flex-1 pt-16"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></main>
+            <main className="flex-1 pt-16">
+              <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+            </main>
             <SiteFooter />
           </div>
         </ThemeProvider>

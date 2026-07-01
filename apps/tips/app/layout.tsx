@@ -49,7 +49,9 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
     >
       <body>
-        <ThemeProvider><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></ThemeProvider>
+        <ThemeProvider>
+          <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

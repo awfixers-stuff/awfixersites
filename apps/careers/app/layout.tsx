@@ -51,7 +51,9 @@ export default function RootLayout({
         <ThemeProvider>
           <SplashProvider>
             <SiteHeader />
-            <main className="min-h-svh pt-20"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></main>
+            <main className="min-h-svh pt-20">
+              <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+            </main>
             <SiteFooter />
           </SplashProvider>
         </ThemeProvider>

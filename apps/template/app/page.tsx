@@ -5,6 +5,7 @@ import { ArrowUpRight, Landmark, Layers3, LineChart, ShieldCheck } from "lucide-
 import { PortfolioGrid } from "@/components/portfolio-grid";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
+import { showPortfolioHighlight } from "@/lib/flags";
 import { portfolioCompanies } from "@/lib/portfolio";
 
 const tickerItems = [
@@ -50,7 +51,9 @@ const metrics = [
   { label: "Reach", value: "Multi-entity" },
 ] as const;
 
-export default function Page() {
+export default async function Page() {
+  const highlightPortfolio = await showPortfolioHighlight();
+
   return (
     <div className="flex flex-col">
       <section className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden px-6 py-24 lg:py-32">
@@ -198,7 +201,10 @@ export default function Page() {
 
       <section
         id="portfolio"
-        className="section-auto border-t border-glass-border px-6 py-24 lg:py-32"
+        className={cn(
+          "section-auto border-t border-glass-border px-6 py-24 lg:py-32",
+          highlightPortfolio && "bg-steel-muted/10",
+        )}
       >
         <div className="mx-auto max-w-[1200px]">
           <Reveal className="mb-14 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

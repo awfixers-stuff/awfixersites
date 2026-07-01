@@ -75,7 +75,11 @@ describe("resolveHref", () => {
   });
 
   it("does not override utm params the link already specifies", () => {
-    const result = resolveHref("https://example.com/page?utm_source=newsletter", baseConfig, ORIGIN);
+    const result = resolveHref(
+      "https://example.com/page?utm_source=newsletter",
+      baseConfig,
+      ORIGIN,
+    );
     const url = new URL(result.href);
     expect(url.searchParams.get("utm_source")).toBe("newsletter");
   });

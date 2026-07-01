@@ -1,0 +1,41 @@
+{
+  "name": "@awfixersites/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./chat": "./src/chat/index.ts",
+    "./chat/ai": "./src/chat/ai.ts",
+    "./flags": "./src/flags/index.ts",
+    "./flags/next": "./src/flags/next.ts",
+    "./flags/react": "./src/flags/react.ts",
+    "./streamdown": "./src/streamdown/index.ts",
+    "./streamdown/styles.css": "streamdown/styles.css",
+    "./workflow": "./src/workflow/index.ts",
+    "./workflow/next": "./src/workflow/next.ts",
+    "./next-config": "./src/next-config.ts"
+  },
+  "scripts": {
+    "lint": "oxlint -c ../../src/lint.json .",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts",
+    "lint:fix": "oxlint -c ../../src/lint.json . --fix"
+  },
+  "dependencies": {
+    "ai": "catalog:vercel",
+    "chat": "catalog:vercel",
+    "flags": "catalog:vercel",
+    "streamdown": "catalog:vercel",
+    "workflow": "catalog:vercel"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:types",
+    "@types/react": "catalog:types",
+    "@types/react-dom": "catalog:types",
+    "next": "catalog:nextjs",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "typescript": "catalog:checking"
+  }
+}

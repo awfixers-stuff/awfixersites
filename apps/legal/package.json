@@ -37,7 +37,6 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
-    "@types/mdx": "catalog:types",
     "@awfixersites/auth": "catalog:workspace",
     "@awfixersites/mdx": "catalog:workspace",
     "@awfixersites/telemetry": "catalog:workspace",
@@ -50,6 +49,7 @@
     "@tailwindcss/oxide-linux-x64-gnu": "catalog:css",
     "@tailwindcss/postcss": "catalog:css",
     "@tailwindcss/typography": "catalog:css",
+    "@types/mdx": "catalog:types",
     "@typescript/native-preview-linux-x64": "catalog:bindings",
     "@vercel/analytics": "catalog:vercel",
     "@vercel/speed-insights": "catalog:vercel",

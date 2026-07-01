@@ -44,7 +44,9 @@ export default function RootLayout({
           <SplashProvider>
             <div className="flex min-h-svh flex-col">
               <SiteHeader />
-              <div className="flex-1"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></div>
+              <div className="flex-1">
+                <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+              </div>
               <SiteFooter />
             </div>
           </SplashProvider>

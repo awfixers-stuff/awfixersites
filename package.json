@@ -51,6 +51,7 @@
     },
     "catalogs": {
       "auth": {
+        "@auth/core": "0.34.3",
         "@better-auth/passkey": "1.6.18",
         "better-auth": "1.6.18"
       },
@@ -152,7 +153,9 @@
         "@types/react-dom": "19.2.3"
       },
       "vercel": {
+        "@vercel/blob": "2.5.0",
         "@vercel/analytics": "2.0.1",
+        "@vercel/edge-config": "1.4.3",
         "@vercel/backends": "0.8.21",
         "@vercel/cervel": "0.1.29",
         "@vercel/config": "0.5.5",
@@ -204,7 +207,6 @@
     "vercel:checks:list": "bun scripts/vercel-deployment-check.ts --list"
   },
   "dependencies": {
-    "@auth/core": "0.34.3",
     "@socketsecurity/bun-security-scanner": "catalog:",
     "@typescript/native-preview": "catalog:checking",
     "@typescript/native-preview-linux-x64": "catalog:bindings",

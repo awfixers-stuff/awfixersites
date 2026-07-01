@@ -74,7 +74,9 @@ export default function RootLayout({
       <body
         className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <ErrorBoundary><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></ErrorBoundary>
+        <ErrorBoundary>
+          <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+        </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>

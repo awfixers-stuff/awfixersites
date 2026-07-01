@@ -40,7 +40,9 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, geist.variable)}
     >
       <body className="font-sans">
-        <ErrorBoundary><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></ErrorBoundary>
+        <ErrorBoundary>
+          <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+        </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>

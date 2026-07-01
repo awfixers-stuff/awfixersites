@@ -29,7 +29,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <ThemeProvider>
           <SiteHeader />
-          <main className="min-h-svh"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></main>
+          <main className="min-h-svh">
+            <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
+          </main>
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
