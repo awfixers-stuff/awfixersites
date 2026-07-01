@@ -1,6 +1,14 @@
 {
   "$schema": "../node_modules/oxlint/configuration_schema.json",
   "extends": ["./lint.json"],
+  "ignorePatterns": [
+    "scripts/**",
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/dist/**",
+    "**/generated/**",
+    "old-sites/**"
+  ],
   "jsPlugins": [
     "eslint-plugin-security",
     { "name": "no-secrets", "specifier": "eslint-plugin-no-secrets" },
