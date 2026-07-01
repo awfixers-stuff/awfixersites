@@ -1,0 +1,55 @@
+# CI install config — omits [install.security] so the Socket scanner does not
+# auto-install from npm and mutate bun.lock during --frozen-lockfile installs.
+
+[install]
+minimumReleaseAge = 259200
+minimumReleaseAgeExcludes = [
+  "@cloudflare/workers-types",
+  "lucide-react",
+  "@types/bun",
+  "typescript",
+  "motion",
+  "tailwindcss",
+  "@oxlint/binding-linux-x64-gnu",
+  "@oxlint-tsgolint/linux-x64",
+  "@oxfmt/binding-linux-x64-gnu",
+  "oxlint",
+  "oxlint-tsgolint",
+  "oxfmt",
+  "@tailwindcss/node",
+  "@tailwindcss/oxide",
+  "@tailwindcss/oxide-linux-x64-gnu",
+  "@next/swc-linux-x64-gnu",
+  "@rolldown/binding-linux-x64-gnu",
+  "lightningcss-linux-x64-gnu",
+  "@typescript/native-preview",
+  "@typescript/native-preview-linux-x64",
+  "@typescript/native-preview-darwin-x64",
+  "@typescript/native-preview-linux-arm64",
+  "@typescript/native-preview-darwin-arm64",
+  "@typescript/native-preview-linux-arm",
+  "@typescript/native-preview-win32-arm64",
+  "@typescript/native-preview-win32-x64",
+  "shadcn",
+  "resend",
+  "railway",
+  "framer-motion",
+  "motion-dom",
+  "vercel",
+  "@vercel/backends",
+  "@vercel/next",
+  "@vercel/container",
+  "@vercel/express",
+  "@vercel/cervel",
+  "@vercel/routing-utils",
+  "@vercel/analytics",
+  "@vercel/speed-insights",
+  "@vercel/config",
+]
+optional = false
+peer = false
+exact = true
+ignoreScripts = true
+auto = "disable"
+prefer = "offline"
+linkWorkspacePackages = true
