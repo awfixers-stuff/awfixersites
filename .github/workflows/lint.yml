@@ -16,7 +16,16 @@ jobs:
     outputs:
       workspaces: ${{ steps.list.outputs.workspaces }}
     steps:
-      - uses: ./.github/actions/checkout
+      # Local composite actions need the repo on disk first; bootstrap via shell.
+      - name: Bootstrap checkout
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth 1 origin "${GITHUB_SHA}"
+          git checkout FETCH_HEAD
 
       - name: List apps and packages
         id: list
@@ -29,7 +38,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: ./.github/actions/checkout
+      - name: Bootstrap checkout
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth 1 origin "${GITHUB_SHA}"
+          git checkout FETCH_HEAD
 
       - uses: ./.github/actions/setup-bun
         with:
@@ -51,7 +68,15 @@ jobs:
       matrix:
         workspace: ${{ fromJson(needs.discover-workspaces.outputs.workspaces) }}
     steps:
-      - uses: ./.github/actions/checkout
+      - name: Bootstrap checkout
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth 1 origin "${GITHUB_SHA}"
+          git checkout FETCH_HEAD
 
       - uses: ./.github/actions/setup-bun
         with:
