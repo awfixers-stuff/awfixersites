@@ -1,0 +1,81 @@
+name: Lint
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  discover-workspaces:
+    name: Discover workspaces
+    runs-on: ubuntu-latest
+    outputs:
+      workspaces: ${{ steps.list.outputs.workspaces }}
+    steps:
+      # Local composite actions need the repo on disk first; bootstrap via shell.
+      - name: Bootstrap checkout
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth 1 origin "${GITHUB_SHA}"
+          git checkout FETCH_HEAD
+
+      - name: List apps and packages
+        id: list
+        run: |
+          workspaces=$(find apps packages -mindepth 1 -maxdepth 1 -type d | sort | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "workspaces=$workspaces" >> "$GITHUB_OUTPUT"
+
+  lint-full:
+    name: Full repo
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Bootstrap checkout
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth 1 origin "${GITHUB_SHA}"
+          git checkout FETCH_HEAD
+
+      - uses: ./.github/actions/install
+
+      - name: Lint full repo
+        run: bun run lint:ci
+
+  lint-workspace:
+    name: ${{ matrix.workspace }}
+    needs: discover-workspaces
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace: ${{ fromJson(needs.discover-workspaces.outputs.workspaces) }}
+    steps:
+      - name: Bootstrap checkout
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth 1 origin "${GITHUB_SHA}"
+          git checkout FETCH_HEAD
+
+      - uses: ./.github/actions/install
+
+      - name: Lint workspace
+        run: |
+          bunx oxlint -c ./src/lint.json "${{ matrix.workspace }}" --no-error-on-unmatched-pattern
+          bunx oxlint -c ./src/lint.security.json "${{ matrix.workspace }}" --no-error-on-unmatched-pattern

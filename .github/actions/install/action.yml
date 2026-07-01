@@ -1,0 +1,19 @@
+name: Install dependencies
+description: Install workspace dependencies with a frozen Bun lockfile.
+
+inputs:
+  bun-version:
+    description: Bun release version used for install.
+    required: false
+    default: "1.3.14"
+
+runs:
+  using: composite
+  steps:
+    - uses: ./.github/actions/setup-bun
+      with:
+        bun-version: ${{ inputs.bun-version }}
+
+    - name: Install dependencies
+      shell: bash
+      run: bun install --frozen-lockfile

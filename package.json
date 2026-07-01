@@ -95,9 +95,14 @@
       "@typescript/native-preview-linux-x64": "7.0.0-dev.20260630.1",
       "@oxfmt/binding-linux-x64-gnu": "0.57.0",
       "@oxlint/binding-linux-x64-gnu": "1.72.0",
+      "@oxlint-tsgolint/linux-x64": "0.23.0",
       "@socketsecurity/bun-security-scanner": "1.1.2",
       "oxfmt": "0.57.0",
       "oxlint": "1.72.0",
+      "oxlint-tsgolint": "0.23.0",
+      "eslint-plugin-no-secrets": "2.3.3",
+      "eslint-plugin-security": "4.0.1",
+      "eslint-plugin-sonarjs": "4.1.0",
       "vitest": "4.1.9",
       "vitest-browser-react": "2.2.0"
     }
@@ -105,6 +110,9 @@
   "scripts": {
     "lint": "oxlint -c ./src/lint.json .",
     "lint:fix": "oxlint -c ./src/lint.json . --fix",
+    "lint:security": "oxlint -c ./src/lint.security.json apps packages src",
+    "lint:security:types": "oxlint -c ./src/lint.security.json apps packages src --type-aware -D typescript/no-unsafe-argument -D typescript/no-unsafe-assignment -D typescript/no-unsafe-call -D typescript/no-unsafe-member-access -D typescript/no-unsafe-return -D typescript/restrict-template-expressions",
+    "lint:ci": "bun --bun scripts/lint-all.ts",
     "format": "oxfmt -c ./src/fmt.json . --write",
     "typecheck": "bun --bun scripts/typecheck-all.ts",
     "typecheck:src": "tsgo -p ./src/tsconfig.json --noEmit --pretty",
@@ -124,6 +132,7 @@
   "devDependencies": {
     "@oxfmt/binding-linux-x64-gnu": "catalog:",
     "@oxlint/binding-linux-x64-gnu": "catalog:",
+    "@oxlint-tsgolint/linux-x64": "catalog:",
     "@rolldown/binding-linux-x64-gnu": "catalog:",
     "@socketsecurity/bun-security-scanner": "catalog:",
     "@types/bun": "catalog:",
@@ -134,8 +143,12 @@
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
     "@vitest/utils": "catalog:",
+    "eslint-plugin-no-secrets": "catalog:",
+    "eslint-plugin-security": "catalog:",
+    "eslint-plugin-sonarjs": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
     "vitest": "catalog:",
     "vitest-browser-react": "catalog:"
   },
