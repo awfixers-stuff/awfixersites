@@ -20,11 +20,7 @@ export const clinkConfigSchema = z.object({
 
 export type ClinkConfig = z.infer<typeof clinkConfigSchema>;
 
-export const CLINK_SAFE_DEFAULT: ClinkConfig = {
-  network: [],
-  click: { event: "link_clicked", properties: {} },
-  exclude: [],
-};
+export const CLINK_SAFE_DEFAULT: ClinkConfig = clinkConfigSchema.parse({});
 
 export function parseClinkConfig(input: unknown): ClinkConfig {
   return clinkConfigSchema.parse(input);
