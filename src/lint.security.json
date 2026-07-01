@@ -1,0 +1,32 @@
+{
+  "$schema": "../node_modules/oxlint/configuration_schema.json",
+  "extends": ["./lint.json"],
+  "jsPlugins": [
+    "eslint-plugin-security",
+    { "name": "no-secrets", "specifier": "eslint-plugin-no-secrets" },
+    "eslint-plugin-sonarjs"
+  ],
+  "rules": {
+    "security/detect-bidi-characters": "error",
+    "security/detect-buffer-noassert": "error",
+    "security/detect-child-process": "error",
+    "security/detect-disable-mustache-escape": "error",
+    "security/detect-eval-with-expression": "error",
+    "security/detect-new-buffer": "error",
+    "security/detect-no-csrf-before-method-override": "error",
+    "security/detect-non-literal-fs-filename": "error",
+    "security/detect-non-literal-regexp": "warn",
+    "security/detect-non-literal-require": "error",
+    "security/detect-object-injection": "warn",
+    "security/detect-possible-timing-attacks": "warn",
+    "security/detect-pseudoRandomBytes": "error",
+    "security/detect-unsafe-regex": "error",
+    "no-secrets/no-secrets": "error",
+    "sonarjs/code-eval": "error",
+    "sonarjs/hardcoded-secret-signatures": "error",
+    "sonarjs/insecure-cookie": "error",
+    "sonarjs/insecure-jwt-token": "error",
+    "sonarjs/no-hardcoded-passwords": "error",
+    "sonarjs/no-hardcoded-secrets": "error"
+  }
+}

@@ -1,20 +1,37 @@
 {
   "$schema": "../node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "react",
+    "node",
+    "promise"
+  ],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
     "perf": "warn"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "node": true
   },
   "rules": {
     "no-debugger": "error",
     "no-eval": "error",
     "no-implied-eval": "error",
     "no-new-func": "error",
-    "import/no-unassigned-import": "off"
-  },
-  "env": {
-    "builtin": true
+    "no-script-url": "error",
+    "import/no-cycle": "error",
+    "import/no-unassigned-import": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/no-danger": "error",
+    "react/no-danger-with-children": "error",
+    "react/jsx-no-target-blank": "error",
+    "node/no-process-env": "warn"
   },
   "ignorePatterns": [
     "scripts/**",
