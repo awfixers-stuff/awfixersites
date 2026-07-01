@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@awfixersites/auth": "catalog:workspace",
+    "@awfixersites/telemetry": "catalog:workspace",
     "class-variance-authority": "catalog:css",
     "clsx": "catalog:css",
     "lucide-react": "catalog:react",
