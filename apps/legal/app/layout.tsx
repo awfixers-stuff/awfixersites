@@ -28,16 +28,14 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AWFixer LLC",
-  description:
-    "AWFixer LLC is the management, administration, and oversight division of AWFixer's Church and church-owned organizations and businesses.",
-  metadataBase: new URL("https://awfixer.llc"),
+  title: "AWFixer Legal",
+  description: "Canonical privacy, terms, and legal disclosures for AWFixer properties.",
+  metadataBase: new URL("https://legal.awfixer.llc"),
   openGraph: {
-    title: "AWFixer LLC",
-    description:
-      "Management, administration, and oversight for AWFixer's Church and the organizations it stewards.",
-    url: "https://awfixer.llc",
-    siteName: "AWFixer LLC",
+    title: "AWFixer Legal",
+    description: "Policies and legal disclosures for the AWFixer ecosystem.",
+    url: "https://legal.awfixer.llc",
+    siteName: "AWFixer Legal",
     locale: "en_US",
     type: "website",
   },

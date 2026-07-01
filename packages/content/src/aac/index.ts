@@ -89,7 +89,7 @@ export function hasAacContent(slug: string): slug is AacSlug {
 }
 
 export function getAdjacentAacArticles(slug: string) {
-  const ordered = [...aacArticles].sort((a, b) => a.order - b.order);
+  const ordered = [...aacArticles].toSorted((a, b) => a.order - b.order);
   const index = ordered.findIndex((article) => article.slug === slug);
   if (index === -1) return { previous: undefined, next: undefined };
 

@@ -18,6 +18,12 @@
     "./enlist": "./src/enlist/index.ts",
     "./enlist/*": "./src/enlist/*"
   },
+  "scripts": {
+    "lint": "oxlint -c ../../src/lint.json . --fix",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts"
+  },
   "dependencies": {
     "@awfixersites/auth": "catalog:",
     "class-variance-authority": "catalog:",
@@ -32,12 +38,6 @@
     "tailwind-merge": "catalog:",
     "tw-animate-css": "catalog:",
     "zod": "catalog:"
-  },
-  "scripts": {
-    "lint": "oxlint -c ../../src/lint.json . --fix",
-    "format": "oxfmt -c ../../src/fmt.json . --check",
-    "typecheck": "tsgo -p tsconfig.json --noEmit",
-    "test": "vitest -c vitest.config.ts"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",

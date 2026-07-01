@@ -3,7 +3,6 @@
  * App build: load root `.env.local`, generate Prisma clients for depended workspace packages, then `next build`.
  * Invoked from each app's `build` script.
  */
-import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 

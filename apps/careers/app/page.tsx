@@ -1,258 +1,246 @@
 "use client";
 
+import { motion } from "motion/react";
 import Link from "next/link";
-import { ArrowUpRight, Landmark, Layers3, LineChart, ShieldCheck } from "lucide-react";
-import { PortfolioGrid } from "@/components/portfolio-grid";
-import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
-import { portfolioCompanies } from "@/lib/portfolio";
+import { GraduationCap, Shield, Briefcase, Newspaper, Heart, UserCircle } from "lucide-react";
 
-const tickerItems = [
-  "Oversight",
-  "Administration",
-  "Governance",
-  "Operations",
-  "Compliance",
-  "Stewardship",
-  "Infrastructure",
-  "Continuity",
-] as const;
+interface Arm {
+  name: string;
+  description: string;
+  icon: React.ReactNode;
+  href?: string;
+}
 
-const pillars = [
+const arms: Arm[] = [
   {
-    title: "Mandate",
-    body: "We hold the line between mission and machinery — so every arm of the Church can move without losing its center.",
-    icon: Landmark,
+    name: "AWFixer Academy",
+    description:
+      "Education and training — equipping minds with the tools to think clearly, act decisively, and build.",
+    icon: <GraduationCap className="w-5 h-5" />,
   },
   {
-    title: "Oversight",
-    body: "Structured review, clear accountability, and reporting that leadership can act on — not noise.",
-    icon: ShieldCheck,
+    name: "AWFixer Army",
+    description: "The disciplined body that puts principle into action. Enlist. Train. Serve.",
+    icon: <Shield className="w-5 h-5" />,
+    href: "https://awfixer.army",
   },
   {
-    title: "Operations",
-    body: "Finance, legal coordination, vendor management, and the unglamorous work that keeps institutions durable.",
-    icon: Layers3,
+    name: "AWFixer LLC",
+    description:
+      "A separate entity providing management, operations, and administrative support across all related organizations.",
+    icon: <Briefcase className="w-5 h-5" />,
   },
   {
-    title: "Scale",
-    body: "Systems that grow with the portfolio: repeatable process, measured risk, and room to flex when it counts.",
-    icon: LineChart,
+    name: "AWFixer News",
+    description:
+      "Independent journalism covering stories that matter — without the filter of corporate or state interests.",
+    icon: <Newspaper className="w-5 h-5" />,
   },
-] as const;
+  {
+    name: "AWFixer Health",
+    description:
+      "Health and wellness initiatives advancing physical, mental, and spiritual vitality.",
+    icon: <Heart className="w-5 h-5" />,
+  },
+];
 
-const homePortfolio = portfolioCompanies.slice(0, 4);
-
-const metrics = [
-  { label: "Function", value: "Management" },
-  { label: "Scope", value: "Church + orgs" },
-  { label: "Posture", value: "Oversight-first" },
-  { label: "Reach", value: "Multi-entity" },
-] as const;
-
-export default function Page() {
+export default function CareersPage() {
   return (
     <div className="flex flex-col">
-      <section className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center overflow-hidden px-6 py-24 lg:py-32">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-steel-muted/20 via-transparent to-transparent" />
+      {/* ============================================================ */}
+      {/* Page header                                                 */}
+      {/* ============================================================ */}
+      <section className="relative px-6 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bleach/30 to-transparent pointer-events-none" />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col gap-12">
-          <Reveal immediate delay={0}>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-full border border-glass-border bg-glass px-3 py-1 font-mono text-[10px] tracking-[0.35em] text-steel-bright uppercase backdrop-blur-sm">
-                Administrative division
-              </span>
-              <span className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground uppercase">
-                AWFixer Church ecosystem
-              </span>
+        <div className="relative z-10 max-w-[800px] mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              type: "spring",
+              stiffness: 180,
+              damping: 24,
+              mass: 0.8,
+            }}
+          >
+            <div className="mb-4 inline-flex items-center gap-2 text-xs font-mono text-foreground/40 uppercase tracking-widest">
+              <span className="w-6 h-px bg-foreground/20" />
+              Careers
             </div>
-          </Reveal>
 
-          <Reveal immediate delay={0.08}>
-            <h1 className="max-w-4xl font-display text-4xl leading-[1.05] text-off-white sm:text-5xl lg:text-7xl">
-              The steel behind
-              <span className="block text-steel-bright">the mission.</span>
-            </h1>
-          </Reveal>
+            <h1 className="text-4xl lg:text-5xl font-display leading-tight mb-6">Work with us</h1>
 
-          <Reveal immediate delay={0.16}>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              AWFixer LLC is the management, administration, and oversight division of
-              AWFixer&apos;s Church and church-owned organizations and businesses. We run the
-              backbone — so the work in front of the world stays sharp.
+            <p className="text-lg text-foreground/60 leading-relaxed max-w-lg mx-auto">
+              The question needs builders. Whether you&rsquo;re called to serve the church directly
+              or through one of its allied arms, there&rsquo;s a place for you.
             </p>
-          </Reveal>
+          </motion.div>
+        </div>
+      </section>
 
-          <Reveal immediate delay={0.24}>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Link
-                href="#mandate"
-                className="inline-flex items-center justify-center rounded-full border border-off-white/20 bg-off-white px-8 py-3.5 text-xs font-mono tracking-[0.2em] text-primary-foreground uppercase transition-transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                Read the mandate
-              </Link>
-              <Link
-                href="https://awfixer.church"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-glass-border px-8 py-3.5 text-xs font-mono tracking-[0.2em] text-off-white uppercase backdrop-blur-sm transition-colors hover:border-steel-bright/40"
-              >
-                The Church
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
+      {/* ============================================================ */}
+      {/* Church positions                                            */}
+      {/* ============================================================ */}
+      <section className="px-6 py-28 lg:py-36 border-t border-glass-border section-auto">
+        <div className="max-w-[800px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="mb-4 inline-flex items-center gap-2 text-xs font-mono text-foreground/40 uppercase tracking-widest">
+              <span className="w-6 h-px bg-foreground/20" />
+              The Church
             </div>
-          </Reveal>
 
-          <Reveal immediate delay={0.32}>
-            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-glass-border bg-glass-border sm:grid-cols-4">
-              {metrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="flex flex-col gap-1 bg-background/60 px-5 py-4 backdrop-blur-sm"
-                >
-                  <span className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
-                    {m.label}
+            <h2 className="text-3xl lg:text-4xl font-display leading-tight mb-6">
+              Join the mission directly
+            </h2>
+
+            <p className="text-foreground/60 leading-relaxed mb-8">
+              Open positions at AWFixer&rsquo;s Church will be listed here as they become available.
+              We are always looking for people who are gripped by the question and ready to put
+              their talents to work building something that lasts.
+            </p>
+
+            <div className="rounded-2xl border border-glass-border bg-glass backdrop-blur-sm p-8 text-center">
+              <p className="text-foreground/40 font-mono text-sm">
+                No open positions at this time. Check back soon.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* Arms of the movement                                        */}
+      {/* ============================================================ */}
+      <section className="px-6 py-28 lg:py-36 border-t border-glass-border bg-bleach/30 section-auto">
+        <div className="max-w-[1000px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="mb-4 inline-flex items-center gap-2 text-xs font-mono text-foreground/40 uppercase tracking-widest">
+              <span className="w-6 h-px bg-foreground/20" />
+              Arms of the Movement
+            </div>
+
+            <h2 className="text-3xl lg:text-4xl font-display leading-tight mb-4">
+              Serve through an allied organization
+            </h2>
+
+            <p className="text-foreground/60 leading-relaxed max-w-xl mx-auto">
+              If the church is not the right fit, one of its associated arms may be. Each advances
+              the same question through a different discipline.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {arms.map((arm, i) => (
+              <motion.div
+                key={arm.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{
+                  delay: 0.1 + i * 0.08,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 24,
+                }}
+                className={cn(
+                  "group relative flex flex-col gap-3 rounded-2xl border border-glass-border bg-glass backdrop-blur-sm p-7",
+                  "hover:border-foreground/20 transition-all duration-300 container-glow",
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-foreground/5 text-foreground/60 group-hover:text-foreground/80 transition-colors">
+                    {arm.icon}
                   </span>
-                  <span className="font-display text-sm text-off-white sm:text-base">
-                    {m.value}
+                  <span className="text-sm font-mono tracking-tight text-foreground/80 group-hover:text-foreground transition-colors">
+                    {arm.name}
                   </span>
                 </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-
-        <div className="relative z-10 mt-16 overflow-hidden border-y border-glass-border py-4">
-          <div className="ticker-track gap-12 px-6 font-mono text-[11px] tracking-[0.3em] text-muted-foreground/90 uppercase">
-            {[...tickerItems, ...tickerItems].map((item, i) => (
-              <span key={`${item}-${i}`} className="flex shrink-0 items-center gap-12">
-                {item}
-                <span className="h-1 w-1 rounded-full bg-steel-bright/60" aria-hidden />
-              </span>
+                <p className="text-sm text-foreground/50 leading-relaxed">{arm.description}</p>
+                {arm.href && (
+                  <span className="text-xs text-foreground/30 font-mono">Opens in new tab</span>
+                )}
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section
-        id="mandate"
-        className="section-auto border-t border-glass-border px-6 py-24 lg:py-32"
-      >
-        <div className="mx-auto grid max-w-[1200px] gap-16 lg:grid-cols-2 lg:gap-24">
-          <Reveal>
-            <p className="mb-4 font-mono text-[10px] tracking-[0.4em] text-muted-foreground uppercase">
-              Mandate
-            </p>
-            <h2 className="font-display text-3xl leading-tight text-off-white lg:text-4xl">
-              Administration is not an afterthought. It is the frame.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
-              <p>
-                Institutions that matter need more than vision — they need custody. AWFixer LLC
-                exists to steward legal entities, operational cadence, and executive visibility
-                across the Church and the businesses it owns.
-              </p>
-              <p>
-                This site is deliberate posture: dark steel, clear lines, motion with restraint.
-                Performance is part of the flex — nothing here should tax the machine that runs it.
-              </p>
+      {/* ============================================================ */}
+      {/* Personal staff                                              */}
+      {/* ============================================================ */}
+      <section className="px-6 py-28 lg:py-36 border-t border-glass-border section-auto">
+        <div className="max-w-[800px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="mb-4 inline-flex items-center gap-2 text-xs font-mono text-foreground/40 uppercase tracking-widest">
+              <span className="w-6 h-px bg-foreground/20" />
+              Personal Staff
             </div>
-          </Reveal>
+
+            <h2 className="text-3xl lg:text-4xl font-display leading-tight mb-6">
+              Work directly with AWFixer
+            </h2>
+
+            <p className="text-foreground/60 leading-relaxed">
+              Occasionally, positions on the personal staff of AWFixer open up. These roles are rare
+              and are reserved for individuals who have prior experience working at one of the
+              organizations above. When such opportunities arise, they will be listed here.
+            </p>
+
+            <div className="mt-8 flex items-center gap-4 text-sm text-foreground/40">
+              <UserCircle className="w-5 h-5 shrink-0" />
+              <span>No personal staff positions open at this time.</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      <section
-        id="oversight"
-        className="section-auto border-t border-glass-border px-6 py-24 lg:py-32"
-      >
-        <div className="mx-auto max-w-[1200px]">
-          <Reveal className="mb-14 max-w-2xl">
-            <p className="mb-4 font-mono text-[10px] tracking-[0.4em] text-muted-foreground uppercase">
-              Oversight
-            </p>
-            <h2 className="font-display text-3xl text-off-white lg:text-4xl">
-              Four load-bearing pillars
+      {/* ============================================================ */}
+      {/* Bottom CTA — back to the question                           */}
+      {/* ============================================================ */}
+      <section className="px-6 pb-28 lg:pb-36 border-t border-glass-border bg-bleach/30 section-auto">
+        <div className="max-w-[800px] mx-auto text-center pt-20 lg:pt-28">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ type: "spring", stiffness: 180, damping: 24 }}
+          >
+            <h2 className="text-2xl lg:text-3xl font-display leading-tight mb-6">
+              The question is the work
             </h2>
-          </Reveal>
-
-          <div className="grid gap-5 sm:grid-cols-2">
-            {pillars.map((pillar, i) => (
-              <Reveal key={pillar.title} delay={0.06 * i}>
-                <article
-                  className={cn(
-                    "panel-steel group flex h-full flex-col gap-4 rounded-2xl p-8 transition-transform duration-300 hover:-translate-y-0.5",
-                  )}
-                >
-                  <pillar.icon className="h-5 w-5 text-steel-bright" strokeWidth={1.5} />
-                  <h3 className="font-display text-xl text-off-white">{pillar.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{pillar.body}</p>
-                  <div className="stat-line mt-auto w-full opacity-60" />
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="portfolio"
-        className="section-auto border-t border-glass-border px-6 py-24 lg:py-32"
-      >
-        <div className="mx-auto max-w-[1200px]">
-          <Reveal className="mb-14 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="mb-4 font-mono text-[10px] tracking-[0.4em] text-muted-foreground uppercase">
-                Portfolio
-              </p>
-              <h2 className="font-display text-3xl text-off-white lg:text-4xl">
-                Entities under the same roof
-              </h2>
-            </div>
-            <p className="max-w-md text-sm text-muted-foreground">
-              Select arms of the ecosystem. LLC provides the connective tissue — not the pulpit, not
-              the product, but the governance that lets both breathe.
+            <p className="text-foreground/60 leading-relaxed mb-8 max-w-md mx-auto">
+              Whether you join the church, one of its arms, or carry the question into your own
+              field — the work begins wherever you are.
             </p>
-          </Reveal>
 
-          <PortfolioGrid companies={homePortfolio} />
-
-          <Reveal className="mt-12 text-center">
             <Link
-              href="/portfolio"
-              className="inline-flex items-center gap-2 rounded-full border border-glass-border px-8 py-3.5 font-mono text-xs tracking-[0.2em] text-off-white uppercase transition-colors hover:border-steel-bright/40"
+              href="https://awfixer.church"
+              className={cn(
+                "inline-flex items-center justify-center rounded-full h-12 px-8 text-sm font-medium",
+                "border border-foreground/20 text-foreground/80 hover:bg-foreground/5 transition-colors btn-glow",
+              )}
             >
-              Full portfolio
-              <ArrowUpRight className="h-4 w-4" />
+              Back to the question
             </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      <section
-        id="contact"
-        className="section-auto border-t border-glass-border px-6 py-24 lg:py-32"
-      >
-        <div className="mx-auto max-w-[900px] text-center">
-          <Reveal>
-            <p className="mb-4 font-mono text-[10px] tracking-[0.4em] text-muted-foreground uppercase">
-              Contact
-            </p>
-            <h2 className="mb-6 font-display text-3xl text-off-white lg:text-5xl">
-              Serious inquiries only.
-            </h2>
-            <p className="mx-auto mb-10 max-w-lg text-muted-foreground">
-              For governance, partnership, or administrative matters across AWFixer entities.
-            </p>
-            <a
-              href="mailto:developers@awfixer.llc"
-              className="inline-flex items-center gap-2 rounded-full border border-steel-bright/35 bg-steel-muted/30 px-10 py-4 font-mono text-xs tracking-[0.25em] text-off-white uppercase backdrop-blur-sm transition-transform hover:scale-[1.02]"
-            >
-              developers@awfixer.llc
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-          </Reveal>
+          </motion.div>
         </div>
       </section>
     </div>

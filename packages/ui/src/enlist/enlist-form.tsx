@@ -151,13 +151,6 @@ export function EnlistForm({ onCancel, onSuccess, onSubmit }: EnlistFormProps) {
     setErrors((current) => ({ ...current, [key]: undefined }));
   }
 
-  function checkRejection(nextValues: EnlistFormDraft, stepId: StepId): RejectionReason | null {
-    if (stepId === "age" || stepId === "screening") {
-      return getRejectionReason(nextValues);
-    }
-    return null;
-  }
-
   function goNext() {
     const stepErrors = validateStep(currentStepId, values);
     if (Object.keys(stepErrors).length > 0) {
@@ -165,7 +158,8 @@ export function EnlistForm({ onCancel, onSuccess, onSubmit }: EnlistFormProps) {
       return;
     }
 
-    const rejectionReason = checkRejection(values, currentStepId);
+    const rejectionReason =
+      currentStepId === "age" || currentStepId === "screening" ? getRejectionReason(values) : null;
     if (rejectionReason) {
       setRejection(rejectionReason);
       return;

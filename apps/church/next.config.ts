@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/jobs",
-        destination: "/careers",
+        destination: "https://careers.awfixer.llc",
         permanent: true,
       },
       {

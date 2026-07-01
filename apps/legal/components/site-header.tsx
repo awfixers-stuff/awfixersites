@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 import { AWFIXER_X_URL } from "@/lib/portfolio";
 
 const navLinks = [
-  { name: "Mandate", href: "/#mandate" },
-  { name: "Oversight", href: "/#oversight" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Contact", href: "/#contact" },
+  { name: "Overview", href: "/" },
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
+  { name: "Disclosures", href: "/legal" },
 ] as const;
 
 export function SiteHeader() {
@@ -50,7 +50,7 @@ export function SiteHeader() {
             AWFixer
           </span>
           <span className="font-mono text-[10px] tracking-[0.35em] text-muted-foreground uppercase">
-            LLC
+            Legal
           </span>
         </Link>
 

@@ -81,7 +81,7 @@ export const portfolioCompanies: PortfolioCompany[] = [
     name: "AWFixer Academy",
     description: "Education and training — equipping minds to think clearly and build.",
     role: "Education",
-    href: "https://awfixer.church/careers",
+    href: "https://careers.awfixer.llc",
     icon: GraduationCap,
     external: true,
   },

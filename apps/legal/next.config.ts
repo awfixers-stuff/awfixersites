@@ -1,7 +1,5 @@
-import type { NextConfig } from "next";
+import { withMdx } from "@awfixersites/mdx/next";
 
-const nextConfig: NextConfig = {
+export default withMdx({
   transpilePackages: ["@awfixersites/ui"],
-};
-
-export default nextConfig;
+});

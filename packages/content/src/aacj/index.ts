@@ -89,7 +89,7 @@ export function hasAacjContent(slug: string): slug is AacjSlug {
 }
 
 export function getAdjacentAacjArticles(slug: string) {
-  const ordered = [...aacjArticles].sort((a, b) => a.order - b.order);
+  const ordered = [...aacjArticles].toSorted((a, b) => a.order - b.order);
   const index = ordered.findIndex((article) => article.slug === slug);
   if (index === -1) return { previous: undefined, next: undefined };
 

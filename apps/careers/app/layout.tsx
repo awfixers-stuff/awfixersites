@@ -1,52 +1,34 @@
-import { Geist, IBM_Plex_Mono, Syne } from "next/font/google";
-import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SteelBackdrop } from "@/components/steel-backdrop";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
-const geist = Geist({
+const fontMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
-  title: "AWFixer LLC",
+  title: "Careers | AWFixer",
   description:
-    "AWFixer LLC is the management, administration, and oversight division of AWFixer's Church and church-owned organizations and businesses.",
-  metadataBase: new URL("https://awfixer.llc"),
+    "Work with AWFixer's Church and its allied organizations — church roles, movement arms, and personal staff opportunities.",
+  metadataBase: new URL("https://careers.awfixer.llc"),
   openGraph: {
-    title: "AWFixer LLC",
+    title: "Careers | AWFixer",
     description:
-      "Management, administration, and oversight for AWFixer's Church and the organizations it stewards.",
-    url: "https://awfixer.llc",
-    siteName: "AWFixer LLC",
+      "Join the mission directly or serve through an allied organization across the AWFixer ecosystem.",
+    url: "https://careers.awfixer.llc",
+    siteName: "AWFixer Careers",
     locale: "en_US",
     type: "website",
   },
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#14161a",
 };
 
 export default function RootLayout({
@@ -57,23 +39,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(
-        "dark antialiased",
-        geist.variable,
-        syne.variable,
-        plexMono.variable,
-        "font-sans",
-      )}
       suppressHydrationWarning
+      className={cn("dark antialiased", fontMono.variable, "font-sans", geist.variable)}
     >
-      <body className="relative min-h-svh">
-        <SteelBackdrop />
+      <body>
         <ThemeProvider>
-          <div className="relative z-10 flex min-h-svh flex-col">
-            <SiteHeader />
-            <main className="flex-1 pt-16">{children}</main>
-            <SiteFooter />
-          </div>
+          <SiteHeader />
+          <main className="min-h-svh pt-20">{children}</main>
+          <SiteFooter />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

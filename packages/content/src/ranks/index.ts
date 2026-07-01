@@ -93,7 +93,9 @@ export function hasRankContent(slug: string): slug is RankSlug {
 }
 
 export function getAdjacentRanks(slug: string) {
-  const ordered = [...ranks].sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+  const ordered = [...ranks].toSorted(
+    (a, b) => a.order - b.order || a.title.localeCompare(b.title),
+  );
   const index = ordered.findIndex((rank) => rank.slug === slug);
   if (index === -1) return { previous: undefined, next: undefined };
 

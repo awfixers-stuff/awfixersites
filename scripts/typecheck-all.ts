@@ -19,7 +19,7 @@ const workspaceRoots = [...listWorkspaces("apps"), ...listWorkspaces("packages")
 
 const failures: string[] = [];
 
-for (const rel of workspaceRoots.sort()) {
+for (const rel of workspaceRoots.toSorted()) {
   const dir = resolve(repoRoot, rel);
   const tsconfig = resolve(dir, "tsconfig.json");
   if (!existsSync(tsconfig)) continue;
