@@ -75,4 +75,21 @@ describe("track", () => {
     registerProvider({ name: "a" });
     expect(getDistinctId()).toBeUndefined();
   });
+
+  it("getDistinctId one provider throwing does not stop the others", () => {
+    const failing = {
+      name: "failing",
+      getDistinctId: vi.fn(() => {
+        throw new Error("boom");
+      }),
+    } satisfies TelemetryProvider;
+    const ok = {
+      name: "ok",
+      getDistinctId: vi.fn(() => "valid-id"),
+    } satisfies TelemetryProvider;
+    registerProvider(failing);
+    registerProvider(ok);
+    expect(() => getDistinctId()).not.toThrow();
+    expect(getDistinctId()).toBe("valid-id");
+  });
 });

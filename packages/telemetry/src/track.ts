@@ -41,8 +41,14 @@ export function captureError(error: unknown, context?: Record<string, unknown>):
 
 export function getDistinctId(): string | undefined {
   for (const provider of getActiveProviders()) {
-    const id = provider.getDistinctId?.();
-    if (id) return id;
+    try {
+      const id = provider.getDistinctId?.();
+      if (id) return id;
+    } catch (error) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error(`[telemetry] ${provider.name}.getDistinctId failed`, error);
+      }
+    }
   }
   return undefined;
 }
