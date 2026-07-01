@@ -3,7 +3,7 @@ import { NavLink } from "@/components/nav-link";
 import { aacArticles } from "@awfixersites/content/aac";
 import { cn } from "@awfixersites/ui/lib/utils";
 
-const orderedArticles = [...aacArticles].sort((a, b) => a.order - b.order);
+const orderedArticles = [...aacArticles].toSorted((a, b) => a.order - b.order);
 
 export default function AacPage() {
   return (

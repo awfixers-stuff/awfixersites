@@ -3,7 +3,9 @@ import { NavLink } from "@/components/nav-link";
 import { ranks } from "@awfixersites/content/ranks";
 import { cn } from "@awfixersites/ui/lib/utils";
 
-const orderedRanks = [...ranks].sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+const orderedRanks = [...ranks].toSorted(
+  (a, b) => a.order - b.order || a.title.localeCompare(b.title),
+);
 
 export default function RanksPage() {
   return (

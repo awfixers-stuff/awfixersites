@@ -3,7 +3,7 @@ import { NavLink } from "@/components/nav-link";
 import { aacjArticles } from "@awfixersites/content/aacj";
 import { cn } from "@awfixersites/ui/lib/utils";
 
-const orderedArticles = [...aacjArticles].sort((a, b) => a.order - b.order);
+const orderedArticles = [...aacjArticles].toSorted((a, b) => a.order - b.order);
 
 export default function AacjPage() {
   return (

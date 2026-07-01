@@ -3,15 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import {
-  Building2,
-  GraduationCap,
-  Shield,
-  Briefcase,
-  Newspaper,
-  Heart,
-  UserCircle,
-} from "lucide-react";
+import { GraduationCap, Shield, Briefcase, Newspaper, Heart, UserCircle } from "lucide-react";
 
 interface Arm {
   name: string;
@@ -66,7 +58,12 @@ export default function CareersPage() {
           <motion.div
             initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ type: "spring", stiffness: 180, damping: 24, mass: 0.8 }}
+            transition={{
+              type: "spring",
+              stiffness: 180,
+              damping: 24,
+              mass: 0.8,
+            }}
           >
             <div className="mb-4 inline-flex items-center gap-2 text-xs font-mono text-foreground/40 uppercase tracking-widest">
               <span className="w-6 h-px bg-foreground/20" />
@@ -152,7 +149,12 @@ export default function CareersPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: 0.1 + i * 0.08, type: "spring", stiffness: 200, damping: 24 }}
+                transition={{
+                  delay: 0.1 + i * 0.08,
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 24,
+                }}
                 className={cn(
                   "group relative flex flex-col gap-3 rounded-2xl border border-glass-border bg-glass backdrop-blur-sm p-7",
                   "hover:border-foreground/20 transition-all duration-300 container-glow",

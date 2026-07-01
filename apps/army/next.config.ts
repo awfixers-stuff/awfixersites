@@ -1,4 +1,3 @@
-import type { NextConfig } from "next";
 import { withMdx } from "@awfixersites/mdx/next";
 
 export default withMdx({
