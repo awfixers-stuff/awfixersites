@@ -23,11 +23,8 @@ describe("getAccountSetupRedirect", () => {
 });
 
 describe("resolveUserRole", () => {
-  it("promotes configured admin usernames", () => {
-    const previous = process.env.AUTH_ADMIN_USERNAMES;
-    process.env.AUTH_ADMIN_USERNAMES = "awfixer,ops";
-    expect(resolveUserRole("awfixer")).toBe("admin");
+  it("always returns user at account creation", () => {
+    expect(resolveUserRole("awfixer")).toBe("user");
     expect(resolveUserRole("guest")).toBe("user");
-    process.env.AUTH_ADMIN_USERNAMES = previous;
   });
 });

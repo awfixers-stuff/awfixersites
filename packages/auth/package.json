@@ -9,6 +9,9 @@
     "./client": "./src/client.ts",
     "./next-js": "./src/next-js.ts",
     "./auth-api-route": "./src/auth-api-route.ts",
+    "./botid-client": "./src/botid-client.ts",
+    "./botid-protect": "./src/botid-protect.ts",
+    "./botid-server": "./src/botid-server.ts",
     "./prisma": "./src/prisma.ts",
     "./session": "./src/session.ts",
     "./server-session": "./src/server-session.ts",
@@ -30,15 +33,18 @@
     "format": "oxfmt -c ../../src/fmt.json . --check",
     "typecheck": "tsgo -p tsconfig.json --noEmit",
     "test": "vitest -c vitest.config.ts",
+    "promote-admins": "bun run scripts/promote-admins.ts",
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
     "@awfixersites/env": "catalog:workspace",
     "@better-auth/passkey": "catalog:auth",
+    "@better-auth/utils": "0.4.1",
     "@prisma/adapter-pg": "catalog:database",
     "@prisma/client": "catalog:database",
     "@prisma/client-runtime-utils": "catalog:database",
     "better-auth": "catalog:auth",
+    "botid": "1.5.11",
     "pg": "catalog:database"
   },
   "devDependencies": {

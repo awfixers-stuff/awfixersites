@@ -27,6 +27,7 @@
 ## Task 1: Scaffold `@awfixersites/telemetry` + provider types + pixel stub
 
 **Files:**
+
 - Create: `packages/telemetry/package.json`
 - Create: `packages/telemetry/tsconfig.json`
 - Create: `packages/telemetry/vitest.config.ts`
@@ -35,6 +36,7 @@
 - Modify: `package.json:93-100` (add `@awfixersites/telemetry` to the `workspace` catalog)
 
 **Interfaces:**
+
 - Produces: `TelemetryProvider` interface (`packages/telemetry/src/providers/types.ts`) — `{ name: string; track?(event: string, properties?: Record<string, unknown>): void; identify?(distinctId: string, traits?: Record<string, unknown>): void; pageview?(url: string): void; captureError?(error: unknown, context?: Record<string, unknown>): void; getDistinctId?(): string | undefined; }`. Every later provider/registry/track task consumes this exact shape.
 - Produces: `pixelProvider: TelemetryProvider` (`packages/telemetry/src/providers/pixel.ts`), `name: "pixel"`, every method a no-op / returns `undefined`.
 
@@ -182,10 +184,12 @@ EOF
 ## Task 2: Sentry provider
 
 **Files:**
+
 - Create: `packages/telemetry/src/providers/sentry.ts`
 - Test: `packages/telemetry/src/providers/sentry.test.ts`
 
 **Interfaces:**
+
 - Consumes: `TelemetryProvider` from `./types` (Task 1).
 - Produces: `initSentry(options: { dsn: string; app: string; environment?: string }): void` and `sentryProvider: TelemetryProvider` (`name: "sentry"`, implements `track` via `Sentry.addBreadcrumb`, `captureError` via `Sentry.captureException`). Consumed by `register.ts` (Task 6) and `register-server.ts` (Task 7).
 
@@ -296,10 +300,12 @@ EOF
 ## Task 3: PostHog provider
 
 **Files:**
+
 - Create: `packages/telemetry/src/providers/posthog.ts`
 - Test: `packages/telemetry/src/providers/posthog.test.ts`
 
 **Interfaces:**
+
 - Consumes: `TelemetryProvider` from `./types` (Task 1).
 - Produces: `initPosthog(options: { apiKey: string; apiHost?: string }): void` and `posthogProvider: TelemetryProvider` (`name: "posthog"`, implements `track`, `identify`, `pageview`, `captureError`, `getDistinctId`). Consumed by `register.ts` (Task 6).
 
@@ -429,10 +435,12 @@ EOF
 ## Task 4: Provider registry
 
 **Files:**
+
 - Create: `packages/telemetry/src/providers/registry.ts`
 - Test: `packages/telemetry/src/providers/registry.test.ts`
 
 **Interfaces:**
+
 - Consumes: `TelemetryProvider` from `./types` (Task 1).
 - Produces: `registerProvider(provider: TelemetryProvider): void`, `getActiveProviders(): TelemetryProvider[]`, `resetProviders(): void`. Consumed by `track.ts` (Task 5), `register.ts` (Task 6), `register-server.ts` (Task 7).
 
@@ -516,10 +524,12 @@ EOF
 ## Task 5: Unified `track()` API
 
 **Files:**
+
 - Create: `packages/telemetry/src/track.ts`
 - Test: `packages/telemetry/src/track.test.ts`
 
 **Interfaces:**
+
 - Consumes: `getActiveProviders` from `./providers/registry` (Task 4); `registerProvider`, `resetProviders` from the same module (test only).
 - Produces: `track(event: string, properties?: Record<string, unknown>): void`, `identify(distinctId: string, traits?: Record<string, unknown>): void`, `pageview(url?: string): void`, `captureError(error: unknown, context?: Record<string, unknown>): void`, `getDistinctId(): string | undefined`. Consumed by `register-server.ts` (Task 7) and `link/clink.tsx` (Task 10).
 
@@ -689,10 +699,12 @@ EOF
 ## Task 6: Client registration (`registerAppTelemetry`)
 
 **Files:**
+
 - Create: `packages/telemetry/src/register.ts`
 - Test: `packages/telemetry/src/register.test.ts`
 
 **Interfaces:**
+
 - Consumes: `registerProvider` from `./providers/registry` (Task 4); `initSentry`, `sentryProvider` from `./providers/sentry` (Task 2); `initPosthog`, `posthogProvider` from `./providers/posthog` (Task 3).
 - Produces: `registerAppTelemetry(options: { app: string }): void`, reading `NEXT_PUBLIC_SENTRY_DSN` and `NEXT_PUBLIC_POSTHOG_KEY` (+ optional `NEXT_PUBLIC_POSTHOG_HOST`) from `process.env`. Consumed by every app's `instrumentation-client.ts` (Task 11).
 
@@ -802,10 +814,12 @@ EOF
 ## Task 7: Server registration + `onRequestError`
 
 **Files:**
+
 - Create: `packages/telemetry/src/register-server.ts`
 - Test: `packages/telemetry/src/register-server.test.ts`
 
 **Interfaces:**
+
 - Consumes: `registerProvider` from `./providers/registry` (Task 4); `initSentry`, `sentryProvider` from `./providers/sentry` (Task 2); `captureError` from `./track` (Task 5).
 - Produces: `registerServerTelemetry(options: { app: string }): void` (reads `SENTRY_DSN`, falling back to `NEXT_PUBLIC_SENTRY_DSN`) and `onRequestErrorTelemetry(error: unknown, request: { path: string; method: string; headers: Record<string, string> }, context: { routerKind: string; routePath: string; routeType: string }): void`. Both consumed by every app's new `instrumentation.ts` (Task 11).
 
@@ -931,10 +945,12 @@ EOF
 ## Task 8: `clink.json` config schema
 
 **Files:**
+
 - Create: `packages/telemetry/src/config/schema.ts`
 - Test: `packages/telemetry/src/config/schema.test.ts`
 
 **Interfaces:**
+
 - Produces: `clinkConfigSchema` (zod schema), `type ClinkConfig`, `CLINK_SAFE_DEFAULT: ClinkConfig`, `parseClinkConfig(input: unknown): ClinkConfig` (throws on invalid), `parseClinkConfigSafe(input: unknown): { config: ClinkConfig; error: z.ZodError | null }`. Consumed by `link/clink-provider.tsx` and `link/resolve-href.ts` (Tasks 9–10) and the rollout script (Task 11).
 
 - [ ] **Step 1: Write the failing test**
@@ -1056,10 +1072,12 @@ EOF
 ## Task 9: `resolveHref` pure function
 
 **Files:**
+
 - Create: `packages/telemetry/src/link/resolve-href.ts`
 - Test: `packages/telemetry/src/link/resolve-href.test.ts`
 
 **Interfaces:**
+
 - Consumes: `ClinkConfig`, `CLINK_SAFE_DEFAULT` from `../config/schema` (Task 8).
 - Produces: `type ResolvedHref = { href: string; internal: boolean; rel?: string; target?: string }` and `resolveHref(href: string, config: ClinkConfig, currentOrigin: string, distinctId?: string): ResolvedHref`. Consumed by `link/clink.tsx` (Task 10).
 
@@ -1145,7 +1163,11 @@ describe("resolveHref", () => {
   });
 
   it("does not override utm params the link already specifies", () => {
-    const result = resolveHref("https://example.com/page?utm_source=newsletter", baseConfig, ORIGIN);
+    const result = resolveHref(
+      "https://example.com/page?utm_source=newsletter",
+      baseConfig,
+      ORIGIN,
+    );
     const url = new URL(result.href);
     expect(url.searchParams.get("utm_source")).toBe("newsletter");
   });
@@ -1265,11 +1287,13 @@ EOF
 ## Task 10: `ClinkProvider` + `CLink` components
 
 **Files:**
+
 - Create: `packages/telemetry/src/link/clink-provider.tsx`
 - Create: `packages/telemetry/src/link/clink.tsx`
 - Create: `packages/telemetry/src/link/index.ts`
 
 **Interfaces:**
+
 - Consumes: `CLINK_SAFE_DEFAULT`, `parseClinkConfigSafe`, `ClinkConfig` from `../config/schema` (Task 8); `resolveHref` from `./resolve-href` (Task 9); `getDistinctId`, `track` from `../track` (Task 5).
 - Produces: `ClinkProvider({ config: unknown; children: React.ReactNode })`, `useClinkConfig(): ClinkConfig`, `CLink` (drop-in `next/link` replacement, `CLinkProps = Omit<React.ComponentProps<typeof NextLink>, "href"> & { href: string }`). Re-exported from `./index.ts`, which is the package's `./link` export subpath. Consumed by every app's `app/layout.tsx` and by call sites currently using `next/link` (Tasks 11–12).
 
@@ -1394,11 +1418,13 @@ EOF
 ## Task 11: Rollout script — wire every app to the telemetry package
 
 **Files:**
+
 - Create: `scripts/apply-telemetry-apps.ts`
 - Modify (via script, not by hand): `apps/*/package.json`, `apps/*/next.config.ts`, `apps/*/instrumentation-client.ts`, `apps/*/.env.example`, `apps/*/app/layout.tsx`
 - Create (via script): `apps/*/clink.json`, `apps/*/instrumentation.ts`
 
 **Interfaces:**
+
 - Consumes: `registerAppTelemetry` (`@awfixersites/telemetry/register`, Task 6), `registerServerTelemetry` + `onRequestErrorTelemetry` (`@awfixersites/telemetry/register-server`, Task 7), `ClinkProvider` (`@awfixersites/telemetry/link`, Task 10).
 - Verified structurally uniform across all 21 apps prior to writing this script: every `app/layout.tsx` has exactly one `{children}` occurrence; every `next.config.ts` has a `transpilePackages: [` array literal; every `instrumentation-client.ts` follows the `registerAppBotId()` pattern (see `scripts/apply-botid-apps.ts` for the precedent this script follows).
 
@@ -1496,8 +1522,7 @@ function patchEnvExample(appDir: string): boolean {
   if (!existsSync(path)) return false;
   const content = readFileSync(path, "utf8");
   if (content.includes("NEXT_PUBLIC_SENTRY_DSN")) return false;
-  const addition =
-    "NEXT_PUBLIC_SENTRY_DSN=\nNEXT_PUBLIC_POSTHOG_KEY=\nNEXT_PUBLIC_POSTHOG_HOST=\n";
+  const addition = "NEXT_PUBLIC_SENTRY_DSN=\nNEXT_PUBLIC_POSTHOG_KEY=\nNEXT_PUBLIC_POSTHOG_HOST=\n";
   writeFileSync(path, `${content.trimEnd()}\n${addition}`);
   return true;
 }
@@ -1583,11 +1608,13 @@ EOF
 ## Task 12: Swap `next/link` for `CLink` everywhere
 
 **Files:**
+
 - Create: `scripts/apply-clink-imports.ts`
 - Modify (via script): every file matching `import Link from "next/link";` under `apps/` and `packages/` (53 files confirmed during design, all using the exact default-import form)
 - Modify: `packages/ui/package.json` (add `@awfixersites/telemetry` dependency — `packages/ui/src/auth/passkey-auth-form.tsx` uses `next/link` and needs the new import to resolve)
 
 **Interfaces:**
+
 - Consumes: `CLink` exported from `@awfixersites/telemetry/link` (Task 10). Because `CLink`'s prop type is `Omit<React.ComponentProps<typeof NextLink>, "href"> & { href: string }` — a superset of `next/link`'s props — aliasing the import (`import { CLink as Link } from "@awfixersites/telemetry/link";`) requires no changes to any JSX call site.
 
 - [ ] **Step 1: Add `@awfixersites/telemetry` to `packages/ui`**

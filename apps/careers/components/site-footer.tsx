@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { motion } from "motion/react";
 
 const socialLinks = [{ name: "@AWFixerChurch", href: "https://x.com/AWFixerChurch" }];

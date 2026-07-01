@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 

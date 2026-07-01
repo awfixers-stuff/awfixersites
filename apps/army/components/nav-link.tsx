@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { useSplash } from "./splash-provider";
 
 export function NavLink({ href, onClick, ...props }: React.ComponentPropsWithoutRef<typeof Link>) {

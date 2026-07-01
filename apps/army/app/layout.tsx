@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import { Barlow_Condensed, Geist, Geist_Mono } from "next/font/google";
 
 import "@awfixersites/ui/globals.css";
@@ -42,7 +44,7 @@ export default function RootLayout({
           <SplashProvider>
             <div className="flex min-h-svh flex-col">
               <SiteHeader />
-              <div className="flex-1">{children}</div>
+              <div className="flex-1"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></div>
               <SiteFooter />
             </div>
           </SplashProvider>

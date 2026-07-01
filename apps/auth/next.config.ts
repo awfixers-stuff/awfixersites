@@ -1,3 +1,4 @@
+import { withBotId } from "botid/next/config";
 import type { NextConfig } from "next";
 
 const securityHeaders = [
@@ -10,10 +11,24 @@ const securityHeaders = [
     value: "max-age=63072000; includeSubDomains; preload",
   },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      "img-src 'self' data: blob:",
+      "font-src 'self' data:",
+      "style-src 'self' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "connect-src 'self' https:",
+    ].join("; "),
+  },
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@awfixersites/ui", "@awfixersites/auth"],
+  transpilePackages: ["@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
   headers: async () => [
     {
       source: "/(.*)",
@@ -22,4 +37,4 @@ const nextConfig: NextConfig = {
   ],
 };
 
-export default nextConfig;
+export default withBotId(nextConfig);

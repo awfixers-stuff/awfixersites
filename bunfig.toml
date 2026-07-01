@@ -1,6 +1,7 @@
 [install]
 minimumReleaseAge = 259200
 minimumReleaseAgeExcludes = [
+  "@cloudflare/workers-types",
   "lucide-react",
   "@types/bun",
   "typescript",

@@ -1,3 +1,4 @@
+import { rejectBotUnlessHuman } from "@awfixersites/auth/botid-server";
 import { createPendingDonation } from "@awfixersites/db/donations";
 import { z } from "zod";
 
@@ -6,6 +7,11 @@ import { getStripe } from "@/lib/stripe";
 import { resolveTenant } from "@/lib/tenants";
 
 export async function POST(request: Request) {
+  const blocked = await rejectBotUnlessHuman();
+  if (blocked) {
+    return blocked;
+  }
+
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const input = createPaymentIntentSchema.parse(body);

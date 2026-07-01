@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { Mail, MessageSquare, Flag, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 

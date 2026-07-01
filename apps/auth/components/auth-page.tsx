@@ -4,6 +4,7 @@ import { Suspense, useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { buildOidcAuthorizeResumeUrl, isOidcAuthorizeQuery } from "@awfixersites/auth/idp";
+import { resolveSafeReturnTo } from "@awfixersites/auth/referrer";
 import { PasskeyAuthForm, type PasskeyAuthMode } from "@awfixersites/ui/auth";
 import { Spinner } from "@awfixersites/ui/components/spinner";
 
@@ -45,8 +46,7 @@ function AuthPageContent() {
       return;
     }
 
-    const destination = returnTo ?? codesSiteUrl;
-    window.location.assign(destination);
+    window.location.assign(resolveSafeReturnTo(returnTo, codesSiteUrl));
   }, [oidcAuthorize, returnTo, searchParams]);
 
   return (

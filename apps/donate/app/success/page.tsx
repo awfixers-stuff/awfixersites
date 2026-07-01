@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { headers } from "next/headers";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 

@@ -37,8 +37,10 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
+    "@types/mdx": "catalog:types",
     "@awfixersites/auth": "catalog:workspace",
     "@awfixersites/mdx": "catalog:workspace",
+    "@awfixersites/telemetry": "catalog:workspace",
     "@awfixersites/ui": "catalog:workspace",
     "@next/swc-linux-x64-gnu": "catalog:nextjs",
     "@oxfmt/binding-linux-x64-gnu": "catalog:bindings",
@@ -51,6 +53,7 @@
     "@typescript/native-preview-linux-x64": "catalog:bindings",
     "@vercel/analytics": "catalog:vercel",
     "@vercel/speed-insights": "catalog:vercel",
+    "botid": "catalog:vercel",
     "class-variance-authority": "catalog:css",
     "clsx": "catalog:css",
     "lightningcss-linux-x64-gnu": "catalog:css",

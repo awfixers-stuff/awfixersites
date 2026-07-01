@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import type { Metadata } from "next";
 
 import { Geist, Geist_Mono } from "next/font/google";
@@ -30,7 +32,7 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></ThemeProvider>
       </body>
     </html>
   );

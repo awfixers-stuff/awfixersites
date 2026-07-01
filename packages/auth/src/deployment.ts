@@ -5,8 +5,13 @@ export function getAuthDeploymentRole(): AuthDeploymentRole {
   const role =
     process.env.AUTH_DEPLOYMENT_ROLE?.trim().toLowerCase() ??
     process.env.NEXT_PUBLIC_AUTH_DEPLOYMENT_ROLE?.trim().toLowerCase();
+
   if (role === "idp" || role === "client") {
     return role;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("AUTH_DEPLOYMENT_ROLE must be set to 'idp' or 'client' in production.");
   }
 
   if (process.env.NEXT_PUBLIC_AUTH_OAUTH_SITE_KEY?.trim()) {

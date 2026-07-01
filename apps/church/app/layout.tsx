@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -50,7 +52,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SplashProvider>
             <SiteHeader />
-            <main className="min-h-svh pt-20">{children}</main>
+            <main className="min-h-svh pt-20"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></main>
             <SiteFooter />
           </SplashProvider>
         </ThemeProvider>

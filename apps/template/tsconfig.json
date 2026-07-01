@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../src/tsconfig.next.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "@awfixersites/ui/*": ["../../packages/ui/src/*"],
+      "@awfixersites/auth": ["../../packages/auth/src/index.ts"],
+      "@awfixersites/auth/*": ["../../packages/auth/src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "next.config.ts",
+    "vercel.ts",
+    "vitest.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

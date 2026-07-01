@@ -1,0 +1,18 @@
+{
+  "network": [],
+  "utm": {
+    "source": "codes",
+    "medium": "referral",
+    "campaign": null
+  },
+  "click": {
+    "event": "link_clicked",
+    "properties": {
+      "app": "codes"
+    }
+  },
+  "exclude": [
+    "mailto:*",
+    "tel:*"
+  ]
+}

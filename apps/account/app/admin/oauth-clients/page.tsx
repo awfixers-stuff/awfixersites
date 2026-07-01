@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { isAdminSession } from "@awfixersites/auth/admin/guard";
+import { isAdminSessionFresh } from "@awfixersites/auth/admin/guard";
 import { listOauthApplications } from "@awfixersites/auth/admin/oauth-clients";
 import { getServerSession } from "@awfixersites/auth/server-session";
 
@@ -13,7 +13,7 @@ export default async function AdminOauthClientsPage() {
   if (!session) {
     redirect("/sign-in?returnTo=/admin/oauth-clients");
   }
-  if (!isAdminSession(session)) {
+  if (!(await isAdminSessionFresh(session))) {
     redirect("/");
   }
 

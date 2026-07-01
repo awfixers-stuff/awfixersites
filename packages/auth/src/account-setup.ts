@@ -52,9 +52,7 @@ export function getAdminUsernames(): Set<string> {
   );
 }
 
-export function resolveUserRole(username: string | null | undefined): "user" | "admin" {
-  if (!username) {
-    return "user";
-  }
-  return getAdminUsernames().has(username.trim().toLowerCase()) ? "admin" : "user";
+/** New accounts always start as user; use promote-admins script for elevation. */
+export function resolveUserRole(_username: string | null | undefined): "user" | "admin" {
+  return "user";
 }

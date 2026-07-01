@@ -2,6 +2,9 @@
 /**
  * Wire OAuth client boilerplate into every satellite app (all apps/* except auth).
  * Run from repo root: bun scripts/wire-oauth-apps.ts
+ *
+ * After scaffolding a new app, also run: bun scripts/apply-botid-apps.ts
+ * (wraps next.config with withBotId + adds instrumentation-client.ts for Vercel BotID).
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";

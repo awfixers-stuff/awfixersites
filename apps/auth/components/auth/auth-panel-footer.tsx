@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 
 import { ctaOutlineButtonClassName } from "@/lib/cta-button";
 

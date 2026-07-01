@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { ArrowLeft } from "lucide-react";
 
 import { cn } from "@/lib/utils";

@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
@@ -27,7 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <ThemeProvider>
           <SiteHeader />
-          <main className="min-h-svh">{children}</main>
+          <main className="min-h-svh"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></main>
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

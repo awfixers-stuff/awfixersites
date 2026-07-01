@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 
 import { getStripe } from "@/lib/stripe";
 
+/** Stripe server webhooks — no browser BotID challenge; verified via stripe-signature only. */
 export async function POST(request: Request) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   if (!webhookSecret) {

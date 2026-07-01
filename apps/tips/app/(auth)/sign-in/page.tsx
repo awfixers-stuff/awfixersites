@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { Suspense } from "react";
 
 import { IdpSignInWithReturn } from "@awfixersites/ui/auth/idp-sign-in-with-return";

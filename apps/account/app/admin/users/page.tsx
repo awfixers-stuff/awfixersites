@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { isAdminSession } from "@awfixersites/auth/admin/guard";
+import { isAdminSessionFresh } from "@awfixersites/auth/admin/guard";
 import { listUsersForAdmin } from "@awfixersites/auth/admin/users";
 import { getServerSession } from "@awfixersites/auth/server-session";
 
@@ -13,7 +13,7 @@ export default async function AdminUsersPage() {
   if (!session) {
     redirect("/sign-in?returnTo=/admin/users");
   }
-  if (!isAdminSession(session)) {
+  if (!(await isAdminSessionFresh(session))) {
     redirect("/");
   }
 

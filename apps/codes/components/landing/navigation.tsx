@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { Menu, X } from "lucide-react";
 import { cn } from "@awfixersites/ui/lib/utils";
 

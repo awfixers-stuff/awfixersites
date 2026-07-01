@@ -70,6 +70,7 @@ export function getTrustedOidcClients(): (Client & { skipConsent?: boolean })[] 
     type: "web",
     redirectUrls: site.redirectUrls,
     disabled: false,
+    // First-party fleet: silent consent is intentional for owned satellite apps.
     skipConsent: true,
     metadata: { site: site.key },
   }));

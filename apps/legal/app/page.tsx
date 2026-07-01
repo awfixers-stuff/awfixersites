@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { ArrowUpRight, FileText, Scale, Shield } from "lucide-react";
 
 export const metadata: Metadata = {

@@ -1,0 +1,18 @@
+{
+  "network": [],
+  "utm": {
+    "source": "club",
+    "medium": "referral",
+    "campaign": null
+  },
+  "click": {
+    "event": "link_clicked",
+    "properties": {
+      "app": "club"
+    }
+  },
+  "exclude": [
+    "mailto:*",
+    "tel:*"
+  ]
+}

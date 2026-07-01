@@ -130,6 +130,7 @@ model OauthApplication {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  @@index([userId])
   @@map("oauthApplication")
 }
 
@@ -164,4 +165,14 @@ model OauthConsent {
   @@index([clientId])
   @@index([userId])
   @@map("oauthConsent")
+}
+
+model RateLimit {
+  id          String @id
+  key         String
+  count       Int
+  lastRequest BigInt
+
+  @@unique([key])
+  @@map("rateLimit")
 }

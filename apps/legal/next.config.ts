@@ -1,5 +1,8 @@
+import { withBotId } from "botid/next/config";
 import { withMdx } from "@awfixersites/mdx/next";
 
-export default withMdx({
-  transpilePackages: ["@awfixersites/ui", "@awfixersites/auth"],
-});
+export default withBotId(
+  withMdx({
+    transpilePackages: ["@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
+  }),
+);

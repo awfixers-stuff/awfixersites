@@ -1,3 +1,4 @@
+import { rejectBotUnlessHuman } from "@awfixersites/auth/botid-server";
 import { z } from "zod";
 import { Resend } from "resend";
 
@@ -42,6 +43,11 @@ function escapeHtml(input: string): string {
 }
 
 export async function POST(request: Request) {
+  const blocked = await rejectBotUnlessHuman();
+  if (blocked) {
+    return blocked;
+  }
+
   try {
     const body = (await request.json()) as {
       name?: string;

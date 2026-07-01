@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@awfixersites/ui/lib/utils";
 

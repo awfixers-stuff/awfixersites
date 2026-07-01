@@ -1,7 +1,7 @@
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { redirect } from "next/navigation";
 
-import { isAdminSession } from "@awfixersites/auth/admin/guard";
+import { isAdminSessionFresh } from "@awfixersites/auth/admin/guard";
 import { listOauthApplications } from "@awfixersites/auth/admin/oauth-clients";
 import { listUsersForAdmin } from "@awfixersites/auth/admin/users";
 import { getServerSession } from "@awfixersites/auth/server-session";
@@ -15,7 +15,7 @@ export default async function AdminPage() {
   if (!session) {
     redirect("/sign-in?returnTo=/admin");
   }
-  if (!isAdminSession(session)) {
+  if (!(await isAdminSessionFresh(session))) {
     redirect("/");
   }
 

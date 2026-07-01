@@ -1,3 +1,4 @@
+import { withBotId } from "botid/next/config";
 import type { NextConfig } from "next";
 
 const securityHeaders = [
@@ -13,7 +14,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@awfixersites/ui", "@awfixersites/auth"],
+  transpilePackages: ["@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   headers: async () => [
     {
@@ -23,4 +24,4 @@ const nextConfig: NextConfig = {
   ],
 };
 
-export default nextConfig;
+export default withBotId(nextConfig);

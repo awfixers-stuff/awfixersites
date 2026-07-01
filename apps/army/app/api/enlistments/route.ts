@@ -1,8 +1,14 @@
+import { rejectBotUnlessHuman } from "@awfixersites/auth/botid-server";
 import { getServerSession } from "@awfixersites/auth/server-session";
 import { submitEnlistment, type SubmitEnlistmentArgs } from "@awfixersites/db/enlistments";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
+  const blocked = await rejectBotUnlessHuman();
+  if (blocked) {
+    return blocked;
+  }
+
   try {
     const session = await getServerSession();
     if (!session?.user?.id) {

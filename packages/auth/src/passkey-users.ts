@@ -1,18 +1,21 @@
 import { hashPassword } from "better-auth/crypto";
 
-import { resolveUserRole } from "./account-setup";
 import { internalUserEmail } from "./config";
 import { prisma } from "./prisma";
+import { generateSnowflakeId } from "./snowflake";
+
+export class PasskeyUsernameTakenError extends Error {
+  constructor(username: string) {
+    super(`Username "${username}" is already taken.`);
+    this.name = "PasskeyUsernameTakenError";
+  }
+}
 
 function randomPassword() {
   return crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "");
 }
 
-function createId() {
-  return crypto.randomUUID();
-}
-
-export async function findOrCreateUserForPasskey(username: string) {
+export async function createUserForPasskeySignup(username: string) {
   const normalized = username.trim().toLowerCase();
   const email = internalUserEmail(normalized);
 
@@ -20,23 +23,15 @@ export async function findOrCreateUserForPasskey(username: string) {
     where: {
       OR: [{ username: normalized }, { email }],
     },
-    select: {
-      id: true,
-      username: true,
-      displayUsername: true,
-    },
+    select: { id: true },
   });
 
-  if (existing?.username) {
-    return {
-      id: existing.id,
-      username: existing.username,
-      displayUsername: existing.displayUsername ?? existing.username,
-    };
+  if (existing) {
+    throw new PasskeyUsernameTakenError(normalized);
   }
 
   const now = new Date();
-  const userId = createId();
+  const userId = generateSnowflakeId();
 
   const user = await prisma.user.create({
     data: {
@@ -46,7 +41,7 @@ export async function findOrCreateUserForPasskey(username: string) {
       name: normalized,
       username: normalized,
       displayUsername: normalized,
-      role: resolveUserRole(normalized),
+      role: "user",
       createdAt: now,
       updatedAt: now,
     },
@@ -59,7 +54,7 @@ export async function findOrCreateUserForPasskey(username: string) {
 
   await prisma.account.create({
     data: {
-      id: createId(),
+      id: generateSnowflakeId(),
       userId: user.id,
       accountId: user.id,
       providerId: "credential",

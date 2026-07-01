@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -38,7 +40,7 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, geist.variable)}
     >
       <body className="font-sans">
-        <ErrorBoundary>{children}</ErrorBoundary>
+        <ErrorBoundary><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,7 +1,8 @@
+import { withBotId } from "botid/next/config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@awfixersites/ui", "@awfixersites/db", "@awfixersites/auth"],
+  transpilePackages: ["@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/db", "@awfixersites/auth"],
 };
 
-export default nextConfig;
+export default withBotId(nextConfig);

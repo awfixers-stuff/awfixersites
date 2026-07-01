@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import { Geist, IBM_Plex_Mono, Syne } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
@@ -69,7 +71,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="relative z-10 flex min-h-svh flex-col">
             <SiteHeader />
-            <main className="flex-1 pt-16">{children}</main>
+            <main className="flex-1 pt-16"><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></main>
             <SiteFooter />
           </div>
         </ThemeProvider>

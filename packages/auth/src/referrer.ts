@@ -102,3 +102,16 @@ export function resolveReferrerSite(
 export function getBackToSiteLabel(referrer: ReferrerSite) {
   return `Back to ${referrer.name}`;
 }
+
+export function resolveSafeReturnTo(returnTo: string | null | undefined, fallback: string): string {
+  if (!returnTo) {
+    return fallback;
+  }
+
+  if (returnTo.startsWith("/") && !returnTo.startsWith("//")) {
+    return returnTo;
+  }
+
+  const validated = resolveReturnToReferrer(returnTo);
+  return validated?.href ?? fallback;
+}

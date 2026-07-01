@@ -1,3 +1,5 @@
+import { ClinkProvider } from "@awfixersites/telemetry/link";
+import clinkConfig from "../clink.json";
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
@@ -72,7 +74,7 @@ export default function RootLayout({
       <body
         className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <ErrorBoundary>{children}</ErrorBoundary>
+        <ErrorBoundary><ClinkProvider config={clinkConfig}>{children}</ClinkProvider></ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 import { Suspense, useEffect, useState } from "react";
 
 import { AuthMark } from "@/components/auth/auth-mark";

@@ -16,15 +16,10 @@ on:
     types:
       - vercel.deployment.ready
 
-run-name: >-
-  Vercel checks — ${{ github.event.client_payload.project.name }}
-  (${{ github.event.client_payload.environment }})
+run-name: "Vercel checks — ${{ github.event.client_payload.project.name }} (${{ github.event.client_payload.environment }})"
 
 concurrency:
-  group: >-
-    vercel-check-${{ github.event.client_payload.project.id }}-${{
-      github.event.client_payload.git.sha
-    }}-${{ matrix.check }}
+  group: "vercel-check-${{ github.event.client_payload.project.id }}-${{ github.event.client_payload.git.sha }}-${{ matrix.check }}"
   cancel-in-progress: true
 
 permissions:
@@ -49,7 +44,7 @@ jobs:
       - name: Notify Vercel (pending)
         uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: Vercel - ${{ github.event.client_payload.project.name }}: ${{ matrix.check }}
+          name: "Vercel - ${{ github.event.client_payload.project.name }}: ${{ matrix.check }}"
 
       - name: Checkout deployment commit
         uses: vercel/repository-dispatch/actions/checkout@v1

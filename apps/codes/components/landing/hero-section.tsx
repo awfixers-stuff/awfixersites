@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { CLink as Link } from "@awfixersites/telemetry/link";
 
 const words = ["create", "build", "scale", "ship"];
 const WORD_CYCLE_MS = 3000;

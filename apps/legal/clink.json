@@ -1,0 +1,18 @@
+{
+  "network": [],
+  "utm": {
+    "source": "legal",
+    "medium": "referral",
+    "campaign": null
+  },
+  "click": {
+    "event": "link_clicked",
+    "properties": {
+      "app": "legal"
+    }
+  },
+  "exclude": [
+    "mailto:*",
+    "tel:*"
+  ]
+}

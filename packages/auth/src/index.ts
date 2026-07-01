@@ -14,7 +14,13 @@ export {
   isOidcAuthorizeQuery,
   buildOidcAuthorizeResumeUrl,
 } from "./idp";
-export { getBackToSiteLabel, resolveReferrerSite, type ReferrerSite } from "./referrer";
+export {
+  getBackToSiteLabel,
+  resolveReferrerSite,
+  resolveSafeReturnTo,
+  type ReferrerSite,
+} from "./referrer";
+export { generateSnowflakeId, isSnowflakeId } from "./snowflake";
 export {
   getAuthDeploymentRole,
   isAuthClientDeployment,

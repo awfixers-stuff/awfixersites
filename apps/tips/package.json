@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@awfixersites/auth": "catalog:workspace",
+    "@awfixersites/telemetry": "catalog:workspace",
     "@awfixersites/ui": "catalog:workspace",
     "@hookform/resolvers": "catalog:",
     "@next/swc-linux-x64-gnu": "catalog:nextjs",
@@ -49,6 +50,7 @@
     "@tailwindcss/postcss": "catalog:css",
     "@typescript/native-preview-linux-x64": "catalog:bindings",
     "@vercel/analytics": "catalog:vercel",
+    "botid": "catalog:vercel",
     "class-variance-authority": "catalog:css",
     "clsx": "catalog:css",
     "lightningcss-linux-x64-gnu": "catalog:css",

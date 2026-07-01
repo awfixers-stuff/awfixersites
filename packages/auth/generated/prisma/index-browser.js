@@ -226,6 +226,13 @@ exports.Prisma.OauthConsentScalarFieldEnum = {
   updatedAt: "updatedAt",
 };
 
+exports.Prisma.RateLimitScalarFieldEnum = {
+  id: "id",
+  key: "key",
+  count: "count",
+  lastRequest: "lastRequest",
+};
+
 exports.Prisma.SortOrder = {
   asc: "asc",
   desc: "desc",
@@ -251,6 +258,7 @@ exports.Prisma.ModelName = {
   OauthApplication: "OauthApplication",
   OauthAccessToken: "OauthAccessToken",
   OauthConsent: "OauthConsent",
+  RateLimit: "RateLimit",
 };
 
 /**

@@ -4,6 +4,7 @@ import { Suspense, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { buildOidcAuthorizeResumeUrl, isOidcAuthorizeQuery } from "@awfixersites/auth/idp";
+import { resolveSafeReturnTo } from "@awfixersites/auth/referrer";
 import { TotpVerifyForm } from "@awfixersites/ui/auth";
 import { Spinner } from "@awfixersites/ui/components/spinner";
 
@@ -25,7 +26,7 @@ function TotpVerifyContent() {
       return;
     }
 
-    window.location.assign(returnTo ?? codesSiteUrl);
+    window.location.assign(resolveSafeReturnTo(returnTo, codesSiteUrl));
   }, [oidcAuthorize, returnTo, searchParams]);
 
   return (

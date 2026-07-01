@@ -1,0 +1,18 @@
+{
+  "network": [],
+  "utm": {
+    "source": "cash",
+    "medium": "referral",
+    "campaign": null
+  },
+  "click": {
+    "event": "link_clicked",
+    "properties": {
+      "app": "cash"
+    }
+  },
+  "exclude": [
+    "mailto:*",
+    "tel:*"
+  ]
+}

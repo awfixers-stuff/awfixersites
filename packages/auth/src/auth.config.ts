@@ -18,8 +18,14 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   emailAndPassword: {
+    enabled: false,
+  },
+  rateLimit: {
     enabled: true,
-    requireEmailVerification: false,
+    storage: "database",
+  },
+  advanced: {
+    cookiePrefix: "awfixer_auth",
   },
   user: {
     additionalFields: {

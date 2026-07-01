@@ -1,0 +1,18 @@
+{
+  "network": [],
+  "utm": {
+    "source": "church",
+    "medium": "referral",
+    "campaign": null
+  },
+  "click": {
+    "event": "link_clicked",
+    "properties": {
+      "app": "church"
+    }
+  },
+  "exclude": [
+    "mailto:*",
+    "tel:*"
+  ]
+}

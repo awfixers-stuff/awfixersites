@@ -70,7 +70,12 @@ export function PasskeyAuthForm({
     if (isSignUp) {
       const result = await registerPasskeyForUsername(trimmed, trimmed);
       if (result.error) {
-        setError(result.error.message ?? "Passkey registration failed.");
+        const message = result.error.message ?? "Passkey registration failed.";
+        setError(
+          message.toLowerCase().includes("already taken")
+            ? "That username is already taken. Sign in instead or choose another username."
+            : message,
+        );
         setLoading(false);
         return;
       }
@@ -91,23 +96,26 @@ export function PasskeyAuthForm({
       return;
     }
 
-    const session = await authClient.getSession();
-    const user = session.data?.user as { twoFactorEnabled?: boolean } | undefined;
     const params = new URLSearchParams(window.location.search);
     const returnTo = params.get("returnTo");
+    const withReturnTo = (path: string) =>
+      returnTo ? `${path}?returnTo=${encodeURIComponent(returnTo)}` : path;
 
-    if (!user?.twoFactorEnabled) {
-      const setupUrl = returnTo
-        ? `/setup/totp?returnTo=${encodeURIComponent(returnTo)}`
-        : "/setup/totp";
-      window.location.assign(setupUrl);
+    const payload = result.data as { twoFactorRedirect?: boolean } | null;
+    if (payload?.twoFactorRedirect) {
+      window.location.assign(withReturnTo("/verify/totp"));
       return;
     }
 
-    const verifyUrl = returnTo
-      ? `/verify/totp?returnTo=${encodeURIComponent(returnTo)}`
-      : "/verify/totp";
-    window.location.assign(verifyUrl);
+    const session = await authClient.getSession();
+    const user = session.data?.user as { twoFactorEnabled?: boolean } | undefined;
+
+    if (!user?.twoFactorEnabled) {
+      window.location.assign(withReturnTo("/setup/totp"));
+      return;
+    }
+
+    onSuccess?.();
     setLoading(false);
   }
 
