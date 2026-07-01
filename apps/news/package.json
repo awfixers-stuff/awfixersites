@@ -32,8 +32,8 @@
     "start": "next start",
     "lint": "oxlint -c ../../src/lint.json . --fix",
     "format": "oxfmt -c ../../src/fmt.json . --check",
-    "typecheck": "tsgo --noEmit",
-    "test": "vitest"
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts"
   },
   "dependencies": {
     "@awfixersites/auth": "catalog:",
@@ -67,6 +67,7 @@
     "resend": "catalog:",
     "shadcn": "catalog:",
     "tailwind-merge": "catalog:",
+    "tailwindcss": "catalog:",
     "tw-animate-css": "catalog:",
     "vercel": "catalog:",
     "zod": "catalog:"

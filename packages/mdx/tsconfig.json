@@ -1,9 +1,6 @@
 {
-  "extends": "../../packages/typescript-config/react-library.json",
-  "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Bundler"
-  },
-  "include": ["src", "mdx.d.ts"],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../src/tsconfig.react-library.json",
+  "include": ["src", "mdx.d.ts", "vitest.config.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,13 +1,12 @@
 {
-  "extends": "../../packages/typescript-config/react-library.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../src/tsconfig.react-library.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
     "paths": {
       "@awfixersites/db/*": ["./src/*"],
       "@awfixersites/ui/*": ["../ui/src/*"]
     }
   },
-  "include": ["src", "prisma.config.ts", "generated"],
+  "include": ["src", "prisma.config.ts", "generated", "vitest.config.ts"],
   "exclude": ["node_modules"]
 }
