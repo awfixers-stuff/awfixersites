@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "@awfixersites/ui/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@awfixersites/ui/lib/utils";
+import { AppUtils } from "@/components/app-utils";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -52,6 +53,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
         </ThemeProvider>
+        <AppUtils />
         <Analytics />
       </body>
     </html>

@@ -38,8 +38,10 @@
   },
   "dependencies": {
     "@awfixersites/auth": "catalog:workspace",
+    "@awfixersites/security": "catalog:workspace",
     "@awfixersites/telemetry": "catalog:workspace",
     "@awfixersites/ui": "catalog:workspace",
+    "@awfixersites/utils": "catalog:workspace",
     "@next/swc-linux-x64-gnu": "catalog:nextjs",
     "@oxfmt/binding-linux-x64-gnu": "catalog:bindings",
     "@oxlint-tsgolint/linux-x64": "catalog:bindings",

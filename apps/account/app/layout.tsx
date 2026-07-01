@@ -10,6 +10,7 @@ import { cn } from "@awfixersites/ui/lib/utils";
 
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AppUtils } from "@/components/app-utils";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
           </main>
         </ThemeProvider>
+        <AppUtils />
         <Analytics />
         <SpeedInsights />
       </body>

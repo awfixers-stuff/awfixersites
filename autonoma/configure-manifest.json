@@ -1,0 +1,163 @@
+{
+  "configuredAt": "2026-07-01T21:16:46.980Z",
+  "applicationId": "cmr1qj62r00q101burtgoonmg",
+  "targets": [
+    "account",
+    "army",
+    "auth",
+    "careers",
+    "church",
+    "codes",
+    "donate",
+    "legal",
+    "llc",
+    "news",
+    "template",
+    "tips"
+  ],
+  "skipped": [
+    "about",
+    "agent",
+    "branding",
+    "cash",
+    "cloud",
+    "club",
+    "me",
+    "network",
+    "party",
+    "space"
+  ],
+  "apps": [
+    {
+      "name": "account",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "army",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "auth",
+      "secrets": [
+        "DATABASE_URL",
+        "AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "AUTH_URL",
+        "AUTH_TRUSTED_ORIGINS",
+        "AUTH_PASSKEY_RP_ID",
+        "AUTH_PASSKEY_RP_NAME",
+        "ARCJET_KEY"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "careers",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "church",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "codes",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "donate",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "legal",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "llc",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "news",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "template",
+      "secrets": [
+        "ARCJET_KEY"
+      ],
+      "status": "dry-run"
+    },
+    {
+      "name": "tips",
+      "secrets": [
+        "ARCJET_KEY",
+        "AUTH_OAUTH_SITE_KEY",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "BETTER_AUTH_URL"
+      ],
+      "status": "dry-run"
+    }
+  ]
+}

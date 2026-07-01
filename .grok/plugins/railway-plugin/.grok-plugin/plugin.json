@@ -1,0 +1,37 @@
+{
+  "name": "railway",
+  "version": "0.1.0",
+  "description": "Railway infrastructure for awfixersites — CLI, Terraform IaC, Postgres, env vars, deployments, and Vercel cross-wiring",
+  "author": {
+    "name": "awfixersites",
+    "url": "https://github.com/awfixersites"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "railway",
+    "terraform",
+    "postgres",
+    "iac",
+    "mcp",
+    "awfixersites",
+    "vercel",
+    "deployment",
+    "database"
+  ],
+  "commands": [
+    "./commands/status.md",
+    "./commands/deploy.md",
+    "./commands/logs.md",
+    "./commands/variables.md",
+    "./commands/iac.md",
+    "./commands/plan.md",
+    "./commands/import.md",
+    "./commands/postgres.md",
+    "./commands/link.md",
+    "./commands/mcp-setup.md"
+  ],
+  "agents": [
+    "./agents/deployment-debugger.md",
+    "./agents/iac-validator.md"
+  ]
+}

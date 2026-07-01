@@ -10,7 +10,7 @@ describe("OAUTH_SITES registry", () => {
     const appDirs = readdirSync(appsDir, { withFileTypes: true })
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name)
-      .filter((name) => name !== "auth");
+      .filter((name) => name !== "auth" && name !== "template");
 
     const registryKeys = new Set(OAUTH_SITES.map((site) => site.key));
     for (const appName of appDirs) {

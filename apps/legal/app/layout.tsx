@@ -10,6 +10,7 @@ import { SteelBackdrop } from "@/components/steel-backdrop";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { cn } from "@/lib/utils";
+import { AppUtils } from "@/components/app-utils";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -77,6 +78,7 @@ export default function RootLayout({
             <SiteFooter />
           </div>
         </ThemeProvider>
+        <AppUtils />
         <Analytics />
         <SpeedInsights />
       </body>

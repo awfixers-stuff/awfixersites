@@ -63,8 +63,8 @@
         "@typescript/native-preview-linux-x64": "7.0.0-dev.20260630.1"
       },
       "infra": {
-        "railway": "3.4.1",
-        "sst": "4.17.0"
+        "@railway/cli": "4.15.0",
+        "railway": "3.4.1"
       },
       "checking": {
         "@typescript/native-preview": "7.0.0-dev.20260630.1",
@@ -204,7 +204,15 @@
     "test:browser": "vitest -c ./src/vitest.config.ts .",
     "typecheck": "bun --bun scripts/typecheck-all.ts",
     "typecheck:src": "tsgo -p ./src/tsconfig.json --noEmit --pretty",
-    "vercel:checks:list": "bun scripts/vercel-deployment-check.ts --list"
+    "vercel:checks:list": "bun scripts/vercel-deployment-check.ts --list",
+    "autonoma:verify": "bun scripts/autonoma-cli.ts verify",
+    "autonoma:configure": "bun scripts/autonoma-cli.ts configure",
+    "autonoma:apps": "bun scripts/autonoma-cli.ts apps list",
+    "autonoma:secrets": "bun scripts/autonoma-cli.ts secrets",
+    "autonoma:recipes:upload": "bun scripts/autonoma-cli.ts recipes upload",
+    "autonoma:configure-all": "bun scripts/autonoma-cli.ts configure-all",
+    "autonoma:apply": "bun scripts/apply-autonoma-apps.ts",
+    "autonoma:targets": "bun scripts/autonoma-cli.ts apps targets"
   },
   "dependencies": {
     "@socketsecurity/bun-security-scanner": "catalog:",
@@ -213,7 +221,6 @@
     "typescript": "catalog:checking"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20260701.1",
     "@oxfmt/binding-linux-x64-gnu": "catalog:bindings",
     "@oxlint-tsgolint/linux-x64": "catalog:bindings",
     "@oxlint/binding-linux-x64-gnu": "catalog:bindings",
@@ -232,6 +239,8 @@
     "oxfmt": "catalog:checking",
     "oxlint": "catalog:checking",
     "oxlint-tsgolint": "catalog:checking",
+    "@railway/cli": "catalog:infra",
+    "vercel": "catalog:vercel",
     "vitest": "catalog:checking",
     "vitest-browser-react": "catalog:checking"
   },

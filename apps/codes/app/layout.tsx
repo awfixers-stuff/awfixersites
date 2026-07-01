@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ErrorBoundary } from "@/components/error-boundary";
 import "./globals.css";
+import { AppUtils } from "@/components/app-utils";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -77,6 +78,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
         </ErrorBoundary>
+        <AppUtils />
         <Analytics />
         <SpeedInsights />
       </body>

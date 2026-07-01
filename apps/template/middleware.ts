@@ -1,6 +1,5 @@
 import { createAppSecurityMiddleware } from "@awfixersites/security/middleware";
 import { NextRequest, NextResponse } from "next/server";
-import { get } from "@vercel/edge-config";
 
 import { arcjet } from "@/lib/security";
 

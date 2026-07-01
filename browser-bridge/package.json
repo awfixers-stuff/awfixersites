@@ -1,0 +1,23 @@
+{
+  "name": "@awfixersites/browser-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome extension + MCP server for full browser control",
+  "type": "module",
+  "scripts": {
+    "build:extension": "bun run scripts/build-extension.ts",
+    "build:mcp": "bun build mcp/src/index.ts --outdir mcp/dist --target bun",
+    "build": "bun run build:extension && bun run build:mcp",
+    "start": "bun run mcp/src/index.ts",
+    "start:gateway": "bash scripts/start-gateway.sh",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.287",
+    "typescript": "6.0.3"
+  }
+}

@@ -8,6 +8,7 @@ import { SplashProvider } from "@/components/splash-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { cn } from "@awfixersites/ui/lib/utils";
+import { AppUtils } from "@/components/app-utils";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -51,6 +52,7 @@ export default function RootLayout({
             </div>
           </SplashProvider>
         </ThemeProvider>
+              <AppUtils />
       </body>
     </html>
   );

@@ -1,8 +1,9 @@
 import { flag } from "@awfixersites/utils/flags/next";
 
-export const showPortfolioHighlight = flag<boolean>({
-  key: "show-portfolio-highlight",
-  description: "Highlight the portfolio section on the home page.",
+/** Example feature flag — replace with app-specific flags. */
+export const showTemplateBanner = flag<boolean>({
+  key: "show-template-banner",
+  description: "Show a banner on the template home page.",
   defaultValue: false,
   options: [
     { label: "Off", value: false },

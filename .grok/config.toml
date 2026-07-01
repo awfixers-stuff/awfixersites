@@ -1,0 +1,9 @@
+[plugins]
+enabled = ["helium-browser", "railway"]
+
+# Persistent Helium MCP gateway (stdio child kept alive by supergateway).
+# Start once: bash .grok/plugins/helium-browser/scripts/start-persistent-server.sh
+[mcp_servers.helium]
+url = "http://127.0.0.1:18791/mcp"
+enabled = true
+startup_timeout_sec = 45

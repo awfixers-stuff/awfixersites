@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "railway-local": {
+      "command": "railway",
+      "args": ["mcp"],
+      "note": "Local stdio MCP via Railway CLI. Requires `railway login` and project link. Broader CRUD tools: deploy, variables, logs, templates."
+    },
+    "railway-remote": {
+      "type": "http",
+      "url": "https://mcp.railway.com",
+      "note": "Remote Railway MCP. OAuth on first connect. Includes railway-agent for multi-step debugging. Destructive ops prompt for confirmation."
+    }
+  }
+}

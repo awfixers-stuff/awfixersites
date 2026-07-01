@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "helium": {
+      "type": "http",
+      "url": "http://127.0.0.1:18791/mcp",
+      "note": "Persistent local gateway — run scripts/start-persistent-server.sh once. Holds a single browser CDP session so Helium does not re-prompt for approval on every agent turn."
+    }
+  }
+}

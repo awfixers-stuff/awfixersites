@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { AppUtils } from "@/components/app-utils";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
         </ErrorBoundary>
+        <AppUtils />
         <Analytics />
         <SpeedInsights />
       </body>

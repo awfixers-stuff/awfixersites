@@ -1,0 +1,17 @@
+{
+  "description": "Railway plugin — inject awfixersites Railway context on session start when infra files detected",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${GROK_PLUGIN_ROOT}/hooks/session-start-context.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

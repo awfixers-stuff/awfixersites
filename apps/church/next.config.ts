@@ -1,8 +1,9 @@
+import { withAppUtils } from "@awfixersites/utils/next-config";
 import { withBotId } from "botid/next/config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
+  transpilePackages: ["@awfixersites/security", "@awfixersites/utils", "@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
   async redirects() {
     return [
       {
@@ -24,4 +25,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBotId(nextConfig);
+export default withAppUtils(withBotId(nextConfig));

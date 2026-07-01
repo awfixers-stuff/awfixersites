@@ -1,0 +1,5 @@
+.bridge-token
+node_modules/
+extension/dist/
+mcp/dist/
+bun.lock

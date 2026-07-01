@@ -2,7 +2,7 @@
   "name": "@awfixersites/template",
   "version": "0.0.1",
   "private": true,
-  "description": "template website for the @awfixersites/mono team to look at and work with",
+  "description": "Reference Next.js app with monorepo configs wired in — copy when scaffolding new sites",
   "homepage": "",
   "author": {
     "name": "AWFixer LLC",
@@ -66,7 +66,6 @@
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "shadcn": "catalog:",
-    "sst": "catalog:infra",
     "tailwind-merge": "catalog:css",
     "tailwindcss": "catalog:css",
     "tw-animate-css": "catalog:css"

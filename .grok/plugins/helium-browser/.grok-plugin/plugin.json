@@ -1,0 +1,20 @@
+{
+  "name": "helium-browser",
+  "version": "1.1.0",
+  "description": "Control and debug your local Helium browser instance via DevTools MCP — navigate, click, screenshot, inspect network, and profile performance.",
+  "author": {
+    "name": "awfixersites",
+    "url": "https://helium.computer"
+  },
+  "homepage": "https://helium.computer",
+  "license": "Apache-2.0",
+  "keywords": [
+    "helium",
+    "browser",
+    "devtools",
+    "mcp",
+    "automation",
+    "debugging",
+    "chromium"
+  ]
+}
