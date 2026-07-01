@@ -211,10 +211,39 @@ unit-testable without React, never mutating `mailto:`/`tel:`/excluded hrefs.
 - `providers/registry.test.ts` — env var presence/absence correctly gates
   provider registration.
 
+## Rollout to all apps
+
+All 21 apps under `apps/*` (about, account, agent, army, auth, branding,
+careers, cash, church, cloud, club, codes, donate, legal, llc, me, network,
+news, party, space, tips) are structurally uniform — each already has
+`instrumentation-client.ts`, `app/layout.tsx`, and `vercel.ts` — so rollout
+is mechanical per app:
+
+1. Add `"@awfixersites/telemetry": "workspace:*"` to the app's
+   `package.json` (via the `workspace` catalog entry) and
+   `transpilePackages` in `next.config.ts`.
+2. Add `clink.json` at the app root, with `network` set to the shared
+   awfixer domain list (same set as `DONATE_APEX_DOMAINS` in
+   `src/donate-domains.ts`) and `utm.source` set to the app name.
+3. Add `NEXT_PUBLIC_SENTRY_DSN` / `NEXT_PUBLIC_POSTHOG_KEY` to
+   `.env.example` (values left blank — real values are set per-app in
+   Vercel project env, not committed).
+4. Add `registerAppTelemetry({ app: "<name>" })` to
+   `instrumentation-client.ts`, alongside the existing `registerAppBotId()`
+   call.
+5. Add a new `instrumentation.ts` with `register()` +
+   `onRequestError` re-exported from `@awfixersites/telemetry/register-server`.
+6. Wrap `<ClinkProvider config={clinkConfig}>` around `{children}` in
+   `app/layout.tsx`, alongside the existing `<ThemeProvider>`.
+7. Replace existing `next/link` imports with `@awfixersites/telemetry/link`
+   (`CLink`) across the app's components/pages.
+
+Given the mechanical, repetitive nature of steps 1–6 across 21 apps, the
+implementation plan should treat this as a scripted/batched step (not 21
+manual hand-edits), with step 7 (swapping `next/link` usages) handled
+per-app since call sites vary.
+
 ## Out of scope for this pass
 
-- Actual X/Twitter pixel implementation (stub only).
-- Rolling `registerAppTelemetry`/`instrumentation.ts`/`clink.json` +
-  `ClinkProvider` out to all 22 apps, and replacing existing `next/link`
-  usages with `CLink` — this design covers the package itself; adoption
-  across apps is a follow-up once the package is reviewed.
+- Actual X/Twitter pixel implementation (stub only) — interface is ready,
+  provider is inert until a future task fills it in.
