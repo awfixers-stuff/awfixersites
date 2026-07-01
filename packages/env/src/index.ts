@@ -22,4 +22,3 @@ export function getAuthDatabaseUrl(): string | undefined {
     process.env.POSTGRES_URL
   );
 }
-

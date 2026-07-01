@@ -29,7 +29,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "bun --bun ../../scripts/vercel-build.ts",
-    "start": "next start"
+    "start": "next start",
+    "lint": "oxlint -c ../../src/lint.json . --fix",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
     "@awfixersites/auth": "catalog:",
@@ -40,6 +44,12 @@
     "@next/swc-linux-x64-gnu": "catalog:",
     "@tailwindcss/oxide-linux-x64-gnu": "catalog:",
     "@vercel/analytics": "catalog:",
+    "@vercel/backends": "catalog:",
+    "@vercel/cervel": "catalog:",
+    "@vercel/config": "catalog:",
+    "@vercel/container": "catalog:",
+    "@vercel/express": "catalog:",
+    "@vercel/next": "catalog:",
     "@vercel/speed-insights": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
@@ -52,21 +62,32 @@
     "radix-ui": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-hook-form": "catalog:",
     "remark-gfm": "catalog:",
+    "resend": "catalog:",
     "shadcn": "catalog:",
     "tailwind-merge": "catalog:",
     "tw-animate-css": "catalog:",
+    "vercel": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@oxfmt/binding-linux-x64-gnu": "catalog:",
+    "@oxlint/binding-linux-x64-gnu": "catalog:",
+    "@rolldown/binding-linux-x64-gnu": "catalog:",
     "@tailwindcss/postcss": "catalog:",
-    "@tailwindcss/typography": "catalog:",
     "@types/bun": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "@vitest/utils": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
   },
   "devEngines": {
     "packageManager": {

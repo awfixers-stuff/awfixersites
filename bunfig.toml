@@ -22,6 +22,16 @@ minimumReleaseAgeExcludes = [
   "railway",
   "framer-motion",
   "motion-dom",
+  "vercel",
+  "@vercel/backends",
+  "@vercel/next",
+  "@vercel/container",
+  "@vercel/express",
+  "@vercel/cervel",
+  "@vercel/routing-utils",
+  "@vercel/analytics",
+  "@vercel/speed-insights",
+  "@vercel/config",
 ]
 optional = false
 peer = false
