@@ -8,7 +8,12 @@ export {
 } from "./client";
 
 export { signInWithAwfixerIdp, redirectToIdpSignUp } from "./oauth-login";
-export { getIdpOrigin, getIdpSignInUrl, isOidcAuthorizeQuery, buildOidcAuthorizeResumeUrl } from "./idp";
+export {
+  getIdpOrigin,
+  getIdpSignInUrl,
+  isOidcAuthorizeQuery,
+  buildOidcAuthorizeResumeUrl,
+} from "./idp";
 export {
   getAuthDeploymentRole,
   isAuthClientDeployment,

@@ -3,10 +3,7 @@
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import {
-  buildOidcAuthorizeResumeUrl,
-  isOidcAuthorizeQuery,
-} from "@awfixersites/auth/idp";
+import { buildOidcAuthorizeResumeUrl, isOidcAuthorizeQuery } from "@awfixersites/auth/idp";
 import { PasskeyAuthForm, type PasskeyAuthMode } from "@awfixersites/ui/auth";
 import { Spinner } from "@awfixersites/ui/components/spinner";
 

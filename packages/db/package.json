@@ -14,6 +14,7 @@
     "push": "prisma db push"
   },
   "dependencies": {
+    "@awfixersites/env": "catalog:",
     "@awfixersites/ui": "catalog:",
     "@prisma/adapter-pg": "catalog:",
     "@prisma/client": "catalog:",

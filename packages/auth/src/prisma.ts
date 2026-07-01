@@ -1,3 +1,4 @@
+import { getAuthDatabaseUrl as resolveAuthDatabaseUrl } from "@awfixersites/env";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -25,10 +26,11 @@ function getAuthDatabaseUrl() {
     return clientUrl;
   }
 
-  const connectionString =
-    process.env.AUTH_DATABASE_URL ?? process.env.AUTH_PRISMA_DATABASE_URL;
+  const connectionString = resolveAuthDatabaseUrl();
   if (!connectionString) {
-    throw new Error("Missing AUTH_DATABASE_URL (or AUTH_PRISMA_DATABASE_URL).");
+    throw new Error(
+      "Missing auth database URL. Set AUTH_DATABASE_URL or PRISMA_DATABASE_URL / DATABASE_URL in .env.local.",
+    );
   }
   return connectionString;
 }

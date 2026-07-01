@@ -177,17 +177,11 @@ export function PasskeyAuthForm({
       </form>
       <FieldDescription className="px-6 text-center text-base text-muted-foreground">
         By clicking continue, you agree to our{" "}
-        <a
-          href={termsHref}
-          className="font-semibold text-foreground/80 hover:text-foreground"
-        >
+        <a href={termsHref} className="font-semibold text-foreground/80 hover:text-foreground">
           Terms of Service
         </a>{" "}
         and{" "}
-        <a
-          href={privacyHref}
-          className="font-semibold text-foreground/80 hover:text-foreground"
-        >
+        <a href={privacyHref} className="font-semibold text-foreground/80 hover:text-foreground">
           Privacy Policy
         </a>
         .

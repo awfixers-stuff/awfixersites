@@ -66,6 +66,7 @@
       "@awfixersites/auth": "workspace:*",
       "@awfixersites/db": "workspace:*",
       "@awfixersites/mdx": "workspace:*",
+      "@awfixersites/env": "workspace:*",
       "@awfixersites/content": "workspace:*",
       "@types/bun": "1.3.14",
       "@types/node": "26.0.1",
@@ -85,7 +86,13 @@
     "lint": "oxlint -c ./src/lint.json . --fix",
     "format": "oxfmt -c ./src/fmt.json . --write",
     "typecheck": "tsgo --noEmit",
-    "test:browser": "vitest"
+    "test:browser": "vitest",
+    "auth:generate": "bun run --cwd packages/auth generate",
+    "auth:push": "bun scripts/prisma-push.ts auth",
+    "db:generate": "bun run --cwd packages/db generate",
+    "db:push": "bun scripts/prisma-push.ts db",
+    "prisma:push": "bun scripts/prisma-push.ts all",
+    "prisma:generate": "bun run auth:generate && bun run db:generate"
   },
   "dependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260630.1",

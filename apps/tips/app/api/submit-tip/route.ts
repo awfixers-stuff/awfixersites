@@ -90,10 +90,7 @@ ${validatedData.tip}
       return Response.json({ error: "Failed to send email" }, { status: 500 });
     }
 
-    return Response.json(
-      { success: true, message: "Tip submitted successfully" },
-      { status: 200 },
-    );
+    return Response.json({ success: true, message: "Tip submitted successfully" }, { status: 200 });
   } catch (error) {
     console.error("Submit tip error:", error);
 

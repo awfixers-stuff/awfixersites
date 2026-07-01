@@ -134,7 +134,6 @@ export function DevelopersSection() {
                 </pre>
               </div>
             </div>
-
           </div>
         </div>
       </div>

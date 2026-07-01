@@ -124,7 +124,6 @@ export function Navigation() {
               </Link>
             ))}
           </div>
-
         </div>
       </div>
     </header>

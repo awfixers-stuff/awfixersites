@@ -18,7 +18,9 @@ import { getAuthDeploymentRole, type AuthDeploymentRole } from "./deployment";
 import { findOrCreateUserForPasskey } from "./passkey-users";
 import { getTrustedOidcClients } from "./oauth-clients";
 
-function sharedOptions(prisma: PrismaClient): Pick<
+function sharedOptions(
+  prisma: PrismaClient,
+): Pick<
   BetterAuthOptions,
   "appName" | "baseURL" | "secret" | "trustedOrigins" | "database" | "advanced"
 > {

@@ -84,7 +84,6 @@ export function getOAuthSiteClient(key: OAuthSiteKey): OAuthSiteClient {
   return client;
 }
 
-
 export function getOAuthSiteKey(): OAuthSiteKey {
   const key =
     process.env.AUTH_OAUTH_SITE_KEY?.trim().toLowerCase() ??
@@ -93,7 +92,7 @@ export function getOAuthSiteKey(): OAuthSiteKey {
     return key;
   }
   throw new Error(
-    "Missing or invalid AUTH_OAUTH_SITE_KEY. Expected \"army\" or \"church\" on OAuth client apps.",
+    'Missing or invalid AUTH_OAUTH_SITE_KEY. Expected "army" or "church" on OAuth client apps.',
   );
 }
 

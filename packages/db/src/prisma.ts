@@ -1,3 +1,4 @@
+import { getAppDatabaseUrl } from "@awfixersites/env";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -9,11 +10,10 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const connectionString =
-    process.env.DATABASE_URL ?? process.env.ENLIST_DATABASE_URL ?? process.env.AUTH_DATABASE_URL;
+  const connectionString = getAppDatabaseUrl();
 
   if (!connectionString) {
-    throw new Error("Missing DATABASE_URL (or ENLIST_DATABASE_URL / AUTH_DATABASE_URL).");
+    throw new Error("Missing DATABASE_URL (or PRISMA_DATABASE_URL / POSTGRES_URL) in .env.local.");
   }
 
   const pool = globalForPrisma.pool ?? new Pool({ connectionString });

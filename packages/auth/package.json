@@ -20,6 +20,7 @@
     "push": "prisma db push"
   },
   "dependencies": {
+    "@awfixersites/env": "catalog:",
     "@better-auth/passkey": "catalog:",
     "@prisma/adapter-pg": "catalog:",
     "@prisma/client": "catalog:",
@@ -28,9 +29,9 @@
     "pg": "catalog:"
   },
   "devDependencies": {
-    "next": "catalog:",
     "@types/node": "catalog:",
     "@types/pg": "catalog:",
+    "next": "catalog:",
     "prisma": "catalog:",
     "typescript": "catalog:"
   }
