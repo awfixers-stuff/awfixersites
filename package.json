@@ -47,6 +47,9 @@
         "@sentry/vercel-edge": "10.62.0",
         "@sentry/webpack-plugin": "5.3.0"
       },
+      "telemetry": {
+        "posthog-js": "1.395.0"
+      },
       "vercel": {
         "ai": "7.0.4",
         "chat": "4.31.0",
@@ -96,7 +99,8 @@
         "@awfixersites/db": "workspace:*",
         "@awfixersites/mdx": "workspace:*",
         "@awfixersites/env": "workspace:*",
-        "@awfixersites/content": "workspace:*"
+        "@awfixersites/content": "workspace:*",
+        "@awfixersites/telemetry": "workspace:*"
       },
       "checking": {
         "@vitejs/plugin-react": "6.0.3",

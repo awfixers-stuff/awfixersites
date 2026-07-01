@@ -1,0 +1,33 @@
+{
+  "name": "@awfixersites/telemetry",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./track": "./src/track.ts",
+    "./register": "./src/register.ts",
+    "./register-server": "./src/register-server.ts",
+    "./link": "./src/link/index.ts",
+    "./config": "./src/config/schema.ts"
+  },
+  "scripts": {
+    "lint": "oxlint -c ../../src/lint.json .",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts",
+    "lint:fix": "oxlint -c ../../src/lint.json . --fix"
+  },
+  "dependencies": {
+    "@sentry/nextjs": "catalog:sentry",
+    "posthog-js": "catalog:telemetry",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:types",
+    "@types/react": "catalog:types",
+    "@types/react-dom": "catalog:types",
+    "next": "catalog:nextjs",
+    "react": "catalog:react",
+    "typescript": "catalog:checking"
+  }
+}
