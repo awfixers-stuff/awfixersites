@@ -14,6 +14,7 @@ export {
   isOidcAuthorizeQuery,
   buildOidcAuthorizeResumeUrl,
 } from "./idp";
+export { getBackToSiteLabel, resolveReferrerSite, type ReferrerSite } from "./referrer";
 export {
   getAuthDeploymentRole,
   isAuthClientDeployment,

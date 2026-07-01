@@ -1,7 +1,4 @@
-import Link from "next/link";
-import { Suspense } from "react";
-
-import { IdpSignInWithReturn } from "@awfixersites/ui/auth/idp-sign-in-with-return";
+import { SignInPanel } from "@/components/auth/sign-in-panel";
 
 export const metadata = {
   title: "Sign in",
@@ -9,27 +6,12 @@ export const metadata = {
 
 export default function SignInPage() {
   return (
-    <main className="flex flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-sm space-y-6">
-        <div className="space-y-2 text-center">
-          <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
-            Welcome back
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Sign in with your AWFixer account via auth.awfixer.me.
-          </p>
-        </div>
+    <div className="relative flex flex-1 flex-col items-center justify-center px-6 py-20 lg:py-28 min-h-[calc(100svh-5rem)]">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-bleach/30 to-transparent" />
 
-        <Suspense fallback={<div className="h-48" />}>
-          <IdpSignInWithReturn />
-        </Suspense>
-
-        <p className="text-center text-sm text-muted-foreground">
-          <Link href="/" className="font-medium text-primary underline-offset-4 hover:underline">
-            Back to home
-          </Link>
-        </p>
+      <div className="relative z-10 flex w-full justify-center">
+        <SignInPanel />
       </div>
-    </main>
+    </div>
   );
 }

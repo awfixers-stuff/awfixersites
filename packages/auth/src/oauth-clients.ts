@@ -1,11 +1,6 @@
 import type { Client } from "better-auth/plugins/oidc-provider";
 
-import {
-  getOAuthSiteByKey,
-  isOAuthSiteKey,
-  OAUTH_SITES,
-  type OAuthSiteKey,
-} from "./oauth-sites";
+import { getOAuthSiteByKey, isOAuthSiteKey, OAUTH_SITES, type OAuthSiteKey } from "./oauth-sites";
 
 export type { OAuthSiteKey } from "./oauth-sites";
 

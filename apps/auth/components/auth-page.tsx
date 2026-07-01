@@ -1,25 +1,24 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { buildOidcAuthorizeResumeUrl, isOidcAuthorizeQuery } from "@awfixersites/auth/idp";
 import { PasskeyAuthForm, type PasskeyAuthMode } from "@awfixersites/ui/auth";
 import { Spinner } from "@awfixersites/ui/components/spinner";
 
-import { AuthChrome } from "@/components/auth-chrome";
-import { CodesGridBackground } from "@/components/codes-grid-background";
+import { ReferrerBackFooter } from "@/components/auth/referrer-back-footer";
+import { AuthPanelLayout } from "@/components/auth/auth-panel-layout";
+import { AuthShell } from "@/components/auth/auth-shell";
+import { ctaButtonClassName } from "@/lib/cta-button";
 
 const codesSiteUrl = process.env.NEXT_PUBLIC_CODES_SITE_URL ?? "https://awfixer.codes";
+const termsHref = "https://awfixer.codes/terms";
+const privacyHref = "https://awfixer.codes/privacy";
 
 function AuthPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const mode = useMemo<PasskeyAuthMode>(() => {
     const modeParam = searchParams.get("mode");
@@ -38,6 +37,7 @@ function AuthPageContent() {
 
   const returnTo = searchParams.get("returnTo") ?? undefined;
   const oidcAuthorize = isOidcAuthorizeQuery(searchParams);
+  const isSignUp = mode === "sign-up";
 
   const handleSuccess = useCallback(() => {
     if (oidcAuthorize) {
@@ -50,35 +50,57 @@ function AuthPageContent() {
   }, [oidcAuthorize, returnTo, searchParams]);
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-background">
-      <AuthChrome />
-      <CodesGridBackground />
-
-      <div className="relative z-10 flex flex-1 items-center justify-center px-6 py-24 pt-28">
-        <div
-          className={`w-full max-w-lg transition-all duration-700 ease-out ${
-            mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-          }`}
-        >
-          <div className="rounded-2xl border border-foreground/10 bg-card p-10 text-card-foreground shadow-lg sm:p-12">
-            <PasskeyAuthForm
-              mode={mode}
-              onModeChange={setMode}
-              codesSiteUrl={codesSiteUrl}
-              onSuccess={handleSuccess}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <AuthShell>
+      <AuthPanelLayout
+        eyebrow={isSignUp ? "Create account" : "Member access"}
+        title={isSignUp ? "Join AWFixer" : "Welcome back"}
+        description={
+          isSignUp
+            ? "Create your AWFixer account with a username and passkey. Two-factor authentication is required."
+            : "Sign in with your AWFixer account to continue across the movement."
+        }
+        footer={
+          <ReferrerBackFooter>
+            <p className="max-w-md text-sm leading-relaxed text-foreground/50">
+              By continuing, you agree to our{" "}
+              <a href={termsHref} className="font-medium text-foreground/80 hover:text-foreground">
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a
+                href={privacyHref}
+                className="font-medium text-foreground/80 hover:text-foreground"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </ReferrerBackFooter>
+        }
+      >
+        <PasskeyAuthForm
+          mode={mode}
+          onModeChange={setMode}
+          codesSiteUrl={codesSiteUrl}
+          termsHref={termsHref}
+          privacyHref={privacyHref}
+          onSuccess={handleSuccess}
+          embedded
+          showTerms={false}
+          buttonClassName={ctaButtonClassName("full")}
+        />
+      </AuthPanelLayout>
+    </AuthShell>
   );
 }
 
 function AuthFallback() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
-      <Spinner className="size-8" />
-    </div>
+    <AuthShell>
+      <div className="flex items-center justify-center py-24">
+        <Spinner className="size-8" />
+      </div>
+    </AuthShell>
   );
 }
 

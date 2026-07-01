@@ -8,9 +8,10 @@ import { signInWithAwfixerIdp, redirectToIdpSignUp } from "@awfixersites/auth/oa
 type IdpSignInFormProps = {
   returnTo?: string;
   onSuccess?: () => void;
+  buttonClassName?: string;
 };
 
-export function IdpSignInForm({ returnTo, onSuccess }: IdpSignInFormProps) {
+export function IdpSignInForm({ returnTo, onSuccess, buttonClassName }: IdpSignInFormProps) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -39,8 +40,13 @@ export function IdpSignInForm({ returnTo, onSuccess }: IdpSignInFormProps) {
         </p>
       ) : null}
 
-      <Button type="button" className="w-full" disabled={loading} onClick={handleSignIn}>
-        {loading ? "Redirecting…" : "Sign in with AWFixer"}
+      <Button
+        type="button"
+        className={buttonClassName ?? "w-full"}
+        disabled={loading}
+        onClick={handleSignIn}
+      >
+        {loading ? "Redirecting…" : "Sign in with your AWFixer Account"}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">

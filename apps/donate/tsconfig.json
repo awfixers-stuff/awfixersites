@@ -3,24 +3,12 @@
   "extends": "../../src/tsconfig.next.json",
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@awfixersites/db": [
-        "../../packages/db/src/index.ts"
-      ],
-      "@awfixersites/db/*": [
-        "../../packages/db/src/*"
-      ],
-      "@awfixersites/ui/*": [
-        "../../packages/ui/src/*"
-      ],
-      "@awfixersites/auth": [
-        "../../packages/auth/src/index.ts"
-      ],
-      "@awfixersites/auth/*": [
-        "../../packages/auth/src/*"
-      ]
+      "@/*": ["./*"],
+      "@awfixersites/db": ["../../packages/db/src/index.ts"],
+      "@awfixersites/db/*": ["../../packages/db/src/*"],
+      "@awfixersites/ui/*": ["../../packages/ui/src/*"],
+      "@awfixersites/auth": ["../../packages/auth/src/index.ts"],
+      "@awfixersites/auth/*": ["../../packages/auth/src/*"]
     }
   },
   "include": [
@@ -34,7 +22,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

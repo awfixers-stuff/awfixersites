@@ -1,0 +1,60 @@
+# Reports GitHub commit statuses for Vercel Deployment Checks.
+# Triggered when a Vercel deployment is ready (before production promotion).
+#
+# In each Vercel project: Settings → Build and Deployment → Deployment Checks
+# → Add Checks → GitHub → select:
+#   Vercel - <project-name>: lint
+#   Vercel - <project-name>: typecheck
+#
+# List all check names: bun scripts/vercel-deployment-check.ts --list
+# Docs: https://vercel.com/docs/deployment-checks
+
+name: Vercel Deployment Checks
+
+on:
+  repository_dispatch:
+    types:
+      - vercel.deployment.ready
+
+run-name: >-
+  Vercel checks — ${{ github.event.client_payload.project.name }}
+  (${{ github.event.client_payload.environment }})
+
+concurrency:
+  group: >-
+    vercel-check-${{ github.event.client_payload.project.id }}-${{
+      github.event.client_payload.git.sha
+    }}-${{ matrix.check }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  check:
+    name: ${{ matrix.check }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [lint, typecheck]
+    env:
+      VERCEL_PROJECT_NAME: ${{ github.event.client_payload.project.name }}
+      VERCEL_DEPLOYMENT_URL: ${{ github.event.client_payload.url }}
+      VERCEL_ENVIRONMENT: ${{ github.event.client_payload.environment }}
+
+    steps:
+      - name: Notify Vercel (pending)
+        uses: vercel/repository-dispatch/actions/status@v1
+        with:
+          name: Vercel - ${{ github.event.client_payload.project.name }}: ${{ matrix.check }}
+
+      - name: Checkout deployment commit
+        uses: vercel/repository-dispatch/actions/checkout@v1
+
+      - uses: ./.github/actions/install
+
+      - name: Run ${{ matrix.check }}
+        run: bun scripts/vercel-deployment-check.ts --project "$VERCEL_PROJECT_NAME" --check "${{ matrix.check }}"

@@ -179,6 +179,7 @@
     "lint:security": "oxlint -c ./src/lint.security.json apps packages src",
     "lint:security:types": "oxlint -c ./src/lint.security.json apps packages src --type-aware -D typescript/no-unsafe-argument -D typescript/no-unsafe-assignment -D typescript/no-unsafe-call -D typescript/no-unsafe-member-access -D typescript/no-unsafe-return -D typescript/restrict-template-expressions",
     "lint:ci": "bun --bun scripts/lint-all.ts",
+    "vercel:checks:list": "bun scripts/vercel-deployment-check.ts --list",
     "format": "oxfmt -c ./src/fmt.json . --write",
     "typecheck": "bun --bun scripts/typecheck-all.ts",
     "typecheck:src": "tsgo -p ./src/tsconfig.json --noEmit --pretty",
@@ -194,6 +195,8 @@
     "@socketsecurity/bun-security-scanner": "catalog:",
     "@typescript/native-preview": "catalog:checking",
     "@typescript/native-preview-linux-x64": "catalog:bindings",
+    "botid": "1.5.11",
+    "railway": "3.4.1",
     "typescript": "catalog:checking"
   },
   "devDependencies": {

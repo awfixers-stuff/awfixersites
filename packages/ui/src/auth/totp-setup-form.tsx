@@ -8,12 +8,19 @@ import { Button } from "@awfixersites/ui/components/button";
 import { Field, FieldGroup, FieldLabel } from "@awfixersites/ui/components/field";
 import { Input } from "@awfixersites/ui/components/input";
 import { Spinner } from "@awfixersites/ui/components/spinner";
+import { cn } from "@awfixersites/ui/lib/utils";
 
 type TotpSetupFormProps = {
   onComplete?: () => void;
+  embedded?: boolean;
+  buttonClassName?: string;
 };
 
-export function TotpSetupForm({ onComplete }: TotpSetupFormProps) {
+export function TotpSetupForm({
+  onComplete,
+  embedded = false,
+  buttonClassName,
+}: TotpSetupFormProps) {
   const [loading, setLoading] = React.useState(true);
   const [verifying, setVerifying] = React.useState(false);
   const [totpUri, setTotpUri] = React.useState<string | null>(null);
@@ -84,20 +91,22 @@ export function TotpSetupForm({ onComplete }: TotpSetupFormProps) {
 
   return (
     <form onSubmit={handleVerify}>
-      <FieldGroup className="gap-6">
-        <div className="space-y-2 text-center">
-          <h1 className="font-display text-3xl tracking-tight text-foreground">
-            Set up authenticator
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            TOTP is required for every AWFixer account. Add this entry to your authenticator app,
-            then enter the 6-digit code.
-          </p>
-        </div>
+      <FieldGroup className="gap-8">
+        {!embedded ? (
+          <div className="space-y-2 text-center">
+            <h1 className="font-display text-3xl tracking-tight text-foreground">
+              Set up authenticator
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              TOTP is required for every AWFixer account. Add this entry to your authenticator app,
+              then enter the 6-digit code.
+            </p>
+          </div>
+        ) : null}
 
         {totpUri ? (
-          <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <div className="rounded-xl border border-foreground/10 bg-foreground/[0.03] p-5">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-foreground/45">
               Authenticator URI
             </p>
             <p className="break-all font-mono text-xs text-foreground">{totpUri}</p>
@@ -105,8 +114,8 @@ export function TotpSetupForm({ onComplete }: TotpSetupFormProps) {
         ) : null}
 
         {backupCodes.length > 0 ? (
-          <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-4">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <div className="rounded-xl border border-foreground/10 bg-foreground/[0.03] p-5">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-foreground/45">
               Backup codes
             </p>
             <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
@@ -118,7 +127,9 @@ export function TotpSetupForm({ onComplete }: TotpSetupFormProps) {
         ) : null}
 
         <Field>
-          <FieldLabel htmlFor="totp-code">Verification code</FieldLabel>
+          <FieldLabel htmlFor="totp-code" className={cn(embedded && "text-center block")}>
+            Verification code
+          </FieldLabel>
           <Input
             id="totp-code"
             inputMode="numeric"
@@ -127,6 +138,7 @@ export function TotpSetupForm({ onComplete }: TotpSetupFormProps) {
             value={code}
             onChange={(event) => setCode(event.target.value)}
             required
+            className="h-12 rounded-lg border-foreground/10 bg-transparent px-4 text-lg"
           />
         </Field>
 
@@ -137,7 +149,7 @@ export function TotpSetupForm({ onComplete }: TotpSetupFormProps) {
           </Alert>
         ) : null}
 
-        <Button type="submit" className="w-full" disabled={verifying}>
+        <Button type="submit" className={buttonClassName ?? "w-full"} disabled={verifying}>
           {verifying ? (
             <>
               <Spinner className="size-4" />

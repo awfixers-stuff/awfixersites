@@ -1,4 +1,4 @@
-import { getAuthDatabaseUrl as resolveAuthDatabaseUrl } from "@awfixersites/env";
+import { getAuthDatabaseUrl } from "@awfixersites/env";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -10,14 +10,11 @@ const globalForIdpPrisma = globalThis as unknown as {
 };
 
 function getIdpDatabaseUrl() {
-  const connectionString =
-    process.env.AUTH_IDP_DATABASE_URL ??
-    process.env.AUTH_DATABASE_URL ??
-    resolveAuthDatabaseUrl();
+  const connectionString = getAuthDatabaseUrl() ?? process.env.AUTH_IDP_DATABASE_URL;
 
   if (!connectionString) {
     throw new Error(
-      "Missing IdP database URL. Set AUTH_IDP_DATABASE_URL or AUTH_DATABASE_URL for admin operations.",
+      "Missing IdP database URL. Set PRISMA_DATABASE_URL (or AUTH_IDP_DATABASE_URL) for admin operations.",
     );
   }
 

@@ -44,9 +44,7 @@ export default async function AdminOauthClientsPage() {
                   <td className="px-4 py-3">
                     {registeredIds.has(client.clientId) ? "Yes" : "Pending push"}
                   </td>
-                  <td className="px-4 py-3 font-mono text-xs">
-                    {client.redirectUrls.join(", ")}
-                  </td>
+                  <td className="px-4 py-3 font-mono text-xs">{client.redirectUrls.join(", ")}</td>
                 </tr>
               ))}
             </tbody>

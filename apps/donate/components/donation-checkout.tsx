@@ -13,11 +13,7 @@ import { Button } from "@awfixersites/ui/components/button";
 import { Input } from "@awfixersites/ui/components/input";
 import { Label } from "@awfixersites/ui/components/label";
 
-import {
-  MAX_AMOUNT_CENTS,
-  MIN_AMOUNT_CENTS,
-  PRESET_AMOUNTS_CENTS,
-} from "@/lib/payment-intent";
+import { MAX_AMOUNT_CENTS, MIN_AMOUNT_CENTS, PRESET_AMOUNTS_CENTS } from "@/lib/payment-intent";
 import { stripeAppearance } from "@/lib/stripe-appearance";
 import type { DonateTenant } from "@/lib/tenants";
 import { cn } from "@/lib/utils";
@@ -99,7 +95,9 @@ function PaymentStep({
       <div className="rounded-2xl border border-glass-border bg-glass p-5 backdrop-blur-sm">
         <p className="text-sm text-muted-foreground">You&apos;re giving</p>
         <p className="font-display text-3xl">{formatUsd(amountCents)}</p>
-        <p className="mt-1 text-sm text-muted-foreground">to AWFixer&apos;s Church via {tenant.displayName}</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          to AWFixer&apos;s Church via {tenant.displayName}
+        </p>
       </div>
 
       <div className="rounded-2xl border border-glass-border bg-glass p-5 backdrop-blur-sm">
@@ -180,7 +178,9 @@ export function DonationCheckout({ tenant, publishableKey }: DonationCheckoutPro
   }, [customAmount, selectedPreset]);
 
   const amountIsValid =
-    amountCents >= MIN_AMOUNT_CENTS && amountCents <= MAX_AMOUNT_CENTS && Number.isInteger(amountCents);
+    amountCents >= MIN_AMOUNT_CENTS &&
+    amountCents <= MAX_AMOUNT_CENTS &&
+    Number.isInteger(amountCents);
 
   const createIntent = useCallback(
     async (donor: DonorFormData) => {
@@ -313,7 +313,9 @@ export function DonationCheckout({ tenant, publishableKey }: DonationCheckoutPro
             <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="name">Name on receipt (optional)</Label>
               <Input id="name" autoComplete="name" placeholder="Your name" {...register("name")} />
-              {errors.name ? <p className="text-sm text-destructive">{errors.name.message}</p> : null}
+              {errors.name ? (
+                <p className="text-sm text-destructive">{errors.name.message}</p>
+              ) : null}
             </div>
           </div>
 

@@ -4,8 +4,12 @@ import { useSearchParams } from "next/navigation";
 
 import { IdpSignInForm } from "./idp-sign-in-form";
 
-export function IdpSignInWithReturn() {
+type IdpSignInWithReturnProps = {
+  buttonClassName?: string;
+};
+
+export function IdpSignInWithReturn({ buttonClassName }: IdpSignInWithReturnProps = {}) {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get("returnTo") ?? undefined;
-  return <IdpSignInForm returnTo={returnTo} />;
+  return <IdpSignInForm returnTo={returnTo} buttonClassName={buttonClassName} />;
 }

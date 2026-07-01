@@ -4,11 +4,11 @@ Read this before touching auth.
 
 ## Architecture
 
-| Role | Host | Purpose |
-|------|------|---------|
-| **IdP** | `auth.awfixer.me` (`apps/auth`) | Passkey + mandatory TOTP, username, OIDC provider |
-| **Account** | `account.awfixer.me` (`apps/account`) | User dashboard + admin (role-gated) |
-| **OAuth clients** | All other `apps/*` | Delegate sign-in to IdP via `genericOAuth` |
+| Role              | Host                                  | Purpose                                           |
+| ----------------- | ------------------------------------- | ------------------------------------------------- |
+| **IdP**           | `auth.awfixer.me` (`apps/auth`)       | Passkey + mandatory TOTP, username, OIDC provider |
+| **Account**       | `account.awfixer.me` (`apps/account`) | User dashboard + admin (role-gated)               |
+| **OAuth clients** | All other `apps/*`                    | Delegate sign-in to IdP via `genericOAuth`        |
 
 Synthetic emails: `{username}@id.awfixer.army` — never shown in UI.
 
@@ -16,31 +16,31 @@ Synthetic emails: `{username}@id.awfixer.army` — never shown in UI.
 
 ```bash
 bun run auth:generate   # prisma generate (packages/auth)
-bun run auth:push       # prisma db push (requires AUTH_DATABASE_URL)
+bun run auth:push       # prisma db push (requires PRISMA_DATABASE_URL)
 bun run prisma:push     # auth + db packages
 bun scripts/wire-oauth-apps.ts   # scaffold OAuth routes on satellite apps
 ```
 
 ## Env — IdP (`apps/auth`)
 
-| Variable | Purpose |
-|----------|---------|
-| `AUTH_DEPLOYMENT_ROLE` | `idp` |
-| `AUTH_DATABASE_URL` | IdP Postgres (users, passkeys, TOTP, OAuth apps) |
-| `AUTH_PASSKEY_RP_ID` | `awfixer.me` in prod |
-| `AUTH_ADMIN_USERNAMES` | Comma-separated usernames promoted to `role=admin` |
-| `AUTH_OAUTH_{SITE}_CLIENT_*` | One set per satellite app (see `oauth-sites.ts`) |
+| Variable                     | Purpose                                            |
+| ---------------------------- | -------------------------------------------------- |
+| `AUTH_DEPLOYMENT_ROLE`       | `idp`                                              |
+| `PRISMA_DATABASE_URL`        | IdP Postgres (users, passkeys, TOTP, OAuth apps)   |
+| `AUTH_PASSKEY_RP_ID`         | `awfixer.me` in prod                               |
+| `AUTH_ADMIN_USERNAMES`       | Comma-separated usernames promoted to `role=admin` |
+| `AUTH_OAUTH_{SITE}_CLIENT_*` | One set per satellite app (see `oauth-sites.ts`)   |
 
 ## Env — OAuth client apps
 
-| Variable | Purpose |
-|----------|---------|
-| `AUTH_DEPLOYMENT_ROLE` | `client` |
-| `AUTH_OAUTH_SITE_KEY` | Site key from `oauth-sites.ts` |
-| `AUTH_CLIENT_DATABASE_URL` | Local session DB |
-| `AUTH_IDP_URL` | `https://auth.awfixer.me` |
+| Variable                   | Purpose                        |
+| -------------------------- | ------------------------------ |
+| `AUTH_DEPLOYMENT_ROLE`     | `client`                       |
+| `AUTH_OAUTH_SITE_KEY`      | Site key from `oauth-sites.ts` |
+| `AUTH_CLIENT_DATABASE_URL` | Local session DB               |
+| `AUTH_IDP_URL`             | `https://auth.awfixer.me`      |
 
-Account app admin routes also need `AUTH_IDP_DATABASE_URL` (or `AUTH_DATABASE_URL`) server-side.
+Account app admin routes also need `PRISMA_DATABASE_URL` (or `AUTH_IDP_DATABASE_URL`) server-side.
 
 ## Mandatory account setup
 

@@ -7,8 +7,10 @@ import { buildOidcAuthorizeResumeUrl, isOidcAuthorizeQuery } from "@awfixersites
 import { TotpVerifyForm } from "@awfixersites/ui/auth";
 import { Spinner } from "@awfixersites/ui/components/spinner";
 
-import { AuthChrome } from "@/components/auth-chrome";
-import { CodesGridBackground } from "@/components/codes-grid-background";
+import { ReferrerBackFooter } from "@/components/auth/referrer-back-footer";
+import { AuthPanelLayout } from "@/components/auth/auth-panel-layout";
+import { AuthShell } from "@/components/auth/auth-shell";
+import { ctaButtonClassName } from "@/lib/cta-button";
 
 const codesSiteUrl = process.env.NEXT_PUBLIC_CODES_SITE_URL ?? "https://awfixer.codes";
 
@@ -27,15 +29,21 @@ function TotpVerifyContent() {
   }, [oidcAuthorize, returnTo, searchParams]);
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-background">
-      <AuthChrome />
-      <CodesGridBackground />
-      <div className="relative z-10 flex flex-1 items-center justify-center px-6 py-24 pt-28">
-        <div className="w-full max-w-lg rounded-2xl border border-foreground/10 bg-card p-10 text-card-foreground shadow-lg sm:p-12">
-          <TotpVerifyForm onComplete={handleComplete} />
-        </div>
-      </div>
-    </div>
+    <AuthShell>
+      <AuthPanelLayout
+        eyebrow="Security"
+        title="Verify authenticator"
+        description="Enter the code from your authenticator app to finish signing in."
+        showFeatures={false}
+        footer={<ReferrerBackFooter />}
+      >
+        <TotpVerifyForm
+          onComplete={handleComplete}
+          embedded
+          buttonClassName={ctaButtonClassName("full")}
+        />
+      </AuthPanelLayout>
+    </AuthShell>
   );
 }
 
@@ -43,9 +51,11 @@ export default function TotpVerifyPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center">
-          <Spinner className="size-8" />
-        </div>
+        <AuthShell>
+          <div className="flex items-center justify-center py-24">
+            <Spinner className="size-8" />
+          </div>
+        </AuthShell>
       }
     >
       <TotpVerifyContent />

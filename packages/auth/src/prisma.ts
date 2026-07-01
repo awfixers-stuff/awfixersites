@@ -29,7 +29,7 @@ function getAuthDatabaseUrl() {
   const connectionString = resolveAuthDatabaseUrl();
   if (!connectionString) {
     throw new Error(
-      "Missing auth database URL. Set AUTH_DATABASE_URL or PRISMA_DATABASE_URL / DATABASE_URL in .env.local.",
+      "Missing auth database URL. Set PRISMA_DATABASE_URL (or DATABASE_URL / POSTGRES_URL) in .env.local.",
     );
   }
   return connectionString;

@@ -16,6 +16,7 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             nodejs_24
+            tfenv
             prisma
             prisma-engines
             openssl
@@ -37,7 +38,7 @@
             export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1
             export PLAYWRIGHT_NODEJS_PATH="${pkgs.nodejs_24}/bin/node"
 
-            export AUTH_DATABASE_URL="''${AUTH_DATABASE_URL:-''${AUTH_PRISMA_DATABASE_URL:-''${PRISMA_DATABASE_URL:-''${DATABASE_URL:-''${POSTGRES_URL:-}}}}}}"
+
           '';
 
           env = {

@@ -13,6 +13,7 @@
     "./session": "./src/session.ts",
     "./server-session": "./src/server-session.ts",
     "./idp": "./src/idp.ts",
+    "./referrer": "./src/referrer.ts",
     "./oauth-login": "./src/oauth-login.ts",
     "./account-setup": "./src/account-setup.ts",
     "./account-setup.server": "./src/account-setup.server.ts",

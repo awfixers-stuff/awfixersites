@@ -24,9 +24,7 @@ describe("donationStatusFromStripe", () => {
 
 describe("paymentIntentIdFromClientSecret", () => {
   it("extracts the payment intent id", () => {
-    expect(
-      paymentIntentIdFromClientSecret("pi_abc123_secret_xyz789"),
-    ).toBe("pi_abc123");
+    expect(paymentIntentIdFromClientSecret("pi_abc123_secret_xyz789")).toBe("pi_abc123");
   });
 
   it("returns null for invalid secrets", () => {

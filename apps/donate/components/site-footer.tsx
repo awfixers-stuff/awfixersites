@@ -11,8 +11,9 @@ export function SiteFooter({ tenant }: SiteFooterProps) {
     <footer className="border-t border-glass-border px-6 py-10">
       <div className="mx-auto flex max-w-3xl flex-col gap-4 text-center text-sm text-muted-foreground">
         <p>
-          All donations are made to <strong className="text-foreground">AWFixer&apos;s Church</strong>
-          , a 501(c)(3) nonprofit. Contributions are tax-deductible to the extent permitted by law.
+          All donations are made to{" "}
+          <strong className="text-foreground">AWFixer&apos;s Church</strong>, a 501(c)(3) nonprofit.
+          Contributions are tax-deductible to the extent permitted by law.
         </p>
         <p>
           You arrived from{" "}

@@ -19,7 +19,10 @@ export default async function AdminPage() {
     redirect("/");
   }
 
-  const [users, oauth] = await Promise.all([listUsersForAdmin({ limit: 10 }), listOauthApplications()]);
+  const [users, oauth] = await Promise.all([
+    listUsersForAdmin({ limit: 10 }),
+    listOauthApplications(),
+  ]);
 
   return (
     <div className="mx-auto max-w-5xl space-y-10 px-6 py-12">
@@ -74,8 +77,8 @@ export default async function AdminPage() {
           </Link>
         </div>
         <p className="text-sm text-muted-foreground">
-          {oauth.configured.length} configured satellite clients, {oauth.registered.length} registered
-          in the IdP database.
+          {oauth.configured.length} configured satellite clients, {oauth.registered.length}{" "}
+          registered in the IdP database.
         </p>
       </section>
     </div>

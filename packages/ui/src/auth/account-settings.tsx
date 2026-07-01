@@ -5,8 +5,19 @@ import * as React from "react";
 import { authClient } from "@awfixersites/auth/client";
 import { Button } from "@awfixersites/ui/components/button";
 import { Spinner } from "@awfixersites/ui/components/spinner";
+import { cn } from "@awfixersites/ui/lib/utils";
 
-export function AccountSettings() {
+type AccountSettingsProps = {
+  embedded?: boolean;
+  buttonClassName?: string;
+  outlineButtonClassName?: string;
+};
+
+export function AccountSettings({
+  embedded = false,
+  buttonClassName,
+  outlineButtonClassName,
+}: AccountSettingsProps) {
   const { data: session, isPending } = authClient.useSession();
   const [signingOut, setSigningOut] = React.useState(false);
 
@@ -26,9 +37,9 @@ export function AccountSettings() {
 
   if (!session?.user) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-center text-base text-foreground/55">
         You are not signed in.{" "}
-        <a href="/" className="font-medium text-primary underline-offset-4 hover:underline">
+        <a href="/" className="font-medium text-foreground/80 underline-offset-4 hover:underline">
           Sign in
         </a>
       </p>
@@ -44,16 +55,18 @@ export function AccountSettings() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="font-display text-3xl tracking-tight text-foreground">Account settings</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Manage passkeys and two-factor authentication on the IdP.
-        </p>
-      </div>
-
-      <dl className="grid gap-4 rounded-xl border border-foreground/10 p-6">
+      {!embedded ? (
         <div>
-          <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <h1 className="font-display text-3xl tracking-tight text-foreground">Account settings</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Manage passkeys and two-factor authentication on the IdP.
+          </p>
+        </div>
+      ) : null}
+
+      <dl className="grid gap-4 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-6">
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-widest text-foreground/45">
             Username
           </dt>
           <dd className="mt-1 font-medium text-foreground">
@@ -61,7 +74,7 @@ export function AccountSettings() {
           </dd>
         </div>
         <div>
-          <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <dt className="text-xs font-semibold uppercase tracking-widest text-foreground/45">
             Two-factor
           </dt>
           <dd className="mt-1 font-medium text-foreground">
@@ -70,7 +83,7 @@ export function AccountSettings() {
         </div>
         {user.role === "admin" ? (
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <dt className="text-xs font-semibold uppercase tracking-widest text-foreground/45">
               Role
             </dt>
             <dd className="mt-1 font-medium text-foreground">Administrator</dd>
@@ -78,11 +91,21 @@ export function AccountSettings() {
         ) : null}
       </dl>
 
-      <div className="flex flex-wrap gap-3">
-        <Button type="button" variant="outline" onClick={() => authClient.passkey.addPasskey()}>
+      <div className={cn("flex flex-col gap-3 sm:flex-row", embedded && "sm:justify-center")}>
+        <Button
+          type="button"
+          variant="outline"
+          className={outlineButtonClassName}
+          onClick={() => authClient.passkey.addPasskey()}
+        >
           Add passkey
         </Button>
-        <Button type="button" variant="outline" onClick={handleSignOut} disabled={signingOut}>
+        <Button
+          type="button"
+          className={buttonClassName}
+          onClick={handleSignOut}
+          disabled={signingOut}
+        >
           {signingOut ? "Signing out…" : "Sign out"}
         </Button>
       </div>

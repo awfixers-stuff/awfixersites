@@ -1,7 +1,4 @@
-import {
-  markDonationFailed,
-  syncDonationFromPaymentIntent,
-} from "@awfixersites/db/donations";
+import { markDonationFailed, syncDonationFromPaymentIntent } from "@awfixersites/db/donations";
 import type Stripe from "stripe";
 
 import { getStripe } from "@/lib/stripe";

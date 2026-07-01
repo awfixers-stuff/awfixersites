@@ -2,19 +2,27 @@
 
 import { AccountSettings } from "@awfixersites/ui/auth";
 
-import { AuthChrome } from "@/components/auth-chrome";
-import { CodesGridBackground } from "@/components/codes-grid-background";
+import { AuthPanelFooter } from "@/components/auth/auth-panel-footer";
+import { AuthPanelLayout } from "@/components/auth/auth-panel-layout";
+import { AuthShell } from "@/components/auth/auth-shell";
+import { ctaButtonClassName, ctaOutlineButtonClassName } from "@/lib/cta-button";
 
 export default function SettingsPage() {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-background">
-      <AuthChrome />
-      <CodesGridBackground />
-      <div className="relative z-10 flex flex-1 items-center justify-center px-6 py-24 pt-28">
-        <div className="w-full max-w-lg rounded-2xl border border-foreground/10 bg-card p-10 text-card-foreground shadow-lg sm:p-12">
-          <AccountSettings />
-        </div>
-      </div>
-    </div>
+    <AuthShell>
+      <AuthPanelLayout
+        eyebrow="Your account"
+        title="Account settings"
+        description="Manage passkeys and two-factor authentication for your AWFixer identity."
+        showFeatures={false}
+        footer={<AuthPanelFooter backLabel="Back to sign in" />}
+      >
+        <AccountSettings
+          embedded
+          buttonClassName={ctaButtonClassName("full")}
+          outlineButtonClassName={ctaOutlineButtonClassName(true)}
+        />
+      </AuthPanelLayout>
+    </AuthShell>
   );
 }
