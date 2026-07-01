@@ -5,7 +5,7 @@ inputs:
   bun-version:
     description: Bun release version from package.json engines.
     required: false
-    default: "1.4.0"
+    default: "1.3.14"
 
 runs:
   using: composite
