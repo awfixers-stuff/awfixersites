@@ -16,11 +16,13 @@
   },
   "include": [
     "next-env.d.ts",
+    "../../packages/mdx/mdx.d.ts",
     "next.config.ts",
     "vercel.ts",
     "vitest.config.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.mdx",
     "**/*.mts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
