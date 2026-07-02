@@ -72,6 +72,8 @@ AUTH_OAUTH_SITE_KEY=
 AUTH_CLIENT_DATABASE_URL=
 AUTH_IDP_URL=https://auth.awfixer.me
 NEXT_PUBLIC_AUTH_IDP_URL=https://auth.awfixer.me
+NEXT_PUBLIC_API_URL=https://api.awfixer.me
+NEXT_PUBLIC_AUTH_API_URL=https://api.awfixer.me/oauth
 `;
 
 function ensureDir(path: string) {
@@ -141,7 +143,7 @@ function patchPackageJson(appDir: string, appName: string) {
 }
 
 for (const dirent of readdirSync(appsDir, { withFileTypes: true })) {
-  if (!dirent.isDirectory() || dirent.name === "auth") continue;
+  if (!dirent.isDirectory() || dirent.name === "auth" || dirent.name === "api") continue;
 
   const appName = dirent.name;
   const appDir = resolve(appsDir, appName);

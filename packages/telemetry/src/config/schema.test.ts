@@ -5,6 +5,7 @@ import { CLINK_SAFE_DEFAULT, parseClinkConfig, parseClinkConfigSafe } from "./sc
 describe("clinkConfigSchema", () => {
   it("parses a fully specified config", () => {
     const input = {
+      apiBase: "https://api.awfixer.me",
       network: ["awfixer.llc"],
       utm: { source: "about", medium: "referral", campaign: "spring" },
       click: { event: "link_clicked", properties: { app: "about" } },
@@ -15,6 +16,7 @@ describe("clinkConfigSchema", () => {
 
   it("applies defaults for an empty object", () => {
     expect(parseClinkConfig({})).toEqual({
+      apiBase: "https://api.awfixer.me",
       network: [],
       click: { event: "link_clicked", properties: {} },
       exclude: [],

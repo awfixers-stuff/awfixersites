@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     "@awfixersites/telemetry",
     "@awfixersites/ui",
     "@awfixersites/db",
+    "@awfixersites/api-handlers",
     "@awfixersites/auth",
   ],
 };

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../packages/telemetry/clink.schema.json",
+  "apiBase": "https://api.awfixer.me",
+  "network": [],
+  "utm": {
+    "source": "api",
+    "medium": "referral",
+    "campaign": null
+  },
+  "click": {
+    "event": "link_clicked",
+    "properties": {
+      "app": "api"
+    }
+  },
+  "exclude": ["mailto:*", "tel:*"]
+}

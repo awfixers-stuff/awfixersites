@@ -1,0 +1,36 @@
+{
+  "name": "@awfixersites/api-handlers",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tips": "./src/tips.ts",
+    "./enlistments": "./src/enlistments.ts",
+    "./donate/tenants": "./src/donate/tenants.ts",
+    "./donate/payment-intent": "./src/donate/payment-intent.ts",
+    "./donate/stripe": "./src/donate/stripe.ts",
+    "./donate/create-intent": "./src/donate/create-intent.ts",
+    "./donate/webhook": "./src/donate/webhook.ts",
+    "./cleanup": "./src/cleanup.ts",
+    "./urls": "./src/urls.ts"
+  },
+  "scripts": {
+    "lint": "oxlint -c ../../src/lint.json .",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts",
+    "lint:fix": "oxlint -c ../../src/lint.json . --fix"
+  },
+  "dependencies": {
+    "@awfixersites/auth": "catalog:workspace",
+    "@awfixersites/db": "catalog:workspace",
+    "resend": "catalog:",
+    "stripe": "catalog:payments",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:types",
+    "typescript": "catalog:checking"
+  }
+}

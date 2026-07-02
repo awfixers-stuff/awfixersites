@@ -39,6 +39,28 @@ function isLocalhostValue(value: string | undefined) {
   }
 }
 
+export function getAuthBasePath() {
+  const configured = process.env.AUTH_BASE_PATH?.trim();
+  if (configured) {
+    return configured.startsWith("/") ? configured : `/${configured}`;
+  }
+  return "/api/auth";
+}
+
+export function getPublicAuthBaseUrl() {
+  const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL?.trim().replace(/\/$/, "");
+  if (apiUrl) {
+    return apiUrl;
+  }
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
+  if (appUrl) {
+    return `${appUrl}${getAuthBasePath()}`;
+  }
+
+  return undefined;
+}
+
 export function getAuthBaseUrl() {
   const configured =
     process.env.BETTER_AUTH_URL ?? process.env.AUTH_URL ?? process.env.NEXT_PUBLIC_APP_URL;

@@ -1,6 +1,11 @@
 import { initBotId } from "botid/client/core";
 
-import { BOTID_CLIENT_PROTECT_BASE, type BotIdProtectRoute } from "./botid-protect";
+import {
+  BOTID_API_V1_ROUTES,
+  BOTID_CLIENT_PROTECT_BASE,
+  BOTID_OAUTH_PROTECT,
+  type BotIdProtectRoute,
+} from "./botid-protect";
 
 export { BOTID_CLIENT_PROTECT_BASE };
 export type { BotIdProtectRoute };
@@ -23,4 +28,9 @@ export function registerAppBotId(extra: BotIdProtectRoute[] = []): void {
     protect.push(route);
   }
   initBotId({ protect });
+}
+
+/** BotID routes for api.awfixer.me (OAuth at /oauth, shared v1 APIs). */
+export function registerApiBotId(): void {
+  initBotId({ protect: [...BOTID_OAUTH_PROTECT, ...BOTID_API_V1_ROUTES] });
 }

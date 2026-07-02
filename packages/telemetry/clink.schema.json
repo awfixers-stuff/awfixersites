@@ -11,6 +11,12 @@
       "format": "uri-reference",
       "description": "JSON Schema reference for editor validation"
     },
+    "apiBase": {
+      "type": "string",
+      "format": "uri",
+      "default": "https://api.awfixer.me",
+      "description": "Base URL for clink TARGETID redirects (api.awfixer.me/l/:id)"
+    },
     "network": {
       "type": "array",
       "items": { "type": "string" },

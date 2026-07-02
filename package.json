@@ -185,6 +185,8 @@
         "@awfixersites/content": "workspace:*",
         "@awfixersites/db": "workspace:*",
         "@awfixersites/env": "workspace:*",
+        "@awfixersites/api-handlers": "workspace:*",
+        "@awfixersites/links": "workspace:*",
         "@awfixersites/mdx": "workspace:*",
         "@awfixersites/security": "workspace:*",
         "@awfixersites/telemetry": "workspace:*",

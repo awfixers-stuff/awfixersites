@@ -17,6 +17,7 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
+    "@awfixersites/telemetry": "catalog:workspace",
     "@awfixersites/ui": "catalog:workspace",
     "@mdx-js/loader": "catalog:markdown",
     "@mdx-js/react": "catalog:markdown",

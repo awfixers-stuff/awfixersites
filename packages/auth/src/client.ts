@@ -5,10 +5,24 @@ import { usernameClient, genericOAuthClient, twoFactorClient } from "better-auth
 import { passkeyClient } from "@better-auth/passkey/client";
 
 import type { Auth } from "./server";
-import { internalUserEmail } from "./config";
+import { getAuthBasePath, internalUserEmail } from "./config";
 import { isAuthClientDeployment } from "./deployment";
 
-const baseURL = process.env.NEXT_PUBLIC_APP_URL;
+function getAuthClientBase() {
+  const gateway = process.env.NEXT_PUBLIC_AUTH_API_URL?.trim().replace(/\/$/, "");
+  if (gateway) {
+    const url = new URL(gateway);
+    return { baseURL: url.origin, basePath: url.pathname || "/oauth" };
+  }
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
+  return {
+    baseURL: appUrl,
+    basePath: getAuthBasePath(),
+  };
+}
+
+const authClientBase = getAuthClientBase();
 
 function createIdpClientPlugins() {
   return [
@@ -30,7 +44,8 @@ function createIdpClientPlugins() {
 }
 
 export const authClient = createAuthClient({
-  baseURL,
+  baseURL: authClientBase.baseURL,
+  basePath: authClientBase.basePath,
   plugins: isAuthClientDeployment() ? [genericOAuthClient()] : createIdpClientPlugins(),
 });
 

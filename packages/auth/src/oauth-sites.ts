@@ -1,5 +1,6 @@
 /** OAuth relying-party registry — one entry per satellite app (not the IdP). */
 export const OAUTH_SITES = [
+  { key: "api", name: "AWFixer API", apex: "api.awfixer.me", devPort: 3021 },
   { key: "account", name: "AWFixer Account", apex: "account.awfixer.me", devPort: 3020 },
   { key: "army", name: "AWFixer Army", apex: "awfixer.army", devPort: 3000 },
   { key: "church", name: "AWFixer Church", apex: "awfixer.church", devPort: 3001 },

@@ -1,5 +1,6 @@
 import type { Client } from "better-auth/plugins/oidc-provider";
 
+import { getAuthBasePath } from "./config";
 import { getOAuthSiteByKey, isOAuthSiteKey, OAUTH_SITES, type OAuthSiteKey } from "./oauth-sites";
 
 export type { OAuthSiteKey } from "./oauth-sites";
@@ -34,11 +35,16 @@ function envKeyForSite(siteKey: OAuthSiteKey) {
   return siteKey.toUpperCase().replace(/-/g, "_");
 }
 
+function authBasePathForSite(siteKey: OAuthSiteKey) {
+  return siteKey === "api" ? "/oauth" : "/api/auth";
+}
+
 function defaultRedirectUrls(siteKey: OAuthSiteKey) {
   const site = getOAuthSiteByKey(siteKey);
+  const basePath = authBasePathForSite(siteKey);
   return [
-    `http://localhost:${site.devPort}/api/auth/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`,
-    `https://${site.apex}/api/auth/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`,
+    `http://localhost:${site.devPort}${basePath}/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`,
+    `https://${site.apex}${basePath}/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`,
   ];
 }
 
@@ -98,8 +104,9 @@ export function getOAuthSiteKey(): OAuthSiteKey {
   );
 }
 
-export function getOAuthRedirectUri(appBaseUrl: string) {
-  return `${appBaseUrl.replace(/\/$/, "")}/api/auth/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`;
+export function getOAuthRedirectUri(appBaseUrl: string, basePath: string = getAuthBasePath()) {
+  const normalizedBase = basePath.startsWith("/") ? basePath : `/${basePath}`;
+  return `${appBaseUrl.replace(/\/$/, "")}${normalizedBase}/oauth2/callback/${OAUTH_IDP_PROVIDER_ID}`;
 }
 
 export const OAUTH_IDP_PROVIDER_ID = "awfixer-idp";

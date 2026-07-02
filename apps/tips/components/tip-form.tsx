@@ -66,7 +66,11 @@ export function TipForm() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/submit-tip", {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL
+          ? `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/v1/tips`
+          : "/api/submit-tip",
+        {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

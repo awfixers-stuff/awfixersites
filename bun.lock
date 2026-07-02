@@ -79,10 +79,56 @@
         "tw-animate-css": "catalog:css",
       },
     },
+    "apps/api": {
+      "name": "@awfixersites/api",
+      "version": "0.0.1",
+      "dependencies": {
+        "@awfixersites/api-handlers": "workspace:*",
+        "@awfixersites/auth": "catalog:workspace",
+        "@awfixersites/db": "catalog:workspace",
+        "@awfixersites/links": "catalog:workspace",
+        "@awfixersites/security": "catalog:workspace",
+        "@awfixersites/telemetry": "catalog:workspace",
+        "@awfixersites/ui": "catalog:workspace",
+        "@awfixersites/utils": "catalog:workspace",
+        "@esbuild/linux-x64": "catalog:bindings",
+        "@next/env": "catalog:nextjs",
+        "@next/swc-linux-x64-gnu": "catalog:nextjs",
+        "@oxfmt/binding-linux-x64-gnu": "catalog:bindings",
+        "@oxlint-tsgolint/linux-x64": "catalog:bindings",
+        "@oxlint/binding-linux-x64-gnu": "catalog:bindings",
+        "@rolldown/binding-linux-x64-gnu": "catalog:bindings",
+        "@swc/core": "catalog:swc",
+        "@swc/core-linux-x64-gnu": "catalog:swc",
+        "@swc/counter": "catalog:swc",
+        "@swc/helpers": "catalog:swc",
+        "@swc/types": "catalog:swc",
+        "@tailwindcss/oxide-linux-x64-gnu": "catalog:css",
+        "@tailwindcss/postcss": "catalog:css",
+        "@typescript/native-preview-linux-x64": "catalog:bindings",
+        "@vercel/analytics": "catalog:vercel",
+        "@vercel/config": "catalog:vercel",
+        "botid": "catalog:vercel",
+        "class-variance-authority": "catalog:css",
+        "clsx": "catalog:css",
+        "lightningcss-linux-x64-gnu": "catalog:css",
+        "lucide-react": "catalog:react",
+        "next": "catalog:nextjs",
+        "next-themes": "catalog:nextjs",
+        "radix-ui": "catalog:react",
+        "react": "catalog:react",
+        "react-dom": "catalog:react",
+        "tailwind-merge": "catalog:css",
+        "tailwindcss": "catalog:css",
+        "tw-animate-css": "catalog:css",
+        "zod": "catalog:",
+      },
+    },
     "apps/army": {
       "name": "@awfixersites/army",
       "version": "0.0.1",
       "dependencies": {
+        "@awfixersites/api-handlers": "catalog:workspace",
         "@awfixersites/auth": "catalog:workspace",
         "@awfixersites/content": "catalog:workspace",
         "@awfixersites/db": "catalog:workspace",
@@ -305,6 +351,7 @@
       "name": "@awfixersites/donate",
       "version": "0.0.1",
       "dependencies": {
+        "@awfixersites/api-handlers": "catalog:workspace",
         "@awfixersites/auth": "catalog:workspace",
         "@awfixersites/db": "catalog:workspace",
         "@awfixersites/security": "catalog:workspace",
@@ -534,6 +581,7 @@
       "name": "@awfixersites/tips",
       "version": "0.0.1",
       "dependencies": {
+        "@awfixersites/api-handlers": "catalog:workspace",
         "@awfixersites/auth": "catalog:workspace",
         "@awfixersites/security": "catalog:workspace",
         "@awfixersites/telemetry": "catalog:workspace",
@@ -575,6 +623,21 @@
         "tailwindcss": "catalog:css",
         "tw-animate-css": "catalog:css",
         "zod": "catalog:",
+      },
+    },
+    "packages/api-handlers": {
+      "name": "@awfixersites/api-handlers",
+      "version": "0.0.0",
+      "dependencies": {
+        "@awfixersites/auth": "catalog:workspace",
+        "@awfixersites/db": "catalog:workspace",
+        "resend": "catalog:",
+        "stripe": "catalog:payments",
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:types",
+        "typescript": "catalog:checking",
       },
     },
     "packages/auth": {
@@ -638,10 +701,22 @@
         "typescript": "catalog:checking",
       },
     },
+    "packages/links": {
+      "name": "@awfixersites/links",
+      "version": "0.0.0",
+      "dependencies": {
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@types/node": "catalog:types",
+        "typescript": "catalog:checking",
+      },
+    },
     "packages/mdx": {
       "name": "@awfixersites/mdx",
       "version": "0.0.0",
       "dependencies": {
+        "@awfixersites/telemetry": "catalog:workspace",
         "@awfixersites/ui": "catalog:workspace",
         "@mdx-js/loader": "catalog:markdown",
         "@mdx-js/react": "catalog:markdown",
@@ -676,6 +751,7 @@
       "name": "@awfixersites/telemetry",
       "version": "0.0.0",
       "dependencies": {
+        "@awfixersites/links": "catalog:workspace",
         "@sentry/nextjs": "catalog:sentry",
         "posthog-js": "catalog:telemetry",
         "zod": "catalog:",
@@ -901,10 +977,12 @@
       "workflow": "4.5.0",
     },
     "workspace": {
+      "@awfixersites/api-handlers": "workspace:*",
       "@awfixersites/auth": "workspace:*",
       "@awfixersites/content": "workspace:*",
       "@awfixersites/db": "workspace:*",
       "@awfixersites/env": "workspace:*",
+      "@awfixersites/links": "workspace:*",
       "@awfixersites/mdx": "workspace:*",
       "@awfixersites/security": "workspace:*",
       "@awfixersites/telemetry": "workspace:*",
@@ -961,6 +1039,10 @@
 
     "@awfixersites/account": ["@awfixersites/account@workspace:apps/account"],
 
+    "@awfixersites/api": ["@awfixersites/api@workspace:apps/api"],
+
+    "@awfixersites/api-handlers": ["@awfixersites/api-handlers@workspace:packages/api-handlers"],
+
     "@awfixersites/army": ["@awfixersites/army@workspace:apps/army"],
 
     "@awfixersites/auth": ["@awfixersites/auth@workspace:packages/auth"],
@@ -982,6 +1064,8 @@
     "@awfixersites/env": ["@awfixersites/env@workspace:packages/env"],
 
     "@awfixersites/legal": ["@awfixersites/legal@workspace:apps/legal"],
+
+    "@awfixersites/links": ["@awfixersites/links@workspace:packages/links"],
 
     "@awfixersites/llc": ["@awfixersites/llc@workspace:apps/llc"],
 

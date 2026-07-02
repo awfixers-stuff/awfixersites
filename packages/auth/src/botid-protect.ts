@@ -36,3 +36,28 @@ export const BOTID_ARMY_ROUTES: BotIdProtectRoute[] = [
     advancedOptions: { checkLevel: "deepAnalysis" },
   },
 ];
+
+export const BOTID_OAUTH_PROTECT: BotIdProtectRoute[] = [
+  { path: "/oauth/*", method: "POST" },
+  { path: "/oauth/*", method: "PATCH" },
+  { path: "/oauth/*", method: "PUT" },
+  { path: "/oauth/*", method: "DELETE" },
+];
+
+export const BOTID_API_V1_ROUTES: BotIdProtectRoute[] = [
+  {
+    path: "/v1/tips",
+    method: "POST",
+    advancedOptions: { checkLevel: "deepAnalysis" },
+  },
+  {
+    path: "/v1/donate/intents",
+    method: "POST",
+    advancedOptions: { checkLevel: "deepAnalysis" },
+  },
+  {
+    path: "/v1/enlistments",
+    method: "POST",
+    advancedOptions: { checkLevel: "deepAnalysis" },
+  },
+];

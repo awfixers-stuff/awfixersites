@@ -9,6 +9,7 @@ import type { PrismaClient } from "../generated/prisma/client";
 
 import { createOAuthClientPlugin } from "./client-options";
 import {
+  getAuthBasePath,
   getAuthBaseUrl,
   getAuthSecret,
   getPasskeyRpId,
@@ -53,6 +54,7 @@ function sharedOptions(
 function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
   return {
     ...sharedOptions(prisma),
+    basePath: getAuthBasePath(),
     emailAndPassword: {
       enabled: false,
     },
@@ -173,6 +175,7 @@ function createIdpAuthOptions(prisma: PrismaClient): BetterAuthOptions {
 function createOAuthRelyingPartyOptions(prisma: PrismaClient): BetterAuthOptions {
   return {
     ...sharedOptions(prisma),
+    basePath: getAuthBasePath(),
     emailAndPassword: {
       enabled: false,
     },

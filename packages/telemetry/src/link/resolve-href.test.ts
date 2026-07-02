@@ -13,6 +13,22 @@ const baseConfig: ClinkConfig = {
 const ORIGIN = "https://about.awfixer.llc";
 
 describe("resolveHref", () => {
+  it("rewrites target ids to api clink urls", () => {
+    expect(resolveHref("enlist", baseConfig, ORIGIN)).toEqual({
+      href: "https://api.awfixer.me/l/enlist",
+      internal: true,
+    });
+  });
+
+  it("opens hyphenated target ids in a new tab", () => {
+    expect(resolveHref("github-awfixer", baseConfig, ORIGIN)).toEqual({
+      href: "https://api.awfixer.me/l/github-awfixer",
+      internal: false,
+      rel: "noopener noreferrer",
+      target: "_blank",
+    });
+  });
+
   it("leaves relative paths untouched and marks them internal", () => {
     expect(resolveHref("/careers", baseConfig, ORIGIN)).toEqual({
       href: "/careers",

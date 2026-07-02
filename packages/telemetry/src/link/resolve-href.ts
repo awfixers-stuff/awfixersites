@@ -1,3 +1,5 @@
+import { clinkUrl, isExternalTargetId, isTargetId } from "@awfixersites/links";
+
 import type { ClinkConfig } from "../config/schema";
 
 export type ResolvedHref = {
@@ -42,6 +44,19 @@ export function resolveHref(
   currentOrigin: string,
   distinctId?: string,
 ): ResolvedHref {
+  if (isTargetId(href)) {
+    const resolvedHref = clinkUrl(href, config.apiBase);
+    if (isExternalTargetId(href)) {
+      return {
+        href: resolvedHref,
+        internal: false,
+        rel: "noopener noreferrer",
+        target: "_blank",
+      };
+    }
+    return { href: resolvedHref, internal: true };
+  }
+
   if (isExcluded(href, config.exclude)) {
     return { href, internal: true };
   }

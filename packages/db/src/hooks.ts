@@ -8,7 +8,11 @@ export type { EnlistmentInput, SubmitEnlistmentArgs } from "./enlistments";
 
 export function useSubmitEnlistment() {
   return useCallback(async (enlistment: EnlistmentInput) => {
-    const response = await fetch("/api/enlistments", {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL
+        ? `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/v1/enlistments`
+        : "/api/enlistments",
+      {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ enlistment }),

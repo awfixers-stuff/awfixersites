@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const clinkConfigSchema = z.object({
+  apiBase: z.string().url().default("https://api.awfixer.me"),
   network: z.array(z.string()).default([]),
   utm: z
     .object({

@@ -1,0 +1,26 @@
+{
+  "name": "@awfixersites/links",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./registry": "./src/registry.ts",
+    "./resolve": "./src/resolve.ts",
+    "./schema": "./src/schema.ts"
+  },
+  "scripts": {
+    "lint": "oxlint -c ../../src/lint.json .",
+    "format": "oxfmt -c ../../src/fmt.json . --check",
+    "typecheck": "tsgo -p tsconfig.json --noEmit",
+    "test": "vitest -c vitest.config.ts",
+    "lint:fix": "oxlint -c ../../src/lint.json . --fix"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:types",
+    "typescript": "catalog:checking"
+  }
+}

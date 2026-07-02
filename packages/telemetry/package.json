@@ -19,6 +19,7 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
+    "@awfixersites/links": "catalog:workspace",
     "@sentry/nextjs": "catalog:sentry",
     "posthog-js": "catalog:telemetry",
     "zod": "catalog:"

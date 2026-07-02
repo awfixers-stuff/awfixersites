@@ -188,7 +188,11 @@ export function DonationCheckout({ tenant, publishableKey }: DonationCheckoutPro
       setCheckoutError("");
 
       try {
-        const response = await fetch("/api/create-payment-intent", {
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_API_URL
+            ? `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/v1/donate/intents`
+            : "/api/create-payment-intent",
+          {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

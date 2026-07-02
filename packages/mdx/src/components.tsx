@@ -1,5 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 
+import { MdxClink } from "@awfixersites/telemetry/link";
+
 import {
   MdxH1,
   MdxH2,
@@ -45,6 +47,7 @@ export function useMDXComponents(components: MDXComponents = {}): MDXComponents 
     tbody: MdxTbody,
     strong: MdxStrong,
     em: MdxEm,
+    clink: MdxClink,
     ...components,
   };
 }

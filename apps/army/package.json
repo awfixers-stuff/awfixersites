@@ -37,6 +37,7 @@
     "lint:fix": "oxlint -c ../../src/lint.json . --fix"
   },
   "dependencies": {
+    "@awfixersites/api-handlers": "catalog:workspace",
     "@awfixersites/auth": "catalog:workspace",
     "@awfixersites/content": "catalog:workspace",
     "@awfixersites/db": "catalog:workspace",
