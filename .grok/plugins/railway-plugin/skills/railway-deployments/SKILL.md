@@ -11,13 +11,13 @@ description: >
 
 ## Deploy methods
 
-| Method | When |
-|--------|------|
-| Terraform | Durable service config (Postgres, workers) |
-| CLI `railway up` | Ad-hoc deploy from linked directory |
-| MCP `deploy` | Agent-driven deploy from natural language |
-| MCP `redeploy` (remote) | Restart without code change |
-| Git push | If service has Railway GitHub integration |
+| Method                  | When                                       |
+| ----------------------- | ------------------------------------------ |
+| Terraform               | Durable service config (Postgres, workers) |
+| CLI `railway up`        | Ad-hoc deploy from linked directory        |
+| MCP `deploy`            | Agent-driven deploy from natural language  |
+| MCP `redeploy` (remote) | Restart without code change                |
+| Git push                | If service has Railway GitHub integration  |
 
 ## CLI deploy
 

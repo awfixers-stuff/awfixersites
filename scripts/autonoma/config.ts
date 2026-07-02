@@ -23,11 +23,17 @@ function firstEnv(...keys: string[]): string | undefined {
 }
 
 /** Resolve Autonoma credentials from .env.local with alias support. */
-export function resolveAutonomaConfig(repoRoot = resolve(import.meta.dir, "../..")): AutonomaConfig {
+export function resolveAutonomaConfig(
+  repoRoot = resolve(import.meta.dir, "../.."),
+): AutonomaConfig {
   loadRootEnvLocal();
 
   const apiKey = firstEnv("AUTONOMA_API_KEY", "AUTONOMA_SECRET_ID");
-  const applicationId = firstEnv("AUTONOMA_PROJECT_ID", "AUTONOMA_CLIENT_ID", "AUTONOMA_APPLICATION_ID");
+  const applicationId = firstEnv(
+    "AUTONOMA_PROJECT_ID",
+    "AUTONOMA_CLIENT_ID",
+    "AUTONOMA_APPLICATION_ID",
+  );
 
   if (!apiKey) {
     throw new Error(

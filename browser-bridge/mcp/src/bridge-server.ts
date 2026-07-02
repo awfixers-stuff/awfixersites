@@ -16,3 +16,6 @@ async function shutdown() {
 
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
+
+// Bun can exit once top-level await finishes; block until a signal arrives.
+await new Promise<void>(() => {});

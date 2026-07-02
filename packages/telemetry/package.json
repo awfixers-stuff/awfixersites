@@ -8,7 +8,8 @@
     "./register": "./src/register.ts",
     "./register-server": "./src/register-server.ts",
     "./link": "./src/link/index.ts",
-    "./config": "./src/config/schema.ts"
+    "./config": "./src/config/schema.ts",
+    "./clink.schema.json": "./clink.schema.json"
   },
   "scripts": {
     "lint": "oxlint -c ../../src/lint.json .",

@@ -33,21 +33,21 @@ If `autonoma/.docs-url` exists in the workspace, use it as the base instead of h
 
 Key doc paths (append `.txt` to fetch):
 
-| Topic | Path |
-|-------|------|
-| Introduction | `llms/index.txt` |
-| Test Planner overview | `llms/test-planner.txt` |
-| Step 1: Knowledge base | `llms/test-planner/step-1-knowledge-base.txt` |
-| Step 2: Entity audit | `llms/test-planner/step-2-entity-audit.txt` |
-| Step 3: Scenarios | `llms/test-planner/step-3-scenarios.txt` |
-| Step 4: Implement factory | `llms/test-planner/step-4-implement.txt` |
-| Step 5: Validate lifecycle | `llms/test-planner/step-5-validate.txt` |
-| Step 6: E2E tests | `llms/test-planner/step-6-e2e-tests.txt` |
-| Environment Factory guide | `llms/guides/environment-factory.txt` |
-| Scenario recipe schema | `llms/reference/scenario-recipe-schema.txt` |
-| Framework examples | `llms/examples.txt` (+ per-language pages) |
-| Previewkit | `llms/previewkit.txt` |
-| Previewkit secrets | `llms/previewkit/secrets.txt` |
+| Topic                      | Path                                          |
+| -------------------------- | --------------------------------------------- |
+| Introduction               | `llms/index.txt`                              |
+| Test Planner overview      | `llms/test-planner.txt`                       |
+| Step 1: Knowledge base     | `llms/test-planner/step-1-knowledge-base.txt` |
+| Step 2: Entity audit       | `llms/test-planner/step-2-entity-audit.txt`   |
+| Step 3: Scenarios          | `llms/test-planner/step-3-scenarios.txt`      |
+| Step 4: Implement factory  | `llms/test-planner/step-4-implement.txt`      |
+| Step 5: Validate lifecycle | `llms/test-planner/step-5-validate.txt`       |
+| Step 6: E2E tests          | `llms/test-planner/step-6-e2e-tests.txt`      |
+| Environment Factory guide  | `llms/guides/environment-factory.txt`         |
+| Scenario recipe schema     | `llms/reference/scenario-recipe-schema.txt`   |
+| Framework examples         | `llms/examples.txt` (+ per-language pages)    |
+| Previewkit                 | `llms/previewkit.txt`                         |
+| Previewkit secrets         | `llms/previewkit/secrets.txt`                 |
 
 See `references/llms-index.md` for the full page list.
 
@@ -55,26 +55,26 @@ See `references/llms-index.md` for the full page list.
 
 Determine what the user needs, then follow the matching workflow below. If unclear, ask which area they want: full pipeline, factory-only, tests-only, or Previewkit.
 
-| User wants | Start here |
-|------------|------------|
-| Full setup from scratch | Test Planner Steps 1→6 |
-| Environment Factory only | Environment Factory guide + framework example |
-| Generate/upload E2E tests | Step 6 (requires Steps 1–5 artifacts) |
-| Validate scenarios | Step 5 (requires Step 4 endpoint) |
-| PR preview environments | Previewkit docs |
-| Framework-specific SDK code | `llms/examples/<language>.txt` |
+| User wants                  | Start here                                    |
+| --------------------------- | --------------------------------------------- |
+| Full setup from scratch     | Test Planner Steps 1→6                        |
+| Environment Factory only    | Environment Factory guide + framework example |
+| Generate/upload E2E tests   | Step 6 (requires Steps 1–5 artifacts)         |
+| Validate scenarios          | Step 5 (requires Step 4 endpoint)             |
+| PR preview environments     | Previewkit docs                               |
+| Framework-specific SDK code | `llms/examples/<language>.txt`                |
 
 ## Prerequisites
 
 ### Environment variables
 
-| Variable | When needed | Purpose |
-|----------|-------------|---------|
-| `AUTONOMA_API_KEY` | Test Planner, dashboard uploads | API auth |
-| `AUTONOMA_PROJECT_ID` | Test Planner | Project scope |
-| `AUTONOMA_API_URL` | Test Planner | API base URL |
-| `AUTONOMA_SHARED_SECRET` | Environment Factory | HMAC request signing (you + Autonoma) |
-| `AUTONOMA_SIGNING_SECRET` | Environment Factory | Signs refs tokens (you only) |
+| Variable                  | When needed                     | Purpose                               |
+| ------------------------- | ------------------------------- | ------------------------------------- |
+| `AUTONOMA_API_KEY`        | Test Planner, dashboard uploads | API auth                              |
+| `AUTONOMA_PROJECT_ID`     | Test Planner                    | Project scope                         |
+| `AUTONOMA_API_URL`        | Test Planner                    | API base URL                          |
+| `AUTONOMA_SHARED_SECRET`  | Environment Factory             | HMAC request signing (you + Autonoma) |
+| `AUTONOMA_SIGNING_SECRET` | Environment Factory             | Signs refs tokens (you only)          |
 
 Generate secrets (must be **different** values):
 
@@ -181,21 +181,21 @@ Tests reference scenarios by name (`Using scenario: standard`). Variable fields 
 
 Single POST endpoint with three actions:
 
-| Action | Purpose |
-|--------|---------|
-| `discover` | Returns schema from factory input schemas |
-| `up` | Creates test data + auth credentials before each test |
-| `down` | Tears down only what `up` created (signed refsToken) |
+| Action     | Purpose                                               |
+| ---------- | ----------------------------------------------------- |
+| `discover` | Returns schema from factory input schemas             |
+| `up`       | Creates test data + auth credentials before each test |
+| `down`     | Tears down only what `up` created (signed refsToken)  |
 
 ### SDK packages by stack
 
-| Backend | Packages |
-|---------|----------|
-| Next.js / Bun / Deno | `@autonoma-ai/sdk` + `@autonoma-ai/server-web` + `zod` |
-| Express / Fastify | `@autonoma-ai/sdk` + `@autonoma-ai/server-express` + `zod` |
-| Hono | `@autonoma-ai/sdk` + `@autonoma-ai/server-hono` + `zod` |
-| Python | `autonoma-ai` (+ `autonoma_fastapi` / `autonoma_flask` / `autonoma_django`) |
-| Go, Rust, Java, Ruby, PHP, Elixir | See `llms/examples/<language>.txt` |
+| Backend                           | Packages                                                                    |
+| --------------------------------- | --------------------------------------------------------------------------- |
+| Next.js / Bun / Deno              | `@autonoma-ai/sdk` + `@autonoma-ai/server-web` + `zod`                      |
+| Express / Fastify                 | `@autonoma-ai/sdk` + `@autonoma-ai/server-express` + `zod`                  |
+| Hono                              | `@autonoma-ai/sdk` + `@autonoma-ai/server-hono` + `zod`                     |
+| Python                            | `autonoma-ai` (+ `autonoma_fastapi` / `autonoma_flask` / `autonoma_django`) |
+| Go, Rust, Java, Ruby, PHP, Elixir | See `llms/examples/<language>.txt`                                          |
 
 ### Create payload format
 
@@ -238,7 +238,15 @@ Must return **real** working credentials:
     "scenariosPath": "autonoma/scenarios.md"
   },
   "validationMode": "endpoint-lifecycle",
-  "recipes": [{ "name": "...", "description": "...", "create": {}, "variables": {}, "validation": { "status": "validated", "method": "endpoint-up-down", "phase": "ok" } }]
+  "recipes": [
+    {
+      "name": "...",
+      "description": "...",
+      "create": {},
+      "variables": {},
+      "validation": { "status": "validated", "method": "endpoint-up-down", "phase": "ok" }
+    }
+  ]
 }
 ```
 
@@ -263,16 +271,16 @@ When working with the Environment Factory or validation:
 
 Before starting a step, verify prerequisites exist:
 
-| Artifact | Created by | Required for |
-|----------|------------|--------------|
-| `autonoma/AUTONOMA.md` | Step 1 | Steps 2–6 |
-| `autonoma/features.json` | Step 1 | Validation hooks |
-| `autonoma/entity-audit.md` | Step 2 | Steps 4–5 |
-| `autonoma/scenarios.md` | Step 3 | Steps 4–6 |
-| `autonoma/.endpoint-implemented` | Step 4 | Step 5 |
-| `autonoma/scenario-recipes.json` | Step 5 | Dashboard + Step 6 |
-| `autonoma/.endpoint-validated` | Step 5 | Step 6 |
-| `autonoma/qa-tests/` | Step 6 | Upload to Autonoma |
+| Artifact                         | Created by | Required for       |
+| -------------------------------- | ---------- | ------------------ |
+| `autonoma/AUTONOMA.md`           | Step 1     | Steps 2–6          |
+| `autonoma/features.json`         | Step 1     | Validation hooks   |
+| `autonoma/entity-audit.md`       | Step 2     | Steps 4–5          |
+| `autonoma/scenarios.md`          | Step 3     | Steps 4–6          |
+| `autonoma/.endpoint-implemented` | Step 4     | Step 5             |
+| `autonoma/scenario-recipes.json` | Step 5     | Dashboard + Step 6 |
+| `autonoma/.endpoint-validated`   | Step 5     | Step 6             |
+| `autonoma/qa-tests/`             | Step 6     | Upload to Autonoma |
 
 ## Execution discipline
 

@@ -1,9 +1,16 @@
 [plugins]
-enabled = ["helium-browser", "railway"]
+enabled = ["helium-browser", "railway", "browser-bridge"]
 
 # Persistent Helium MCP gateway (stdio child kept alive by supergateway).
 # Start once: bash .grok/plugins/helium-browser/scripts/start-persistent-server.sh
 [mcp_servers.helium]
 url = "http://127.0.0.1:18791/mcp"
+enabled = true
+startup_timeout_sec = 45
+
+# Browser Bridge — stdio MCP; launch-mcp.sh auto-starts the WebSocket bridge on connect.
+[mcp_servers.browser-bridge]
+command = "bash"
+args = ["browser-bridge/scripts/launch-mcp.sh"]
 enabled = true
 startup_timeout_sec = 45

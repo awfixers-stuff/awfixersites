@@ -1,5 +1,0 @@
-{
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Deprecated — use ../../src/tsconfig.react-library.json",
-  "extends": "../../src/tsconfig.react-library.json"
-}

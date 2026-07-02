@@ -24,10 +24,7 @@ import {
   writeGenerationId,
 } from "./autonoma/config.ts";
 import { secretsForApp } from "./autonoma/secrets.ts";
-import {
-  listAutonomaTargetApps,
-  listBootstrappedApps,
-} from "./autonoma/targets.ts";
+import { listAutonomaTargetApps, listBootstrappedApps } from "./autonoma/targets.ts";
 import { loadRootEnvLocal } from "./load-root-env.ts";
 
 const repoRoot = resolve(import.meta.dir, "..");
@@ -104,7 +101,9 @@ async function verifyAuth(client: AutonomaClient, applicationId: string) {
     if (error instanceof AutonomaApiError && error.status === 401) {
       console.error(`[autonoma] API auth failed (401 Unauthorized)`);
       console.error(`  Your AUTONOMA_SECRET_ID / AUTONOMA_API_KEY is not accepted.`);
-      console.error(`  Create an org API key in Autonoma → Settings → API keys (ak_live_... format).`);
+      console.error(
+        `  Create an org API key in Autonoma → Settings → API keys (ak_live_... format).`,
+      );
       console.error(`  Then set AUTONOMA_API_KEY in .env.local (or replace AUTONOMA_SECRET_ID).`);
       console.error(`  AUTONOMA_CLIENT_ID maps to applicationId: ${applicationId}`);
       return false;
@@ -126,12 +125,18 @@ function ensureAutonomaScaffold(docsUrl: string) {
   );
 }
 
-async function cmdConfigure(client: AutonomaClient, config: ReturnType<typeof resolveAutonomaConfig>, repoName: string) {
+async function cmdConfigure(
+  client: AutonomaClient,
+  config: ReturnType<typeof resolveAutonomaConfig>,
+  repoName: string,
+) {
   ensureAutonomaScaffold(config.docsUrl);
 
   const authed = await verifyAuth(client, config.applicationId);
   if (!authed) {
-    console.error(`[autonoma] Local scaffold written to autonoma/ — fix API key, then re-run configure.`);
+    console.error(
+      `[autonoma] Local scaffold written to autonoma/ — fix API key, then re-run configure.`,
+    );
     process.exit(1);
   }
 
@@ -156,16 +161,16 @@ async function cmdConfigure(client: AutonomaClient, config: ReturnType<typeof re
   console.log(`  docs url:      ${config.docsUrl}`);
   console.log(`  apps:          ${listAutonomaApps(repoRoot).length} (see autonoma/apps.json)`);
   console.log(`\nNext (no dashboard):`);
-  console.log(`  1. Run /autonoma-ai or the Test Planner pipeline to generate autonoma/* artifacts`);
+  console.log(
+    `  1. Run /autonoma-ai or the Test Planner pipeline to generate autonoma/* artifacts`,
+  );
   console.log(`  2. bun scripts/autonoma-cli.ts recipes upload   (after Step 5)`);
-  console.log(`  3. bun scripts/autonoma-cli.ts secrets sync --app auth --from-env DATABASE_URL,AUTH_SECRET`);
+  console.log(
+    `  3. bun scripts/autonoma-cli.ts secrets sync --app auth --from-env DATABASE_URL,AUTH_SECRET`,
+  );
 }
 
-async function cmdSecretsSync(
-  client: AutonomaClient,
-  appName: string,
-  envKeys: string[],
-) {
+async function cmdSecretsSync(client: AutonomaClient, appName: string, envKeys: string[]) {
   loadRootEnvLocal();
   const items = envKeys
     .map((key) => {
@@ -350,7 +355,14 @@ async function main() {
     case "secrets:sync": {
       const app = requireString(flags.app, "--app");
       const fromEnv = requireString(flags.fromEnv, "--from-env");
-      await cmdSecretsSync(client, app, fromEnv.split(",").map((k) => k.trim()).filter(Boolean));
+      await cmdSecretsSync(
+        client,
+        app,
+        fromEnv
+          .split(",")
+          .map((k) => k.trim())
+          .filter(Boolean),
+      );
       return;
     }
 

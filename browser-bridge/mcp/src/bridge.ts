@@ -191,7 +191,9 @@ export class RemoteExtensionBridge {
 
   async refreshStatus() {
     try {
-      const response = await fetch(`${this.baseUrl}/healthz`, { signal: AbortSignal.timeout(2000) });
+      const response = await fetch(`${this.baseUrl}/healthz`, {
+        signal: AbortSignal.timeout(2000),
+      });
       const data = (await response.json()) as { extensionConnected?: boolean };
       this.extensionConnected = data.extensionConnected === true;
     } catch {

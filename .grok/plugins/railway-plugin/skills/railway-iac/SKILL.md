@@ -81,11 +81,11 @@ See `railway-vercel-wiring` skill for the full matrix.
 
 ## Database topology
 
-| Database | Serves | Vercel project |
-|----------|--------|----------------|
-| IdP Postgres | users, passkeys, OAuth registry | `awfixersites-auth-app` |
-| Per-app session DB | local OAuth client sessions | each `awfixersites-<app>` |
-| App DBs | enlistments, donations, etc. | `careers`, `donate`, etc. |
+| Database           | Serves                          | Vercel project            |
+| ------------------ | ------------------------------- | ------------------------- |
+| IdP Postgres       | users, passkeys, OAuth registry | `awfixersites-auth-app`   |
+| Per-app session DB | local OAuth client sessions     | each `awfixersites-<app>` |
+| App DBs            | enlistments, donations, etc.    | `careers`, `donate`, etc. |
 
 Canonical var: `PRISMA_DATABASE_URL` via `packages/env` and `packages/auth/src/prisma.ts`.
 

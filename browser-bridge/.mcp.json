@@ -1,9 +1,9 @@
 {
   "mcpServers": {
     "browser-bridge": {
-      "type": "http",
-      "url": "http://127.0.0.1:18794/mcp",
-      "note": "Requires scripts/start-gateway.sh and the unpacked Chrome extension in extension/dist."
+      "command": "bash",
+      "args": ["browser-bridge/scripts/launch-mcp.sh"],
+      "note": "Stdio MCP — auto-starts the WebSocket bridge when Grok connects. For a persistent HTTP gateway instead, run scripts/start-gateway.sh and use http://127.0.0.1:18794/mcp."
     }
   }
 }

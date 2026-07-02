@@ -15,18 +15,6 @@
     "template",
     "tips"
   ],
-  "skipped": [
-    "about",
-    "agent",
-    "branding",
-    "cash",
-    "cloud",
-    "club",
-    "me",
-    "network",
-    "party",
-    "space"
-  ],
   "apps": [
     {
       "name": "account",
@@ -143,9 +131,7 @@
     },
     {
       "name": "template",
-      "secrets": [
-        "ARCJET_KEY"
-      ],
+      "secrets": ["ARCJET_KEY"],
       "status": "dry-run"
     },
     {

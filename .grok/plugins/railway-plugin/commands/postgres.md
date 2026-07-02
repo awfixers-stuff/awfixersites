@@ -18,6 +18,7 @@ Guide Postgres setup and wiring for awfixersites.
    - App name (e.g. "auth") → show app-specific DB config
 
 3. For provisioning, prefer Terraform:
+
    ```hcl
    resource "railway_service" "postgres" {
      project_id   = railway_project.awfixersites.id
@@ -25,6 +26,7 @@ Guide Postgres setup and wiring for awfixersites.
      source_image = "ghcr.io/railwayapp-templates/postgres-ssl:16"
    }
    ```
+
    Or MCP: "Deploy a Postgres database"
 
 4. Show Prisma integration:

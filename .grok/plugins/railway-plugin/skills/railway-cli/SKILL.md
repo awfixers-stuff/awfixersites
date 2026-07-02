@@ -43,16 +43,16 @@ Creates `.railway/` metadata locally. Do not commit secrets from this directory.
 
 ## Common commands
 
-| Task | Command |
-|------|---------|
-| Deploy current service | `railway up` |
-| View logs | `railway logs` |
-| Follow logs | `railway logs --follow` |
-| List variables | `railway variables` |
-| Set variable | `railway variables set KEY=value` |
-| Open dashboard | `railway open` |
-| Run locally | `railway run <cmd>` |
-| Shell into service | `railway shell` |
+| Task                   | Command                           |
+| ---------------------- | --------------------------------- |
+| Deploy current service | `railway up`                      |
+| View logs              | `railway logs`                    |
+| Follow logs            | `railway logs --follow`           |
+| List variables         | `railway variables`               |
+| Set variable           | `railway variables set KEY=value` |
+| Open dashboard         | `railway open`                    |
+| Run locally            | `railway run <cmd>`               |
+| Shell into service     | `railway shell`                   |
 
 ## Environment targeting
 
@@ -82,11 +82,11 @@ See `railway-mcp` skill for local vs remote decision guide.
 
 ## Troubleshooting
 
-| Symptom | Fix |
-|---------|-----|
-| "Not logged in" | `railway login` |
-| "No project linked" | `railway link` |
-| Wrong service context | `railway link` again |
-| Token expired | Regenerate at railway.app/account/tokens |
+| Symptom               | Fix                                      |
+| --------------------- | ---------------------------------------- |
+| "Not logged in"       | `railway login`                          |
+| "No project linked"   | `railway link`                           |
+| Wrong service context | `railway link` again                     |
+| Token expired         | Regenerate at railway.app/account/tokens |
 
 Docs: https://docs.railway.com/cli

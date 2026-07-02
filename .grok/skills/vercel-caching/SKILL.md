@@ -22,13 +22,13 @@ Client → PoP → CDN Cache → ISR Cache → Vercel Function → Runtime Cache
 
 ## Cache layers
 
-| Layer | What | Control |
-|-------|------|---------|
-| **CDN cache** | Full HTTP responses at edge | `Cache-Control`, `vercel.json` headers |
-| **ISR cache** | Pre-rendered pages (durable, single region) | Next.js `revalidate`, `generateStaticParams` |
-| **Runtime cache** | Data inside functions | `fetch` with cache, `getCache()` from `@vercel/functions` |
-| **Image cache** | Optimized images | Automatic via Image Optimization |
-| **Build cache** | Build artifacts | Remote cache for monorepos |
+| Layer             | What                                        | Control                                                   |
+| ----------------- | ------------------------------------------- | --------------------------------------------------------- |
+| **CDN cache**     | Full HTTP responses at edge                 | `Cache-Control`, `vercel.json` headers                    |
+| **ISR cache**     | Pre-rendered pages (durable, single region) | Next.js `revalidate`, `generateStaticParams`              |
+| **Runtime cache** | Data inside functions                       | `fetch` with cache, `getCache()` from `@vercel/functions` |
+| **Image cache**   | Optimized images                            | Automatic via Image Optimization                          |
+| **Build cache**   | Build artifacts                             | Remote cache for monorepos                                |
 
 awfixersites sets static asset caching in `createAppVercelConfig()`:
 
@@ -37,7 +37,7 @@ routes.cacheControl("/static/(.*)", {
   public: true,
   maxAge: "1 week",
   immutable: true,
-})
+});
 ```
 
 ## CDN cache
@@ -58,6 +58,7 @@ routes.cacheControl("/static/(.*)", {
 ### Cache-Control directives
 
 Function responses need one of:
+
 - `s-maxage=N`
 - `s-maxage=N, stale-while-revalidate=Z`
 - `s-maxage=N, stale-while-revalidate=Z, stale-if-error=Z`
@@ -75,11 +76,11 @@ export async function GET() {
 
 ### Three-tier header control
 
-| Header | Affects | Returned to browser |
-|--------|---------|---------------------|
-| `Cache-Control` | Browser + shared caches | Yes |
-| `CDN-Cache-Control` | Downstream CDNs (not browser) | Yes |
-| `Vercel-CDN-Cache-Control` | Vercel CDN only | No |
+| Header                     | Affects                       | Returned to browser |
+| -------------------------- | ----------------------------- | ------------------- |
+| `Cache-Control`            | Browser + shared caches       | Yes                 |
+| `CDN-Cache-Control`        | Downstream CDNs (not browser) | Yes                 |
+| `Vercel-CDN-Cache-Control` | Vercel CDN only               | No                  |
 
 ```typescript
 headers: {
@@ -119,6 +120,7 @@ Vercel CDN already varies on `Accept` and `Accept-Encoding` by default.
 ### Debug cache hits
 
 Check response header `x-vercel-cache`:
+
 - `HIT` — served from CDN
 - `MISS` — fetched from origin
 - `STALE` — served stale while revalidating
@@ -174,9 +176,9 @@ bunx vercel cache invalidate --tag my-tag  # tag-based (foreground revalidate)
 bunx vercel cache dangerously-delete --tag my-tag  # immediate purge
 ```
 
-| Method | Behavior |
-|--------|----------|
-| **invalidate** | Marks stale; revalidates on next request (safe) |
+| Method                 | Behavior                                                       |
+| ---------------------- | -------------------------------------------------------------- |
+| **invalidate**         | Marks stale; revalidates on next request (safe)                |
 | **dangerously-delete** | Immediate purge; next request blocks on origin (use carefully) |
 
 Purge by: deployment URL, cache tag, source image (image optimization).

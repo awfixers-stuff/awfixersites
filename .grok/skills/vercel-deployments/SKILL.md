@@ -18,12 +18,12 @@ Every successful build creates a **deployment** with a unique URL. awfixersites 
 
 ## Environments
 
-| Environment | Trigger | URL |
-|-------------|---------|-----|
-| **Local** | `vercel dev`, `next dev` | `localhost` |
-| **Preview** | PR, non-prod branch push, `vercel` (no `--prod`) | `*.vercel.app`, branch URL |
-| **Production** | merge to prod branch, `vercel --prod` | custom domain + prod alias |
-| **Custom** | `vercel deploy --target=staging` (Pro/Enterprise) | attached domain |
+| Environment    | Trigger                                           | URL                        |
+| -------------- | ------------------------------------------------- | -------------------------- |
+| **Local**      | `vercel dev`, `next dev`                          | `localhost`                |
+| **Preview**    | PR, non-prod branch push, `vercel` (no `--prod`)  | `*.vercel.app`, branch URL |
+| **Production** | merge to prod branch, `vercel --prod`             | custom domain + prod alias |
+| **Custom**     | `vercel deploy --target=staging` (Pro/Enterprise) | attached domain            |
 
 Each environment has **separate env vars**. Preview deployments expose `VERCEL_URL` — auth satellites depend on this (`packages/auth/src/config.ts`). Never break preview env vars when changing auth.
 
@@ -100,13 +100,13 @@ bunx vercel inspect <deployment-url> --wait
 
 Dashboard: Project → Deployments → filter by branch/status/environment.
 
-| Action | When |
-|--------|------|
-| **Redeploy** | Bad build cache, env var change, outage resiliency, analytics enable |
-| **Promote to production** | Manual promotion when auto-promote disabled |
-| **Rollback** | Revert production to previous deployment |
-| **Delete** | Cleanup; breaks instant rollback and PR integration links |
-| **Assign domain** | Point custom domain to any deployment |
+| Action                    | When                                                                 |
+| ------------------------- | -------------------------------------------------------------------- |
+| **Redeploy**              | Bad build cache, env var change, outage resiliency, analytics enable |
+| **Promote to production** | Manual promotion when auto-promote disabled                          |
+| **Rollback**              | Revert production to previous deployment                             |
+| **Delete**                | Cleanup; breaks instant rollback and PR integration links            |
+| **Assign domain**         | Point custom domain to any deployment                                |
 
 ### Rollback
 
@@ -120,6 +120,7 @@ Instant rollback requires the target deployment still exists (check retention po
 ### Redeploy with/without build cache
 
 Redeploy when:
+
 - Environment variables changed (values don't apply until redeploy)
 - Build & Development Settings changed
 - Suspected stale build cache
@@ -142,6 +143,7 @@ Checks can block promotion. Re-request failed checks via REST API or dashboard.
 ## Inspecting deployments
 
 Dashboard → Deployment → Resources tab shows:
+
 - Middleware matchers
 - Static assets (sizes)
 - Functions (runtime, region, size)
@@ -160,10 +162,10 @@ bunx vercel logs
 
 ```typescript
 // Client: use relative paths when protection enabled
-fetch('/api/data');  // not fetch(`${process.env.VERCEL_URL}/api/data`)
+fetch("/api/data"); // not fetch(`${process.env.VERCEL_URL}/api/data`)
 
 // Server: forward cookies from incoming request
-const headers = { cookie: request.headers.get('cookie') ?? '' };
+const headers = { cookie: request.headers.get("cookie") ?? "" };
 fetch(`${request.nextUrl.origin}/api/data`, { headers });
 ```
 

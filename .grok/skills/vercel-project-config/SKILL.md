@@ -17,11 +17,11 @@ Docs: https://vercel.com/docs/project-configuration
 
 Three configuration surfaces:
 
-| Surface | Location | Version controlled |
-|---------|----------|-------------------|
-| **vercel.json** | Static JSON in repo | Yes |
-| **vercel.ts** | Programmatic TS at build time | Yes |
-| **Dashboard** | Project Settings | No (unless exported) |
+| Surface         | Location                      | Version controlled   |
+| --------------- | ----------------------------- | -------------------- |
+| **vercel.json** | Static JSON in repo           | Yes                  |
+| **vercel.ts**   | Programmatic TS at build time | Yes                  |
+| **Dashboard**   | Project Settings              | No (unless exported) |
 
 **One config file per project** — vercel.json OR vercel.ts, not both.
 
@@ -50,32 +50,33 @@ export default createAppVercelConfig({
 
 ### Fleet defaults (createAppVercelConfig)
 
-| Property | Value | Notes |
-|----------|-------|-------|
-| `framework` | `"nextjs"` | |
-| `bunVersion` | `"1.x"` | Bun runtime for functions |
-| `fluid` | `true` | Fluid compute enabled |
-| `cleanUrls` | `true` | Strip .html extensions |
-| `trailingSlash` | `false` | |
-| `buildCommand` | `bun --bun ../../scripts/vercel-build.ts` | Monorepo build script |
-| `installCommand` | `cd ../.. && bun install --frozen-lockfile` | Root install |
-| `devCommand` | `bun --bun run dev` | |
-| `crons` | optional `/api/cleanup` daily | `crons: true` to enable |
+| Property         | Value                                       | Notes                     |
+| ---------------- | ------------------------------------------- | ------------------------- |
+| `framework`      | `"nextjs"`                                  |                           |
+| `bunVersion`     | `"1.x"`                                     | Bun runtime for functions |
+| `fluid`          | `true`                                      | Fluid compute enabled     |
+| `cleanUrls`      | `true`                                      | Strip .html extensions    |
+| `trailingSlash`  | `false`                                     |                           |
+| `buildCommand`   | `bun --bun ../../scripts/vercel-build.ts`   | Monorepo build script     |
+| `installCommand` | `cd ../.. && bun install --frozen-lockfile` | Root install              |
+| `devCommand`     | `bun --bun run dev`                         |                           |
+| `crons`          | optional `/api/cleanup` daily               | `crons: true` to enable   |
 
 ### Per-app options (AppVercelOptions)
 
 ```typescript
 type AppVercelOptions = {
-  name: string;                    // Vercel project display name
-  legalRedirect?: boolean;         // default true — /legal → legal.awfixer.llc
-  careersRedirect?: boolean;       // default true — /careers → careers.awfixer.llc
-  donateApex?: string;             // e.g. "awfixer.church" → /donate redirects
-  crons?: boolean;                 // enable cleanup cron
-  extraRedirects?: Redirect[];     // app-specific redirects
+  name: string; // Vercel project display name
+  legalRedirect?: boolean; // default true — /legal → legal.awfixer.llc
+  careersRedirect?: boolean; // default true — /careers → careers.awfixer.llc
+  donateApex?: string; // e.g. "awfixer.church" → /donate redirects
+  crons?: boolean; // enable cleanup cron
+  extraRedirects?: Redirect[]; // app-specific redirects
 };
 ```
 
 Opt-out examples:
+
 - `apps/legal` — `legalRedirect: false`
 - `apps/careers` — `careersRedirect: false`
 
@@ -83,44 +84,44 @@ Opt-out examples:
 
 ### Build & deploy
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `buildCommand` | string | Override build (dashboard + package.json) |
-| `installCommand` | string | Override install |
-| `devCommand` | string | Override dev server |
-| `outputDirectory` | string | Build output dir (non-framework) |
-| `framework` | string | Framework preset slug |
-| `ignoreCommand` | string | Exit 0 = skip build |
-| `bunVersion` | `"1.x"` | Use Bun runtime |
-| `fluid` | boolean | Enable fluid compute |
+| Property          | Type    | Description                               |
+| ----------------- | ------- | ----------------------------------------- |
+| `buildCommand`    | string  | Override build (dashboard + package.json) |
+| `installCommand`  | string  | Override install                          |
+| `devCommand`      | string  | Override dev server                       |
+| `outputDirectory` | string  | Build output dir (non-framework)          |
+| `framework`       | string  | Framework preset slug                     |
+| `ignoreCommand`   | string  | Exit 0 = skip build                       |
+| `bunVersion`      | `"1.x"` | Use Bun runtime                           |
+| `fluid`           | boolean | Enable fluid compute                      |
 
 ### Routing
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `redirects` | Redirect[] | HTTP redirects (308/307) |
-| `rewrites` | Rewrite[] | Internal/external URL mapping |
-| `headers` | HeaderRule[] | Response headers + cache control |
-| `bulkRedirectsPath` | string | Path to CSV/JSON bulk redirects file |
-| `cleanUrls` | boolean | Remove file extensions from URLs |
-| `trailingSlash` | boolean | Add/remove trailing slashes |
+| Property            | Type         | Description                          |
+| ------------------- | ------------ | ------------------------------------ |
+| `redirects`         | Redirect[]   | HTTP redirects (308/307)             |
+| `rewrites`          | Rewrite[]    | Internal/external URL mapping        |
+| `headers`           | HeaderRule[] | Response headers + cache control     |
+| `bulkRedirectsPath` | string       | Path to CSV/JSON bulk redirects file |
+| `cleanUrls`         | boolean      | Remove file extensions from URLs     |
+| `trailingSlash`     | boolean      | Add/remove trailing slashes          |
 
 ### Functions
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `functions` | Record<glob, config> | Per-function maxDuration, regions, runtime |
-| `regions` | string[] | Default function regions |
-| `functionFailoverRegions` | string[] | Failover regions (Enterprise) |
-| `crons` | Cron[] | Scheduled function invocations |
+| Property                  | Type                 | Description                                |
+| ------------------------- | -------------------- | ------------------------------------------ |
+| `functions`               | Record<glob, config> | Per-function maxDuration, regions, runtime |
+| `regions`                 | string[]             | Default function regions                   |
+| `functionFailoverRegions` | string[]             | Failover regions (Enterprise)              |
+| `crons`                   | Cron[]               | Scheduled function invocations             |
 
 ### Other
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `images` | object | Image optimization config |
-| `public` | boolean | Public deployment logs/source |
-| `$schema` | string | `"https://openapi.vercel.sh/vercel.json"` |
+| Property  | Type    | Description                               |
+| --------- | ------- | ----------------------------------------- |
+| `images`  | object  | Image optimization config                 |
+| `public`  | boolean | Public deployment logs/source             |
+| `$schema` | string  | `"https://openapi.vercel.sh/vercel.json"` |
 
 ## Typed config with @vercel/config/v1
 
@@ -157,9 +158,7 @@ ISR routes accept same `functions` config (glob match on page paths).
 
 ```json
 {
-  "crons": [
-    { "path": "/api/cleanup", "schedule": "0 0 * * *" }
-  ]
+  "crons": [{ "path": "/api/cleanup", "schedule": "0 0 * * *" }]
 }
 ```
 
@@ -209,11 +208,13 @@ Add to vercel.json or reference in vercel.ts for IDE validation.
 ## vercel.ts vs vercel.json
 
 Use **vercel.ts** when:
+
 - Sharing config across fleet (awfixersites pattern)
 - Dynamic config from env vars at build time
 - Type safety with `@vercel/config/v1`
 
 Use **vercel.json** when:
+
 - Simple static config
 - Non-TypeScript projects
 - Quick prototyping
@@ -235,9 +236,7 @@ Use **vercel.json** when:
 ```typescript
 export default createAppVercelConfig({
   name: "awfixersites-example",
-  extraRedirects: [
-    routes.redirect("/old-page", "/new-page", { permanent: true }) as Redirect,
-  ],
+  extraRedirects: [routes.redirect("/old-page", "/new-page", { permanent: true }) as Redirect],
 });
 ```
 

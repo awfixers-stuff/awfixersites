@@ -26,6 +26,7 @@ bash ${GROK_PLUGIN_ROOT}/scripts/start-persistent-server.sh
 Confirm Grok MCP config uses `http://127.0.0.1:18791/mcp` (HTTP), not a stdio `launch-mcp.sh` command.
 
 For **zero prompts ever**, restart Helium with the classic debug port:
+
 ```bash
 bash ${GROK_PLUGIN_ROOT}/scripts/launch-helium-with-debug.sh
 ```
@@ -52,9 +53,9 @@ Read `.grok/plugins/helium-browser/.mcp.json` and confirm:
 
 Optional env overrides:
 
-| Variable | Purpose |
-|----------|---------|
-| `HELIUM_EXECUTABLE` | Path to Helium binary (auto-detected from PATH) |
+| Variable               | Purpose                                             |
+| ---------------------- | --------------------------------------------------- |
+| `HELIUM_EXECUTABLE`    | Path to Helium binary (auto-detected from PATH)     |
 | `HELIUM_USER_DATA_DIR` | Profile dir (default: `~/.config/net.imput.helium`) |
 
 ### Step 4: Fallback — explicit browser URL

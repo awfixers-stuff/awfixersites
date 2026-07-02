@@ -1,1 +1,0 @@
-export { GET, POST, PATCH, PUT, DELETE } from "@awfixersites/auth/auth-api-route";

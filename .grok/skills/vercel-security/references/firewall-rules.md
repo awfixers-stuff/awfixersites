@@ -4,12 +4,12 @@ Source: https://vercel.com/docs/security/vercel-waf, https://vercel.com/docs/ver
 
 ## Rule actions
 
-| Action | Effect |
-|--------|--------|
-| **deny** | Block request (403) |
-| **challenge** | CAPTCHA/bot challenge |
-| **log** | Allow but log (monitoring mode) |
-| **bypass** | Skip remaining rules (system bypass) |
+| Action        | Effect                               |
+| ------------- | ------------------------------------ |
+| **deny**      | Block request (403)                  |
+| **challenge** | CAPTCHA/bot challenge                |
+| **log**       | Allow but log (monitoring mode)      |
+| **bypass**    | Skip remaining rules (system bypass) |
 
 ## Common rule conditions
 

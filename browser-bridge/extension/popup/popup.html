@@ -83,13 +83,25 @@
     <input id="port" type="number" value="18793" />
     <label for="token">Auth token</label>
     <div style="display: flex; gap: 8px; margin-bottom: 12px">
-      <input id="token" type="password" placeholder="Paste token from setup-token.sh" style="margin-bottom: 0" />
-      <button id="reveal" type="button" style="width: auto; padding: 8px 12px; background: #3c4043; color: #e8eaed">Show</button>
+      <input
+        id="token"
+        type="password"
+        placeholder="Paste token from setup-token.sh"
+        style="margin-bottom: 0"
+      />
+      <button
+        id="reveal"
+        type="button"
+        style="width: auto; padding: 8px 12px; background: #3c4043; color: #e8eaed"
+      >
+        Show
+      </button>
     </div>
     <button id="save">Save & reconnect</button>
     <p class="hint">
       Token: run <code>bash browser-bridge/scripts/setup-token.sh</code> and paste above. Start the
-      gateway with <code>start-gateway.sh</code>. Chrome shows a debugger banner when the agent attaches.
+      gateway with <code>start-gateway.sh</code>. Chrome shows a debugger banner when the agent
+      attaches.
     </p>
     <script src="popup.js" type="module"></script>
   </body>

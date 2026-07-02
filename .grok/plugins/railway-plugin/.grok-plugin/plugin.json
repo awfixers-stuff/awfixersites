@@ -30,8 +30,5 @@
     "./commands/link.md",
     "./commands/mcp-setup.md"
   ],
-  "agents": [
-    "./agents/deployment-debugger.md",
-    "./agents/iac-validator.md"
-  ]
+  "agents": ["./agents/deployment-debugger.md", "./agents/iac-validator.md"]
 }

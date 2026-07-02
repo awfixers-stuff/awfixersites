@@ -1,5 +1,5 @@
 {
-  "description": "Apps wired for Autonoma checks. Bootstrapped = default shadcn 'Project ready!' placeholder.",
+  "description": "Apps wired for Autonoma checks.",
   "targets": [
     "account",
     "army",
@@ -13,17 +13,5 @@
     "news",
     "template",
     "tips"
-  ],
-  "skipped": [
-    "about",
-    "agent",
-    "branding",
-    "cash",
-    "cloud",
-    "club",
-    "me",
-    "network",
-    "party",
-    "space"
   ]
 }

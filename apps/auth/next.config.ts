@@ -29,7 +29,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@awfixersites/security", "@awfixersites/utils", "@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
+  transpilePackages: [
+    "@awfixersites/security",
+    "@awfixersites/utils",
+    "@awfixersites/telemetry",
+    "@awfixersites/ui",
+    "@awfixersites/auth",
+  ],
   headers: async () => [
     {
       source: "/(.*)",

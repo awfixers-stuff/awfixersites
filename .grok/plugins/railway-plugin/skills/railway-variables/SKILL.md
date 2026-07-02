@@ -33,12 +33,12 @@ railway variables --json > /tmp/railway-vars.json
 
 ## awfixersites variable matrix
 
-| Variable | Source | Destination |
-|----------|--------|-------------|
-| `DATABASE_URL` | Railway Postgres service | Terraform → `PRISMA_DATABASE_URL` on Vercel |
-| `RAILWAY_TOKEN` | railway.app/account/tokens | Shell env / TF Cloud (never commit) |
-| `AUTH_CLIENT_DATABASE_URL` | Railway session DB | Vercel auth satellite apps |
-| `AUTH_<SITE>_SESSION_DATABASE_URL` | Per-app session DB | Specific Vercel project |
+| Variable                           | Source                     | Destination                                 |
+| ---------------------------------- | -------------------------- | ------------------------------------------- |
+| `DATABASE_URL`                     | Railway Postgres service   | Terraform → `PRISMA_DATABASE_URL` on Vercel |
+| `RAILWAY_TOKEN`                    | railway.app/account/tokens | Shell env / TF Cloud (never commit)         |
+| `AUTH_CLIENT_DATABASE_URL`         | Railway session DB         | Vercel auth satellite apps                  |
+| `AUTH_<SITE>_SESSION_DATABASE_URL` | Per-app session DB         | Specific Vercel project                     |
 
 Resolver: `packages/env/src/index.ts`
 

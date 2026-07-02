@@ -47,11 +47,11 @@ Resolution order in `packages/env/src/index.ts`:
 
 ## Topology (production)
 
-| DB | Purpose | Isolation |
-|----|---------|-----------|
-| IdP | users, passkeys, OAuth apps | **Dedicated** — downtime breaks all satellites |
-| Session | per-app OAuth client sessions | Per-app or shared (see auth docs) |
-| App data | enlistments, donations, tips | Per-app where required |
+| DB       | Purpose                       | Isolation                                      |
+| -------- | ----------------------------- | ---------------------------------------------- |
+| IdP      | users, passkeys, OAuth apps   | **Dedicated** — downtime breaks all satellites |
+| Session  | per-app OAuth client sessions | Per-app or shared (see auth docs)              |
+| App data | enlistments, donations, tips  | Per-app where required                         |
 
 Local dev may share one DB. Production follows `docs/auth-deployment.md` and `packages/auth/HANDOFF.md`.
 

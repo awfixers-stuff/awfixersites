@@ -15,7 +15,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@awfixersites/security", "@awfixersites/utils", "@awfixersites/telemetry", "@awfixersites/ui", "@awfixersites/auth"],
+  transpilePackages: [
+    "@awfixersites/security",
+    "@awfixersites/utils",
+    "@awfixersites/telemetry",
+    "@awfixersites/ui",
+    "@awfixersites/auth",
+  ],
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   headers: async () => [
     {

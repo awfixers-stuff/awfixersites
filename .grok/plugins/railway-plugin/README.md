@@ -39,43 +39,43 @@ Architecture diagram, decision matrix, database topology, and safety rules.
 
 ### Skills (7)
 
-| Skill | Covers |
-|-------|--------|
-| `railway-cli` | CLI auth, link, deploy, logs, variables |
-| `railway-iac` | Terraform `railway_*` resources, import, apply workflow |
-| `railway-postgres` | Postgres templates, Prisma wiring, volume safety |
-| `railway-variables` | Env var management, local pull, drift prevention |
-| `railway-deployments` | Deploy, redeploy, failure diagnostics |
-| `railway-mcp` | Local vs remote MCP setup and decision guide |
-| `railway-vercel-wiring` | Cross-provider `DATABASE_URL` → `PRISMA_DATABASE_URL` |
+| Skill                   | Covers                                                  |
+| ----------------------- | ------------------------------------------------------- |
+| `railway-cli`           | CLI auth, link, deploy, logs, variables                 |
+| `railway-iac`           | Terraform `railway_*` resources, import, apply workflow |
+| `railway-postgres`      | Postgres templates, Prisma wiring, volume safety        |
+| `railway-variables`     | Env var management, local pull, drift prevention        |
+| `railway-deployments`   | Deploy, redeploy, failure diagnostics                   |
+| `railway-mcp`           | Local vs remote MCP setup and decision guide            |
+| `railway-vercel-wiring` | Cross-provider `DATABASE_URL` → `PRISMA_DATABASE_URL`   |
 
 ### Commands (10)
 
-| Command | Purpose |
-|---------|---------|
-| `/railway:status` | CLI auth, link, Terraform health |
-| `/railway:deploy` | Deploy linked Railway service |
-| `/railway:logs` | View or stream service logs |
-| `/railway:variables` | List, pull, or set variables |
-| `/railway:iac` | Terraform stack overview |
-| `/railway:plan` | Safe `terraform plan` with review |
-| `/railway:import` | Import live resources into state |
-| `/railway:postgres` | Postgres topology and provisioning |
-| `/railway:link` | Link directory to Railway project |
-| `/railway:mcp-setup` | Configure local or remote MCP |
+| Command              | Purpose                            |
+| -------------------- | ---------------------------------- |
+| `/railway:status`    | CLI auth, link, Terraform health   |
+| `/railway:deploy`    | Deploy linked Railway service      |
+| `/railway:logs`      | View or stream service logs        |
+| `/railway:variables` | List, pull, or set variables       |
+| `/railway:iac`       | Terraform stack overview           |
+| `/railway:plan`      | Safe `terraform plan` with review  |
+| `/railway:import`    | Import live resources into state   |
+| `/railway:postgres`  | Postgres topology and provisioning |
+| `/railway:link`      | Link directory to Railway project  |
+| `/railway:mcp-setup` | Configure local or remote MCP      |
 
 ### Agents (2)
 
-| Agent | Expertise |
-|-------|-----------|
-| `deployment-debugger` | Failed deploys, log analysis, DB connectivity |
-| `iac-validator` | Pre-apply Terraform review, destructive op detection |
+| Agent                 | Expertise                                            |
+| --------------------- | ---------------------------------------------------- |
+| `deployment-debugger` | Failed deploys, log analysis, DB connectivity        |
+| `iac-validator`       | Pre-apply Terraform review, destructive op detection |
 
 ### MCP (2 servers)
 
-| Server | Config | Best for |
-|--------|--------|----------|
-| `railway-local` | `railway mcp` (stdio) | Daily ops, broader tool set |
+| Server           | Config                            | Best for                      |
+| ---------------- | --------------------------------- | ----------------------------- |
+| `railway-local`  | `railway mcp` (stdio)             | Daily ops, broader tool set   |
 | `railway-remote` | `https://mcp.railway.com` (OAuth) | Debugging via `railway-agent` |
 
 Setup: `/railway:mcp-setup` or `railway setup agent`.

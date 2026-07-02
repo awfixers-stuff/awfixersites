@@ -8,6 +8,7 @@ Check connection readiness for the Helium browser MCP plugin.
 ## Steps
 
 1. Run the status script:
+
    ```bash
    bash ${GROK_PLUGIN_ROOT}/scripts/status.sh
    ```

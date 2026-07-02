@@ -1,20 +1,10 @@
 {
-  "generatedAt": "2026-07-01T21:13:32.909Z",
+  "generatedAt": "2026-07-02T00:00:00.000Z",
   "apps": [
-    {
-      "name": "about",
-      "workspace": "apps/about",
-      "vercelProject": "awfixersites-about"
-    },
     {
       "name": "account",
       "workspace": "apps/account",
       "vercelProject": "awfixersites-account"
-    },
-    {
-      "name": "agent",
-      "workspace": "apps/agent",
-      "vercelProject": "awfixersites-agent"
     },
     {
       "name": "army",
@@ -27,34 +17,14 @@
       "vercelProject": "awfixersites-auth-app"
     },
     {
-      "name": "branding",
-      "workspace": "apps/branding",
-      "vercelProject": "awfixersites-branding"
-    },
-    {
       "name": "careers",
       "workspace": "apps/careers",
       "vercelProject": "awfixersites-careers"
     },
     {
-      "name": "cash",
-      "workspace": "apps/cash",
-      "vercelProject": "awfixersites-cash"
-    },
-    {
       "name": "church",
       "workspace": "apps/church",
       "vercelProject": "awfixersites-church"
-    },
-    {
-      "name": "cloud",
-      "workspace": "apps/cloud",
-      "vercelProject": "awfixersites-cloud"
-    },
-    {
-      "name": "club",
-      "workspace": "apps/club",
-      "vercelProject": "awfixersites-club"
     },
     {
       "name": "codes",
@@ -77,29 +47,9 @@
       "vercelProject": "awfixersites-llc"
     },
     {
-      "name": "me",
-      "workspace": "apps/me",
-      "vercelProject": "awfixersites-me"
-    },
-    {
-      "name": "network",
-      "workspace": "apps/network",
-      "vercelProject": "awfixersites-network"
-    },
-    {
       "name": "news",
       "workspace": "apps/news",
       "vercelProject": "awfixersites-news"
-    },
-    {
-      "name": "party",
-      "workspace": "apps/party",
-      "vercelProject": "awfixersites-party"
-    },
-    {
-      "name": "space",
-      "workspace": "apps/space",
-      "vercelProject": "awfixersites-space"
     },
     {
       "name": "template",

@@ -159,8 +159,7 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
         tabId: z.number().int().optional(),
       },
     },
-    async ({ selector, tabId }) =>
-      textResult(await bridge.call("dom.query", { selector, tabId })),
+    async ({ selector, tabId }) => textResult(await bridge.call("dom.query", { selector, tabId })),
   );
 
   server.registerTool(
@@ -179,7 +178,8 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
   server.registerTool(
     "fill",
     {
-      description: "Fill an input or textarea by CSS selector.",
+      description:
+        "Fill an input, textarea, or contenteditable element (e.g. TipTap/ProseMirror) by CSS selector.",
       inputSchema: {
         selector: z.string(),
         value: z.string(),
@@ -199,8 +199,7 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
         tabId: z.number().int().optional(),
       },
     },
-    async ({ key, tabId }) =>
-      textResult(await bridge.call("interaction.press", { key, tabId })),
+    async ({ key, tabId }) => textResult(await bridge.call("interaction.press", { key, tabId })),
   );
 
   server.registerTool(

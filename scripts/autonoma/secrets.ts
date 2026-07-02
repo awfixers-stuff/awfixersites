@@ -33,7 +33,13 @@ export function secretsForApp(appName: string): string[] {
   }
 
   if (isOAuthSiteKey(appName)) {
-    keys.push("AUTH_OAUTH_SITE_KEY", "AUTH_DEPLOYMENT_ROLE", "AUTH_SECRET", "AUTH_URL", "BETTER_AUTH_URL");
+    keys.push(
+      "AUTH_OAUTH_SITE_KEY",
+      "AUTH_DEPLOYMENT_ROLE",
+      "AUTH_SECRET",
+      "AUTH_URL",
+      "BETTER_AUTH_URL",
+    );
     const site = getOAuthSiteByKey(appName);
     const siteKey = site.key.toUpperCase();
     keys.push(`AUTH_OAUTH_${siteKey}_CLIENT_ID`, `AUTH_OAUTH_${siteKey}_CLIENT_SECRET`);

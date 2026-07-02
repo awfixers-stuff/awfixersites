@@ -1,0 +1,9 @@
+{
+  "name": "browser-bridge",
+  "version": "0.1.0",
+  "description": "Control your local Chrome via the AWFixer Browser Bridge extension — auto-starts the WebSocket bridge when Grok connects.",
+  "author": {
+    "name": "awfixersites"
+  },
+  "keywords": ["chrome", "browser", "extension", "mcp", "automation", "tabs"]
+}

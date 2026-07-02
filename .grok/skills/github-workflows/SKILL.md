@@ -62,13 +62,13 @@ jobs:
 
 ### Trigger cheat sheet
 
-| Event | Use when |
-|-------|----------|
-| `push` / `pull_request` | Standard CI on branch activity |
-| `workflow_dispatch` | Manual run from Actions tab; add `inputs` for parameters |
-| `schedule` | Cron maintenance (dependabot-style, nightly checks) |
-| `repository_dispatch` | External systems (Vercel, custom webhooks) post to GitHub |
-| `workflow_call` | Reusable workflow invoked by other workflows |
+| Event                   | Use when                                                  |
+| ----------------------- | --------------------------------------------------------- |
+| `push` / `pull_request` | Standard CI on branch activity                            |
+| `workflow_dispatch`     | Manual run from Actions tab; add `inputs` for parameters  |
+| `schedule`              | Cron maintenance (dependabot-style, nightly checks)       |
+| `repository_dispatch`   | External systems (Vercel, custom webhooks) post to GitHub |
+| `workflow_call`         | Reusable workflow invoked by other workflows              |
 
 Always pin third-party actions to a major version tag (`@v4`) or full SHA for supply-chain safety.
 
@@ -180,12 +180,12 @@ For logic that needs Node, prefer a **JavaScript action** (`action.yml` with `us
 
 ## Secrets, variables, and environments
 
-| Mechanism | Scope | When |
-|-----------|-------|------|
-| `secrets.*` | Repo/org/env | Tokens, API keys — never log or echo |
-| `vars.*` | Repo/org/env | Non-sensitive config |
-| `github.token` | Per-run | Default `GITHUB_TOKEN`; set `permissions` to grant write |
-| Environments | Per-env secrets + protection rules | Deploy approvals, prod-only secrets |
+| Mechanism      | Scope                              | When                                                     |
+| -------------- | ---------------------------------- | -------------------------------------------------------- |
+| `secrets.*`    | Repo/org/env                       | Tokens, API keys — never log or echo                     |
+| `vars.*`       | Repo/org/env                       | Non-sensitive config                                     |
+| `github.token` | Per-run                            | Default `GITHUB_TOKEN`; set `permissions` to grant write |
+| Environments   | Per-env secrets + protection rules | Deploy approvals, prod-only secrets                      |
 
 Reference: `${{ secrets.MY_TOKEN }}`. For OIDC to cloud providers, use `permissions: id-token: write` and provider-specific `aws-actions/configure-aws-credentials` (or equivalent).
 

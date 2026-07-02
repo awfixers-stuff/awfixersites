@@ -15,30 +15,12 @@ if ! browser_bridge_load_token "${BRIDGE_ROOT}"; then
 fi
 
 PORT="${BROWSER_BRIDGE_MCP_PORT:-18794}"
-BRIDGE_PORT="${BROWSER_BRIDGE_PORT:-18793}"
 PID_FILE="${BROWSER_BRIDGE_PID_FILE:-${XDG_RUNTIME_DIR:-/tmp}/browser-bridge-mcp-${UID}.pid}"
-BRIDGE_PID_FILE="${BROWSER_BRIDGE_BRIDGE_PID_FILE:-${XDG_RUNTIME_DIR:-/tmp}/browser-bridge-ws-${UID}.pid}"
 LOG_FILE="${BROWSER_BRIDGE_LOG_FILE:-${HOME}/.grok/logs/browser-bridge-mcp.log}"
-BRIDGE_LOG_FILE="${BROWSER_BRIDGE_BRIDGE_LOG_FILE:-${HOME}/.grok/logs/browser-bridge-ws.log}"
 HEALTH_URL="http://127.0.0.1:${PORT}/healthz"
-BRIDGE_HEALTH_URL="http://127.0.0.1:${BRIDGE_PORT}/healthz"
 MCP_URL="http://127.0.0.1:${PORT}/mcp"
 
 mkdir -p "$(dirname "${LOG_FILE}")"
-mkdir -p "$(dirname "${BRIDGE_LOG_FILE}")"
-
-bridge_running() {
-  if [[ -f "${BRIDGE_PID_FILE}" ]]; then
-    local pid
-    pid="$(cat "${BRIDGE_PID_FILE}")"
-    if kill -0 "${pid}" 2>/dev/null; then
-      if curl -sf --max-time 2 "${BRIDGE_HEALTH_URL}" >/dev/null 2>&1; then
-        return 0
-      fi
-    fi
-  fi
-  return 1
-}
 
 gateway_running() {
   if [[ -f "${PID_FILE}" ]]; then
@@ -56,28 +38,7 @@ gateway_running() {
 echo "Building extension (if needed)..."
 (cd "${BRIDGE_ROOT}" && bun install && bun run build:extension)
 
-if ! bridge_running; then
-  echo "Starting extension WebSocket bridge on port ${BRIDGE_PORT}..."
-  echo "Bridge logs: ${BRIDGE_LOG_FILE}"
-  nohup env BROWSER_BRIDGE_TOKEN="${BROWSER_BRIDGE_TOKEN:-}" bun "${BRIDGE_ROOT}/mcp/src/bridge-server.ts" >>"${BRIDGE_LOG_FILE}" 2>&1 &
-  BRIDGE_PID=$!
-  echo "${BRIDGE_PID}" > "${BRIDGE_PID_FILE}"
-
-  for _ in $(seq 1 20); do
-    if curl -sf --max-time 1 "${BRIDGE_HEALTH_URL}" >/dev/null 2>&1; then
-      echo "Extension bridge ready at ${BRIDGE_HEALTH_URL} (pid ${BRIDGE_PID})"
-      break
-    fi
-    if ! kill -0 "${BRIDGE_PID}" 2>/dev/null; then
-      echo "Bridge failed to start. Check ${BRIDGE_LOG_FILE}" >&2
-      rm -f "${BRIDGE_PID_FILE}"
-      exit 1
-    fi
-    sleep 0.25
-  done
-else
-  echo "Extension bridge already running (pid $(cat "${BRIDGE_PID_FILE}"))"
-fi
+bash "${SCRIPT_DIR}/ensure-bridge.sh"
 
 if gateway_running; then
   echo "Browser Bridge MCP gateway already running (pid $(cat "${PID_FILE}"), ${MCP_URL})"

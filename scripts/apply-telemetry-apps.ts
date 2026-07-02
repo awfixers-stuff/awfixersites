@@ -73,6 +73,7 @@ function writeClinkJson(appDir: string, appName: string): boolean {
   const path = resolve(appDir, "clink.json");
   if (existsSync(path)) return false;
   const config = {
+    $schema: "../../packages/telemetry/clink.schema.json",
     network: [],
     utm: { source: appName, medium: "referral", campaign: null },
     click: { event: "link_clicked", properties: { app: appName } },

@@ -54,13 +54,13 @@ Import existing: `terraform import vercel_project_domain.church <project_id>/<do
 
 ## DNS record types
 
-| Type | Use |
-|------|-----|
-| **A** | Apex domain → IP (`76.76.21.21`) |
+| Type      | Use                                |
+| --------- | ---------------------------------- |
+| **A**     | Apex domain → IP (`76.76.21.21`)   |
 | **CNAME** | Subdomain → `cname.vercel-dns.com` |
-| **TXT** | Domain verification, SPF, DKIM |
-| **MX** | Mail routing (Mailgun, etc.) |
-| **NS** | Delegate to nameserver |
+| **TXT**   | Domain verification, SPF, DKIM     |
+| **MX**    | Mail routing (Mailgun, etc.)       |
+| **NS**    | Delegate to nameserver             |
 
 ### Apex domain options
 
@@ -91,12 +91,12 @@ bunx vercel certs issue example.com
 
 ### SSL troubleshooting
 
-| Symptom | Fix |
-|---------|-----|
-| Certificate pending | DNS not propagated; wait or verify records |
-| Certificate error | CNAME pointing wrong target; check dashboard instructions |
-| Mixed content | Ensure all assets use HTTPS |
-| Cert on wrong project | Domain may be assigned to different Vercel project |
+| Symptom               | Fix                                                       |
+| --------------------- | --------------------------------------------------------- |
+| Certificate pending   | DNS not propagated; wait or verify records                |
+| Certificate error     | CNAME pointing wrong target; check dashboard instructions |
+| Mixed content         | Ensure all assets use HTTPS                               |
+| Cert on wrong project | Domain may be assigned to different Vercel project        |
 
 ## Domain → deployment assignment
 
@@ -109,13 +109,13 @@ Preview deployments get auto-generated `*.vercel.app` URLs — custom domains ar
 
 ## awfixersites domain map
 
-| Domain | Project | Notes |
-|--------|---------|-------|
-| `awfixer.church` | `awfixersites-church` | apex |
-| `donate.awfixer.church` | `awfixersites-donate` | separate project |
-| `careers.awfixer.llc` | `awfixersites-careers` | redirect target |
-| `legal.awfixer.llc` | `awfixersites-legal` | redirect target |
-| Per-app apex | `awfixersites-<app>` | see fleet registry |
+| Domain                  | Project                | Notes              |
+| ----------------------- | ---------------------- | ------------------ |
+| `awfixer.church`        | `awfixersites-church`  | apex               |
+| `donate.awfixer.church` | `awfixersites-donate`  | separate project   |
+| `careers.awfixer.llc`   | `awfixersites-careers` | redirect target    |
+| `legal.awfixer.llc`     | `awfixersites-legal`   | redirect target    |
+| Per-app apex            | `awfixersites-<app>`   | see fleet registry |
 
 Satellite apps redirect `/donate` → `donate.<apex>` via `vercel.ts` (not DNS).
 

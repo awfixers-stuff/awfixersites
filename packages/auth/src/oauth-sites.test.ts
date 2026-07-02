@@ -2,7 +2,7 @@ import { readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { isOAuthSiteKey, OAUTH_SITES } from "./oauth-sites";
+import { isOAuthSiteKey } from "./oauth-sites";
 
 describe("OAUTH_SITES registry", () => {
   it("covers every satellite app except auth", () => {
@@ -12,7 +12,6 @@ describe("OAUTH_SITES registry", () => {
       .map((entry) => entry.name)
       .filter((name) => name !== "auth" && name !== "template");
 
-    const registryKeys = new Set(OAUTH_SITES.map((site) => site.key));
     for (const appName of appDirs) {
       expect(isOAuthSiteKey(appName), `missing oauth site for ${appName}`).toBe(true);
     }

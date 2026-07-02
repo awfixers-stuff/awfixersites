@@ -6,11 +6,11 @@ Source lives in [`browser-bridge/`](../browser-bridge/).
 
 ## What it does
 
-| Component | Role |
-| --- | --- |
+| Component            | Role                                                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | **Chrome extension** | Runs in your normal Chrome. Uses `chrome.tabs`, `chrome.scripting`, `chrome.cookies`, and `chrome.debugger` to control tabs. |
-| **WebSocket bridge** | Always-on local server (`127.0.0.1:18793`) that routes commands between the MCP server and the extension. |
-| **MCP gateway** | HTTP MCP endpoint (`127.0.0.1:18794/mcp`) that exposes browser tools to Cursor, Grok, or any MCP client. |
+| **WebSocket bridge** | Always-on local server (`127.0.0.1:18793`) that routes commands between the MCP server and the extension.                    |
+| **MCP gateway**      | HTTP MCP endpoint (`127.0.0.1:18794/mcp`) that exposes browser tools to Cursor, Grok, or any MCP client.                     |
 
 The agent talks to the MCP gateway → bridge forwards requests over WebSocket → extension executes them in Chrome → results flow back.
 
@@ -32,12 +32,12 @@ flowchart LR
 
 ### Why use this instead of DevTools MCP?
 
-| DevTools MCP | Browser Bridge |
-| --- | --- |
-| Needs `--remote-debugging-port` or CDP attach | Works in your everyday Chrome profile |
-| Often launches an isolated profile | Uses your real tabs, cookies, logins, and extensions |
+| DevTools MCP                                    | Browser Bridge                                        |
+| ----------------------------------------------- | ----------------------------------------------------- |
+| Needs `--remote-debugging-port` or CDP attach   | Works in your everyday Chrome profile                 |
+| Often launches an isolated profile              | Uses your real tabs, cookies, logins, and extensions  |
 | Limited on some `chrome://` and extension pages | `chrome.debugger` provides raw CDP on attachable tabs |
-| No direct access to extension APIs | Full `chrome.*` extension surface |
+| No direct access to extension APIs              | Full `chrome.*` extension surface                     |
 
 For Helium-specific CDP attach, see [`.grok/plugins/helium-browser/`](../.grok/plugins/helium-browser/). Browser Bridge is the stock-Chrome / extension-first alternative.
 
@@ -139,40 +139,40 @@ All tools return JSON text in the MCP response body.
 
 ### Connection
 
-| Tool | Description |
-| --- | --- |
+| Tool            | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
 | `bridge_status` | Check gateway health and whether the extension is connected. |
 
 ### Tabs
 
-| Tool | Key parameters | Description |
-| --- | --- | --- |
-| `list_tabs` | `query?` | List tabs; optional `chrome.tabs.query` filter object. |
-| `get_tab` | `tabId?` | Tab metadata. Defaults to the active tab in the current window. |
-| `create_tab` | `url?`, `active?`, `pinned?` | Open a new tab. |
-| `close_tab` | `tabId` | Close a tab. |
-| `activate_tab` | `tabId` | Focus a tab and its window. |
-| `navigate` | `url`, `tabId?` | Navigate a tab to a URL. |
-| `reload_tab` | `tabId?`, `bypassCache?` | Reload a tab. |
-| `screenshot` | `tabId?`, `format?`, `quality?` | Capture visible tab as a data URL (`png` or `jpeg`). |
+| Tool           | Key parameters                  | Description                                                     |
+| -------------- | ------------------------------- | --------------------------------------------------------------- |
+| `list_tabs`    | `query?`                        | List tabs; optional `chrome.tabs.query` filter object.          |
+| `get_tab`      | `tabId?`                        | Tab metadata. Defaults to the active tab in the current window. |
+| `create_tab`   | `url?`, `active?`, `pinned?`    | Open a new tab.                                                 |
+| `close_tab`    | `tabId`                         | Close a tab.                                                    |
+| `activate_tab` | `tabId`                         | Focus a tab and its window.                                     |
+| `navigate`     | `url`, `tabId?`                 | Navigate a tab to a URL.                                        |
+| `reload_tab`   | `tabId?`, `bypassCache?`        | Reload a tab.                                                   |
+| `screenshot`   | `tabId?`, `format?`, `quality?` | Capture visible tab as a data URL (`png` or `jpeg`).            |
 
 ### Page interaction
 
-| Tool | Key parameters | Description |
-| --- | --- | --- |
-| `execute_script` | `expression`, `tabId?` | Evaluate JS in the page **MAIN** world. |
-| `take_snapshot` | `tabId?` | Full accessibility tree via CDP (`Accessibility.getFullAXTree`). |
-| `query_elements` | `selector`, `tabId?` | CSS query with geometry, text, and visibility metadata. |
-| `click` | `selector`, `tabId?` | Click an element. |
-| `fill` | `selector`, `value`, `tabId?` | Fill an input or textarea. |
-| `press_key` | `key`, `tabId?` | Dispatch keydown/keyup on the active element. |
-| `scroll` | `tabId?`, `x?`, `y?`, `selector?` | Scroll the page or scroll an element into view. |
-| `hover` | `selector`, `tabId?` | Dispatch mouseover/mouseenter on an element. |
+| Tool             | Key parameters                    | Description                                                      |
+| ---------------- | --------------------------------- | ---------------------------------------------------------------- |
+| `execute_script` | `expression`, `tabId?`            | Evaluate JS in the page **MAIN** world.                          |
+| `take_snapshot`  | `tabId?`                          | Full accessibility tree via CDP (`Accessibility.getFullAXTree`). |
+| `query_elements` | `selector`, `tabId?`              | CSS query with geometry, text, and visibility metadata.          |
+| `click`          | `selector`, `tabId?`              | Click an element.                                                |
+| `fill`           | `selector`, `value`, `tabId?`     | Fill an input or textarea.                                       |
+| `press_key`      | `key`, `tabId?`                   | Dispatch keydown/keyup on the active element.                    |
+| `scroll`         | `tabId?`, `x?`, `y?`, `selector?` | Scroll the page or scroll an element into view.                  |
+| `hover`          | `selector`, `tabId?`              | Dispatch mouseover/mouseenter on an element.                     |
 
 ### Low-level / CDP
 
-| Tool | Key parameters | Description |
-| --- | --- | --- |
+| Tool          | Key parameters                | Description                                                 |
+| ------------- | ----------------------------- | ----------------------------------------------------------- |
 | `cdp_command` | `method`, `params?`, `tabId?` | Raw Chrome DevTools Protocol command via `chrome.debugger`. |
 
 Example: enable network logging then read events:
@@ -183,23 +183,23 @@ Example: enable network logging then read events:
 
 ### Cookies
 
-| Tool | Key parameters | Description |
-| --- | --- | --- |
-| `get_cookies` | `url`, `name?` | Read cookies for a URL. |
-| `set_cookie` | `url`, `name`, `value`, … | Set a cookie (supports `domain`, `path`, `secure`, `httpOnly`, `sameSite`, `expirationDate`). |
+| Tool          | Key parameters            | Description                                                                                   |
+| ------------- | ------------------------- | --------------------------------------------------------------------------------------------- |
+| `get_cookies` | `url`, `name?`            | Read cookies for a URL.                                                                       |
+| `set_cookie`  | `url`, `name`, `value`, … | Set a cookie (supports `domain`, `path`, `secure`, `httpOnly`, `sameSite`, `expirationDate`). |
 
 ## Environment variables
 
-| Variable | Default | Used by |
-| --- | --- | --- |
-| `BROWSER_BRIDGE_HOST` | `127.0.0.1` | WebSocket bridge bind address |
-| `BROWSER_BRIDGE_PORT` | `18793` | WebSocket bridge port |
-| `BROWSER_BRIDGE_MCP_PORT` | `18794` | MCP HTTP gateway port |
-| `BROWSER_BRIDGE_TOKEN` | from `.bridge-token` | Auth token (set automatically by `start-gateway.sh`) |
-| `BROWSER_BRIDGE_PID_FILE` | `$XDG_RUNTIME_DIR/browser-bridge-mcp-$UID.pid` | MCP gateway PID file |
-| `BROWSER_BRIDGE_BRIDGE_PID_FILE` | `$XDG_RUNTIME_DIR/browser-bridge-ws-$UID.pid` | WebSocket bridge PID file |
-| `BROWSER_BRIDGE_LOG_FILE` | `~/.grok/logs/browser-bridge-mcp.log` | MCP gateway logs |
-| `BROWSER_BRIDGE_BRIDGE_LOG_FILE` | `~/.grok/logs/browser-bridge-ws.log` | WebSocket bridge logs |
+| Variable                         | Default                                        | Used by                                              |
+| -------------------------------- | ---------------------------------------------- | ---------------------------------------------------- |
+| `BROWSER_BRIDGE_HOST`            | `127.0.0.1`                                    | WebSocket bridge bind address                        |
+| `BROWSER_BRIDGE_PORT`            | `18793`                                        | WebSocket bridge port                                |
+| `BROWSER_BRIDGE_MCP_PORT`        | `18794`                                        | MCP HTTP gateway port                                |
+| `BROWSER_BRIDGE_TOKEN`           | from `.bridge-token`                           | Auth token (set automatically by `start-gateway.sh`) |
+| `BROWSER_BRIDGE_PID_FILE`        | `$XDG_RUNTIME_DIR/browser-bridge-mcp-$UID.pid` | MCP gateway PID file                                 |
+| `BROWSER_BRIDGE_BRIDGE_PID_FILE` | `$XDG_RUNTIME_DIR/browser-bridge-ws-$UID.pid`  | WebSocket bridge PID file                            |
+| `BROWSER_BRIDGE_LOG_FILE`        | `~/.grok/logs/browser-bridge-mcp.log`          | MCP gateway logs                                     |
+| `BROWSER_BRIDGE_BRIDGE_LOG_FILE` | `~/.grok/logs/browser-bridge-ws.log`           | WebSocket bridge logs                                |
 
 The token file path is fixed at `browser-bridge/.bridge-token`. Scripts load it automatically; you rarely need to set `BROWSER_BRIDGE_TOKEN` manually.
 
@@ -268,7 +268,7 @@ Extension-side methods are listed in [`shared/protocol.ts`](../browser-bridge/sh
 
 - **Localhost only** — the bridge binds to `127.0.0.1` by default.
 - **Auth token** — when `.bridge-token` exists, the extension must send the matching token or the WebSocket is closed.
-- **Debugger banner** — Chrome shows *“AWFixer Browser Bridge is debugging this browser”* when CDP attaches. This is expected.
+- **Debugger banner** — Chrome shows _“AWFixer Browser Bridge is debugging this browser”_ when CDP attaches. This is expected.
 - **Full browser access** — a connected agent can read any tab you can read, run JS in pages, read/set cookies, and send arbitrary CDP commands. Use only on machines you trust.
 - **Single extension connection** — only one extension WebSocket is accepted at a time.
 
@@ -344,10 +344,10 @@ bun run mcp/src/index.ts           # terminal 2
 
 ## Logs
 
-| Log file | Contents |
-| --- | --- |
-| `~/.grok/logs/browser-bridge-ws.log` | WebSocket bridge (extension connections, `/call` traffic) |
-| `~/.grok/logs/browser-bridge-mcp.log` | MCP gateway (supergateway startup) |
+| Log file                              | Contents                                                  |
+| ------------------------------------- | --------------------------------------------------------- |
+| `~/.grok/logs/browser-bridge-ws.log`  | WebSocket bridge (extension connections, `/call` traffic) |
+| `~/.grok/logs/browser-bridge-mcp.log` | MCP gateway (supergateway startup)                        |
 
 ## Related docs
 

@@ -38,15 +38,15 @@ Firewall evaluates **first** in routing order (before redirects, cache, function
 
 Project-level customizable rules:
 
-| Feature | Description |
-|---------|-------------|
-| **Custom rules** | Block/challenge by IP, path, header, geo, user-agent |
-| **Managed rulesets** | OWASP, bot detection presets |
-| **Rate limiting** | Per-IP or per-path request limits |
-| **IP blocking** | Block/allow specific IPs or CIDR ranges |
-| **Attack Mode** | Elevated protection during active attack |
-| **System bypass** | Allow trusted IPs through all rules |
-| **Observability** | Firewall logs and traffic analytics |
+| Feature              | Description                                          |
+| -------------------- | ---------------------------------------------------- |
+| **Custom rules**     | Block/challenge by IP, path, header, geo, user-agent |
+| **Managed rulesets** | OWASP, bot detection presets                         |
+| **Rate limiting**    | Per-IP or per-path request limits                    |
+| **IP blocking**      | Block/allow specific IPs or CIDR ranges              |
+| **Attack Mode**      | Elevated protection during active attack             |
+| **System bypass**    | Allow trusted IPs through all rules                  |
+| **Observability**    | Firewall logs and traffic analytics                  |
 
 ### CLI
 
@@ -72,20 +72,20 @@ Settings: Project → Settings → Deployment Protection.
 
 ### Protection methods
 
-| Method | Plans | Description |
-|--------|-------|-------------|
-| **Vercel Authentication** | All | Only Vercel team members with access |
-| **Password Protection** | Enterprise / Pro add-on | Shared password |
-| **Trusted IPs** | Enterprise | IP allowlist (can protect production only) |
-| **Passport** | Enterprise (beta) | Identity provider SSO |
+| Method                    | Plans                   | Description                                |
+| ------------------------- | ----------------------- | ------------------------------------------ |
+| **Vercel Authentication** | All                     | Only Vercel team members with access       |
+| **Password Protection**   | Enterprise / Pro add-on | Shared password                            |
+| **Trusted IPs**           | Enterprise              | IP allowlist (can protect production only) |
+| **Passport**              | Enterprise (beta)       | Identity provider SSO                      |
 
 ### Protection scope
 
-| Scope | Plans | What's protected |
-|-------|-------|-----------------|
-| **Standard Protection** | All | All except production custom domains |
-| **All Deployments** | Pro add-on / Enterprise | Everything including production domains |
-| **Trusted IPs (prod only)** | Enterprise | Production only; previews stay public |
+| Scope                       | Plans                   | What's protected                        |
+| --------------------------- | ----------------------- | --------------------------------------- |
+| **Standard Protection**     | All                     | All except production custom domains    |
+| **All Deployments**         | Pro add-on / Enterprise | Everything including production domains |
+| **Trusted IPs (prod only)** | Enterprise              | Production only; previews stay public   |
 
 Hobby: Vercel Auth + Standard Protection only. Production custom domains stay public.
 
@@ -137,11 +137,11 @@ awfixersites uses **BotID** (`botid` package) — Vercel-specific, no Terraform 
 
 ## BotID vs Firewall
 
-| | BotID | Firewall/WAF |
-|---|-------|-------------|
-| Scope | Application-level bot detection | Edge/network-level rules |
-| Config | npm package in app code | Dashboard/CLI/Terraform |
-| Use | Form submissions, sensitive actions | DDoS, geo-blocking, rate limits |
+|        | BotID                               | Firewall/WAF                    |
+| ------ | ----------------------------------- | ------------------------------- |
+| Scope  | Application-level bot detection     | Edge/network-level rules        |
+| Config | npm package in app code             | Dashboard/CLI/Terraform         |
+| Use    | Form submissions, sensitive actions | DDoS, geo-blocking, rate limits |
 
 ## Compliance & encryption
 
@@ -203,5 +203,6 @@ bunx vercel firewall publish
 - `/vercel-domains` — HTTPS/SSL automatic
 
 Deep references:
+
 - [references/deployment-protection.md](references/deployment-protection.md)
 - [references/firewall-rules.md](references/firewall-rules.md)

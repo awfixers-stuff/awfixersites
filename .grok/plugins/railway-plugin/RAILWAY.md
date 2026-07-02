@@ -22,34 +22,34 @@ Relational map of how Railway fits in the awfixersites fleet.
 
 ## Decision matrix
 
-| Need | Tool | Skill |
-|------|------|-------|
-| Provision Postgres in production | Terraform `railway_*` | `railway-iac` |
-| Quick ad-hoc deploy or debug | Railway CLI / MCP | `railway-cli`, `railway-mcp` |
-| Sync DATABASE_URL to Vercel | Terraform cross-provider | `railway-vercel-wiring` |
-| Pull vars for local dev | `railway variables` or MCP | `railway-variables` |
-| Deploy a template (Postgres, Redis) | `deploy-template` MCP or CLI | `railway-postgres` |
-| Debug failing Railway deploy | MCP `get-logs` or `railway-agent` | `deployment-debugger` agent |
-| Validate Terraform before apply | `terraform plan` | `iac-validator` agent |
+| Need                                | Tool                              | Skill                        |
+| ----------------------------------- | --------------------------------- | ---------------------------- |
+| Provision Postgres in production    | Terraform `railway_*`             | `railway-iac`                |
+| Quick ad-hoc deploy or debug        | Railway CLI / MCP                 | `railway-cli`, `railway-mcp` |
+| Sync DATABASE_URL to Vercel         | Terraform cross-provider          | `railway-vercel-wiring`      |
+| Pull vars for local dev             | `railway variables` or MCP        | `railway-variables`          |
+| Deploy a template (Postgres, Redis) | `deploy-template` MCP or CLI      | `railway-postgres`           |
+| Debug failing Railway deploy        | MCP `get-logs` or `railway-agent` | `deployment-debugger` agent  |
+| Validate Terraform before apply     | `terraform plan`                  | `iac-validator` agent        |
 
 ## Database topology
 
-| Database | Serves | Vercel project | Env var |
-|----------|--------|----------------|---------|
-| IdP Postgres | users, passkeys, OAuth registry | `awfixersites-auth-app` | `PRISMA_DATABASE_URL` |
-| Per-app session DB | local OAuth client sessions | each `awfixersites-<app>` | `AUTH_<SITE>_SESSION_DATABASE_URL` |
-| App DBs | enlistments, donations, etc. | `careers`, `donate`, etc. | `PRISMA_DATABASE_URL` |
+| Database           | Serves                          | Vercel project            | Env var                            |
+| ------------------ | ------------------------------- | ------------------------- | ---------------------------------- |
+| IdP Postgres       | users, passkeys, OAuth registry | `awfixersites-auth-app`   | `PRISMA_DATABASE_URL`              |
+| Per-app session DB | local OAuth client sessions     | each `awfixersites-<app>` | `AUTH_<SITE>_SESSION_DATABASE_URL` |
+| App DBs            | enlistments, donations, etc.    | `careers`, `donate`, etc. | `PRISMA_DATABASE_URL`              |
 
 Canonical resolver: `packages/env/src/index.ts` and `packages/auth/src/prisma.ts`.
 
 ## MCP choice
 
-| Scenario | Use |
-|----------|-----|
-| Day-to-day coding in this repo | **Local** (`railway mcp`) — shares CLI auth |
-| No CLI installed / OAuth preferred | **Remote** (`mcp.railway.com`) |
-| Complex debugging | **Remote** `railway-agent` tool |
-| Terraform IaC changes | **Skills** — MCP is for ops, not HCL |
+| Scenario                           | Use                                         |
+| ---------------------------------- | ------------------------------------------- |
+| Day-to-day coding in this repo     | **Local** (`railway mcp`) — shares CLI auth |
+| No CLI installed / OAuth preferred | **Remote** (`mcp.railway.com`)              |
+| Complex debugging                  | **Remote** `railway-agent` tool             |
+| Terraform IaC changes              | **Skills** — MCP is for ops, not HCL        |
 
 ## Safety rules
 

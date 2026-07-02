@@ -30,6 +30,7 @@ terraform plan -out=tfplan
 ## Review
 
 Present plan summary:
+
 - Resources to add / change / destroy
 - **Flag any destroy operations** — especially `railway_volume` replaces
 - **Flag env var changes** on auth-related resources
@@ -38,6 +39,7 @@ Present plan summary:
 ## Safety gates
 
 Stop and warn if plan includes:
+
 - `railway_volume` must be replaced
 - `PRISMA_DATABASE_URL` changes on auth project
 - Any `destroy` on production-tagged resources

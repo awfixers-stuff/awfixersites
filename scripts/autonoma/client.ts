@@ -26,11 +26,7 @@ export class AutonomaApiError extends Error {
 export class AutonomaClient {
   constructor(private readonly config: AutonomaConfig) {}
 
-  private async request<T>(
-    method: string,
-    path: string,
-    body?: unknown,
-  ): Promise<T> {
+  private async request<T>(method: string, path: string, body?: unknown): Promise<T> {
     const url = `${this.config.apiUrl}${path}`;
     const response = await fetch(url, {
       method,
@@ -75,30 +71,16 @@ export class AutonomaClient {
     return this.request<SetupRecord>("GET", `/v1/setup/setups/${setupId}`);
   }
 
-  async emitEvent(
-    setupId: string,
-    type: string,
-    data: Record<string, unknown>,
-  ): Promise<void> {
+  async emitEvent(setupId: string, type: string, data: Record<string, unknown>): Promise<void> {
     await this.request("POST", `/v1/setup/setups/${setupId}/events`, { type, data });
   }
 
-  async uploadArtifacts(
-    setupId: string,
-    payload: Record<string, unknown>,
-  ): Promise<void> {
+  async uploadArtifacts(setupId: string, payload: Record<string, unknown>): Promise<void> {
     await this.request("POST", `/v1/setup/setups/${setupId}/artifacts`, payload);
   }
 
-  async uploadScenarioRecipes(
-    setupId: string,
-    recipes: Record<string, unknown>,
-  ): Promise<void> {
-    await this.request(
-      "POST",
-      `/v1/setup/setups/${setupId}/scenario-recipe-versions`,
-      recipes,
-    );
+  async uploadScenarioRecipes(setupId: string, recipes: Record<string, unknown>): Promise<void> {
+    await this.request("POST", `/v1/setup/setups/${setupId}/scenario-recipe-versions`, recipes);
   }
 
   async listSecrets(appName: string): Promise<string[]> {
@@ -113,11 +95,9 @@ export class AutonomaClient {
     appName: string,
     items: Array<{ key: string; value: string }>,
   ): Promise<void> {
-    await this.request(
-      "PUT",
-      `/v1/previewkit/secrets/${this.config.applicationId}/${appName}`,
-      { items },
-    );
+    await this.request("PUT", `/v1/previewkit/secrets/${this.config.applicationId}/${appName}`, {
+      items,
+    });
   }
 
   async upsertSecret(appName: string, key: string, value: string): Promise<void> {

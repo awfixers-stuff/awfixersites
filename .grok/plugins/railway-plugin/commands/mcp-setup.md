@@ -12,26 +12,34 @@ Configure Railway MCP for AI agent access.
 1. Load `railway-mcp` skill.
 
 2. Check CLI:
+
    ```bash
    railway --version
    railway whoami
    ```
 
 3. If "$ARGUMENTS" contains "remote":
+
    ```bash
    railway setup agent --remote
    ```
+
    Or MCP config only:
+
    ```bash
    railway mcp install --remote
    ```
+
    Explain: OAuth on first connect, includes `railway-agent` for debugging.
 
 4. Otherwise (local, default):
+
    ```bash
    railway setup agent
    ```
+
    Or:
+
    ```bash
    railway mcp install
    ```

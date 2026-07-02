@@ -12,6 +12,7 @@ Check Railway connectivity and project context for awfixersites.
 1. Load the `railway-cli` skill for command reference.
 
 2. Run preflight checks:
+
    ```bash
    railway --version
    railway whoami
@@ -21,11 +22,13 @@ Check Railway connectivity and project context for awfixersites.
 3. If MCP is configured, call `check-railway-status` (local) or `whoami` (remote).
 
 4. Check Terraform stack health:
+
    ```bash
    cd infra/backend && terraform validate 2>&1 || echo "Terraform not initialized"
    ```
 
 5. Report structured summary:
+
    ```
    ## Railway Status
    - CLI: installed / missing

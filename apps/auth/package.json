@@ -42,11 +42,17 @@
     "@awfixersites/telemetry": "catalog:workspace",
     "@awfixersites/ui": "catalog:workspace",
     "@awfixersites/utils": "catalog:workspace",
+    "@next/env": "catalog:nextjs",
     "@next/swc-linux-x64-gnu": "catalog:nextjs",
     "@oxfmt/binding-linux-x64-gnu": "catalog:bindings",
     "@oxlint-tsgolint/linux-x64": "catalog:bindings",
     "@oxlint/binding-linux-x64-gnu": "catalog:bindings",
     "@rolldown/binding-linux-x64-gnu": "catalog:bindings",
+    "@swc/core": "catalog:swc",
+    "@swc/core-linux-x64-gnu": "catalog:swc",
+    "@swc/counter": "catalog:swc",
+    "@swc/helpers": "catalog:swc",
+    "@swc/types": "catalog:swc",
     "@tailwindcss/oxide-linux-x64-gnu": "catalog:css",
     "@tailwindcss/postcss": "catalog:css",
     "@typescript/native-preview-linux-x64": "catalog:bindings",
@@ -66,7 +72,8 @@
     "shadcn": "catalog:",
     "tailwind-merge": "catalog:css",
     "tailwindcss": "catalog:css",
-    "tw-animate-css": "catalog:css"
+    "tw-animate-css": "catalog:css",
+    "workflow": "catalog:vercel"
   },
   "devEngines": {
     "packageManager": {

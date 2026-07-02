@@ -8,13 +8,5 @@
   },
   "homepage": "https://helium.computer",
   "license": "Apache-2.0",
-  "keywords": [
-    "helium",
-    "browser",
-    "devtools",
-    "mcp",
-    "automation",
-    "debugging",
-    "chromium"
-  ]
+  "keywords": ["helium", "browser", "devtools", "mcp", "automation", "debugging", "chromium"]
 }

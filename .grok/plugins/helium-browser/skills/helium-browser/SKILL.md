@@ -28,6 +28,7 @@ Either mode works:
 **A. UI remote debugging** (current Helium session): open `helium://inspect/#remote-debugging`, enable it, approve once when the gateway starts.
 
 **B. Classic debug port** (zero prompts): close Helium, then launch with:
+
 ```bash
 bash ${GROK_PLUGIN_ROOT}/scripts/launch-helium-with-debug.sh
 ```
@@ -69,12 +70,12 @@ Maintain order: list/select page → wait → snapshot → interact. You can par
 
 ## When to use Helium vs other tools
 
-| Task | Use |
-|------|-----|
-| Test a page the user has open | Helium MCP |
-| Debug with user's real session/cookies | Helium MCP |
-| Scrape arbitrary public URLs | Firecrawl |
-| Headless CI-style automation | Firecrawl or chrome-devtools-mcp |
+| Task                                   | Use                              |
+| -------------------------------------- | -------------------------------- |
+| Test a page the user has open          | Helium MCP                       |
+| Debug with user's real session/cookies | Helium MCP                       |
+| Scrape arbitrary public URLs           | Firecrawl                        |
+| Headless CI-style automation           | Firecrawl or chrome-devtools-mcp |
 
 ## Privacy
 

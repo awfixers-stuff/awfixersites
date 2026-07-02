@@ -38,11 +38,11 @@ Routing rules evaluate **before** cache and functions. awfixersites centralizes 
 
 ## Redirects vs rewrites
 
-| | Redirect | Rewrite (same app) | Rewrite (external) |
-|---|----------|-------------------|-------------------|
-| Browser URL | Changes | Unchanged | Unchanged |
-| HTTP status | 301/302/307/308 | 200 (internal) | 200 (proxied) |
-| Use for | SEO moves, HTTPS, locale | Clean URLs, A/B | API proxy, incremental migration |
+|             | Redirect                 | Rewrite (same app) | Rewrite (external)               |
+| ----------- | ------------------------ | ------------------ | -------------------------------- |
+| Browser URL | Changes                  | Unchanged          | Unchanged                        |
+| HTTP status | 301/302/307/308          | 200 (internal)     | 200 (proxied)                    |
+| Use for     | SEO moves, HTTPS, locale | Clean URLs, A/B    | API proxy, incremental migration |
 
 ### Redirect syntax (vercel.ts / vercel.json)
 
@@ -59,6 +59,7 @@ routes.redirect("/beta", "/v2", { permanent: false });
 ```
 
 Status codes:
+
 - `permanent: true` → 308 (or 301)
 - `permanent: false` → 307 (or 302)
 
@@ -79,11 +80,11 @@ External rewrites proxy through Vercel CDN — responses can be CDN-cached. See 
 
 From `src/vercel-app-config.ts`:
 
-| Pattern | Destination | Apps |
-|---------|-------------|------|
-| `/legal`, `/privacy`, `/terms`, `/security`, `/agreements` | `legal.awfixer.llc` | all satellites (opt-out on legal app) |
-| `/careers/:path*` | `careers.awfixer.llc/:path*` | all except careers |
-| `/donate`, `/donations` | `donate.<apex>` | apps with `donateApex` set |
+| Pattern                                                    | Destination                  | Apps                                  |
+| ---------------------------------------------------------- | ---------------------------- | ------------------------------------- |
+| `/legal`, `/privacy`, `/terms`, `/security`, `/agreements` | `legal.awfixer.llc`          | all satellites (opt-out on legal app) |
+| `/careers/:path*`                                          | `careers.awfixer.llc/:path*` | all except careers                    |
+| `/donate`, `/donations`                                    | `donate.<apex>`              | apps with `donateApex` set            |
 
 ```typescript
 // apps/church/vercel.ts
@@ -109,7 +110,7 @@ headers: [
     maxAge: "1 week",
     immutable: true,
   }),
-]
+];
 ```
 
 Function response headers **override** vercel.json/next.config headers for the same route.
@@ -132,6 +133,7 @@ Format: source path → destination (see docs/routing/redirects/bulk-redirects).
 Configure from dashboard or REST API **without deploying code**. Same actions as deployment routes except Routing Middleware.
 
 Use when:
+
 - Marketing needs URL changes without engineering deploy
 - Emergency redirect during incident
 - Rules that change frequently
@@ -194,5 +196,6 @@ bunx vercel httpstat /api/slow        # timing breakdown
 - `/vercel-deployments` — redeploy after routing config changes
 
 Deep references:
+
 - [references/redirects-and-rewrites.md](references/redirects-and-rewrites.md)
 - [references/routing-order.md](references/routing-order.md)

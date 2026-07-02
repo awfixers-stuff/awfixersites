@@ -134,12 +134,12 @@ Use CLI for discovery during import; use Terraform for durable management.
 
 ## Env var categories (by app type)
 
-| Category | Apps | Keys |
-|----------|------|------|
+| Category    | Apps            | Keys                                                                                     |
+| ----------- | --------------- | ---------------------------------------------------------------------------------------- |
 | Auth client | Most satellites | `AUTH_DEPLOYMENT_ROLE=client`, `AUTH_SECRET`, `AUTH_CLIENT_DATABASE_URL`, `AUTH_OAUTH_*` |
-| Auth IdP | `auth` | `AUTH_DEPLOYMENT_ROLE=idp`, `PRISMA_DATABASE_URL` |
-| Donations | `donate` | Stripe keys + church tenant metadata |
-| Telemetry | Many | `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_POSTHOG_KEY` |
+| Auth IdP    | `auth`          | `AUTH_DEPLOYMENT_ROLE=idp`, `PRISMA_DATABASE_URL`                                        |
+| Donations   | `donate`        | Stripe keys + church tenant metadata                                                     |
+| Telemetry   | Many            | `NEXT_PUBLIC_SENTRY_DSN`, `NEXT_PUBLIC_POSTHOG_KEY`                                      |
 
 Full matrix: `docs/auth-deployment.md`.
 

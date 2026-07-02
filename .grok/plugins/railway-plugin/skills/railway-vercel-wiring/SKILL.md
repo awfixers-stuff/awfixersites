@@ -42,23 +42,23 @@ resource "vercel_project_environment_variable" "auth_db" {
 
 ## Env var mapping
 
-| Railway (source) | Vercel (target) | Vercel project |
-|------------------|-----------------|----------------|
-| `DATABASE_URL` | `PRISMA_DATABASE_URL` | `awfixersites-auth-app` |
-| `DATABASE_URL` | `PRISMA_DATABASE_URL` | `awfixersites-<app>` |
-| session DB URL | `AUTH_CLIENT_DATABASE_URL` | auth satellites |
-| per-site session | `AUTH_<SITE>_SESSION_DATABASE_URL` | specific app |
+| Railway (source) | Vercel (target)                    | Vercel project          |
+| ---------------- | ---------------------------------- | ----------------------- |
+| `DATABASE_URL`   | `PRISMA_DATABASE_URL`              | `awfixersites-auth-app` |
+| `DATABASE_URL`   | `PRISMA_DATABASE_URL`              | `awfixersites-<app>`    |
+| session DB URL   | `AUTH_CLIENT_DATABASE_URL`         | auth satellites         |
+| per-site session | `AUTH_<SITE>_SESSION_DATABASE_URL` | specific app            |
 
 App code resolves via `packages/env/src/index.ts` — do not rename without updating that package.
 
 ## Separation of concerns
 
-| Layer | Owner | Location |
-|-------|-------|----------|
-| App build/deploy | Vercel | `apps/*/vercel.ts` |
-| Platform resources | Terraform | `infra/backend/main.tf` |
-| DB hosting | Railway | `railway_service` resources |
-| Env var delivery | Terraform cross-provider | `vercel_project_environment_variable` |
+| Layer              | Owner                    | Location                              |
+| ------------------ | ------------------------ | ------------------------------------- |
+| App build/deploy   | Vercel                   | `apps/*/vercel.ts`                    |
+| Platform resources | Terraform                | `infra/backend/main.tf`               |
+| DB hosting         | Railway                  | `railway_service` resources           |
+| Env var delivery   | Terraform cross-provider | `vercel_project_environment_variable` |
 
 ## Drift detection
 
@@ -68,6 +68,7 @@ terraform plan
 ```
 
 If plan shows env var changes:
+
 1. Check if someone hand-edited Vercel dashboard
 2. Import or reconcile — never delete projects to "fix" drift
 3. For auth DB changes: read `docs/auth-deployment.md` first

@@ -4,18 +4,19 @@ Source: https://vercel.com/docs/deployment-protection
 
 ## Plan matrix
 
-| Feature | Hobby | Pro | Enterprise |
-|---------|-------|-----|------------|
-| Vercel Authentication | ✓ | ✓ | ✓ |
-| Standard Protection | ✓ | ✓ | ✓ |
-| All Deployments (private prod) | ✗ | Add-on ($150/mo) | ✓ |
-| Password Protection | ✗ | Add-on | ✓ |
-| Trusted IPs | ✗ | ✗ | ✓ |
-| Passport (IdP SSO) | ✗ | ✗ | ✓ (beta) |
+| Feature                        | Hobby | Pro              | Enterprise |
+| ------------------------------ | ----- | ---------------- | ---------- |
+| Vercel Authentication          | ✓     | ✓                | ✓          |
+| Standard Protection            | ✓     | ✓                | ✓          |
+| All Deployments (private prod) | ✗     | Add-on ($150/mo) | ✓          |
+| Password Protection            | ✗     | Add-on           | ✓          |
+| Trusted IPs                    | ✗     | ✗                | ✓          |
+| Passport (IdP SSO)             | ✗     | ✗                | ✓ (beta)   |
 
 ## Advanced Deployment Protection add-on (Pro)
 
 $150/month unlocks all advanced features:
+
 - Password Protection
 - Private Production Deployments (All Deployments scope)
 - Deployment Protection Exceptions

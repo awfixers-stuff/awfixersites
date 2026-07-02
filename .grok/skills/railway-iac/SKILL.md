@@ -88,11 +88,11 @@ This keeps **one source of truth** for DB URLs instead of hand-copying in the Ve
 
 ## Database topology (matches app architecture)
 
-| Database | Serves | Vercel project |
-|----------|--------|----------------|
-| IdP Postgres | users, passkeys, OAuth registry | `awfixersites-auth-app` |
-| Per-app session DB | local OAuth client sessions | each `awfixersites-<app>` |
-| App DBs | enlistments, donations, etc. | `careers`, `donate`, etc. |
+| Database           | Serves                          | Vercel project            |
+| ------------------ | ------------------------------- | ------------------------- |
+| IdP Postgres       | users, passkeys, OAuth registry | `awfixersites-auth-app`   |
+| Per-app session DB | local OAuth client sessions     | each `awfixersites-<app>` |
+| App DBs            | enlistments, donations, etc.    | `careers`, `donate`, etc. |
 
 Local dev can share one DB; production should be separate per `docs/auth-deployment.md`.
 

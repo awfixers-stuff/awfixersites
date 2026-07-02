@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "browser-bridge": {
+      "command": "bash",
+      "args": ["${GROK_PLUGIN_ROOT}/scripts/launch-mcp.sh"],
+      "note": "Stdio MCP — launch-mcp.sh auto-starts the WebSocket bridge when Grok connects."
+    }
+  }
+}

@@ -5,6 +5,7 @@ Source: https://vercel.com/docs/caching/cache-control-headers, https://vercel.co
 ## Required for CDN caching
 
 At least one of:
+
 - `s-maxage=<seconds>`
 - `s-maxage=<seconds>, stale-while-revalidate=<seconds>`
 - `s-maxage=<seconds>, stale-while-revalidate=<seconds>, stale-if-error=<seconds>`
@@ -22,19 +23,20 @@ Serves stale content if origin returns error. Resilience pattern for flaky backe
 ## Cache key composition
 
 CDN cache key includes:
+
 - URL path and query string
 - `Vary` header values (specified request headers)
 - `Accept` and `Accept-Encoding` (automatic)
 
 ## Next.js App Router caching
 
-| API | Layer |
-|-----|-------|
-| `fetch(url, { cache: 'force-cache' })` | Runtime cache |
-| `fetch(url, { next: { revalidate: N } })` | ISR + CDN |
-| `export const revalidate = N` | ISR for page |
-| `export const dynamic = 'force-dynamic'` | No static/ISR cache |
-| `unstable_cache()` / `'use cache'` | Data cache (Next 15+) |
+| API                                       | Layer                 |
+| ----------------------------------------- | --------------------- |
+| `fetch(url, { cache: 'force-cache' })`    | Runtime cache         |
+| `fetch(url, { next: { revalidate: N } })` | ISR + CDN             |
+| `export const revalidate = N`             | ISR for page          |
+| `export const dynamic = 'force-dynamic'`  | No static/ISR cache   |
+| `unstable_cache()` / `'use cache'`        | Data cache (Next 15+) |
 
 ## External origin caching
 

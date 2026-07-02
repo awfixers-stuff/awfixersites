@@ -107,11 +107,11 @@ terraform {
 
 ## Separation of concerns
 
-| Layer | Owner | Examples |
-|-------|-------|----------|
-| App build behavior | `apps/*/vercel.ts` + `src/vercel-app-config.ts` | redirects, headers, crons, buildCommand |
-| Platform resources | Terraform | project exists, domain attached, env vars, firewall |
-| External services | Terraform (+ provider-specific skills) | Railway Postgres, Mailgun DNS |
+| Layer              | Owner                                           | Examples                                            |
+| ------------------ | ----------------------------------------------- | --------------------------------------------------- |
+| App build behavior | `apps/*/vercel.ts` + `src/vercel-app-config.ts` | redirects, headers, crons, buildCommand             |
+| Platform resources | Terraform                                       | project exists, domain attached, env vars, firewall |
+| External services  | Terraform (+ provider-specific skills)          | Railway Postgres, Mailgun DNS                       |
 
 ## Safety rules
 

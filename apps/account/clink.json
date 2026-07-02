@@ -1,4 +1,5 @@
 {
+  "$schema": "../../packages/telemetry/clink.schema.json",
   "network": [],
   "utm": {
     "source": "account",

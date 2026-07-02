@@ -4,13 +4,13 @@ Source: https://vercel.com/docs/deployments/environments, https://vercel.com/doc
 
 ## System environment variables (deployment-scoped)
 
-| Variable | Description |
-|----------|-------------|
-| `VERCEL` | `"1"` when running on Vercel |
-| `VERCEL_ENV` | `production`, `preview`, or `development` |
-| `VERCEL_URL` | Deployment hostname (no protocol) |
-| `VERCEL_BRANCH_URL` | Branch-specific hostname |
-| `VERCEL_PROJECT_PRODUCTION_URL` | Production domain (if set) |
+| Variable                        | Description                               |
+| ------------------------------- | ----------------------------------------- |
+| `VERCEL`                        | `"1"` when running on Vercel              |
+| `VERCEL_ENV`                    | `production`, `preview`, or `development` |
+| `VERCEL_URL`                    | Deployment hostname (no protocol)         |
+| `VERCEL_BRANCH_URL`             | Branch-specific hostname                  |
+| `VERCEL_PROJECT_PRODUCTION_URL` | Production domain (if set)                |
 
 Framework-prefixed variants exist (e.g. `NEXT_PUBLIC_VERCEL_URL` for Next.js).
 
@@ -21,6 +21,7 @@ Teams can configure a custom preview suffix (`preview.example.com`) instead of `
 ## Promoting deployments
 
 When auto-promotion is disabled:
+
 1. Preview deployment succeeds
 2. Manual "Promote to Production" in dashboard or API
 3. Production domains repoint to promoted deployment

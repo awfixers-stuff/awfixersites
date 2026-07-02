@@ -12,12 +12,14 @@ Navigate Railway Terraform infrastructure for awfixersites.
 1. Load `railway-iac`, `railway-vercel-wiring`, and `terraform-iac` skills.
 
 2. Read current stack:
+
    ```bash
    ls -la infra/backend/
    cat infra/backend/main.tf
    ```
 
 3. Check Terraform state:
+
    ```bash
    cd infra/backend
    terraform init -backend=false 2>/dev/null || true

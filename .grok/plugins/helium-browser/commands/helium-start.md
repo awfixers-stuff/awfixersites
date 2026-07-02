@@ -8,6 +8,7 @@ Start the persistent Helium browser MCP gateway.
 ## Steps
 
 1. Run:
+
    ```bash
    bash ${GROK_PLUGIN_ROOT}/scripts/start-persistent-server.sh
    ```
@@ -15,6 +16,7 @@ Start the persistent Helium browser MCP gateway.
 2. If Helium shows a remote debugging approval dialog, click **Allow once**. The gateway keeps that session alive — later agent turns will not re-prompt.
 
 3. Verify with:
+
    ```bash
    bash ${GROK_PLUGIN_ROOT}/scripts/status.sh
    ```

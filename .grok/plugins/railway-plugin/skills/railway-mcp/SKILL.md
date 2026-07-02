@@ -63,14 +63,14 @@ railway mcp install --agent claude-code
 
 ## Decision guide
 
-| Scenario | Choose |
-|----------|--------|
-| Working in awfixersites repo daily | Local |
-| CI/automation headless | Local + `RAILWAY_TOKEN` |
-| No CLI installed | Remote |
-| "Why is my service crashing?" | Remote `railway-agent` |
-| Terraform IaC changes | Skills, not MCP |
-| First-time setup | `railway setup agent` |
+| Scenario                           | Choose                  |
+| ---------------------------------- | ----------------------- |
+| Working in awfixersites repo daily | Local                   |
+| CI/automation headless             | Local + `RAILWAY_TOKEN` |
+| No CLI installed                   | Remote                  |
+| "Why is my service crashing?"      | Remote `railway-agent`  |
+| Terraform IaC changes              | Skills, not MCP         |
+| First-time setup                   | `railway setup agent`   |
 
 ## Verify connection
 

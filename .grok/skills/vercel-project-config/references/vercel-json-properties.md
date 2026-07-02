@@ -78,6 +78,7 @@ Optional: `has`, `missing` (conditional redirects).
 ## Monorepo notes
 
 When Vercel Root Directory is `apps/<name>`:
+
 - `vercel.ts` lives in `apps/<name>/vercel.ts`
 - `installCommand` must reach monorepo root (`cd ../.. && bun install`)
 - `buildCommand` references `../../scripts/vercel-build.ts`

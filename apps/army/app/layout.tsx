@@ -52,7 +52,7 @@ export default function RootLayout({
             </div>
           </SplashProvider>
         </ThemeProvider>
-              <AppUtils />
+        <AppUtils />
       </body>
     </html>
   );

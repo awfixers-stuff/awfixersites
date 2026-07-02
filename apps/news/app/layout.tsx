@@ -36,7 +36,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ClinkProvider config={clinkConfig}>{children}</ClinkProvider>
         </ThemeProvider>
-              <AppUtils />
+        <AppUtils />
       </body>
     </html>
   );

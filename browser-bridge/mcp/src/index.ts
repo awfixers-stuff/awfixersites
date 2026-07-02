@@ -1,7 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { RemoteExtensionBridge } from "./bridge";
+import { ensureExtensionBridge } from "./ensure-bridge";
 import { registerBrowserTools } from "./tools";
+
+await ensureExtensionBridge();
 
 const bridge = new RemoteExtensionBridge({
   host: process.env.BROWSER_BRIDGE_HOST ?? "127.0.0.1",

@@ -156,10 +156,14 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
       const tabId = await requireTabId(params.tabId);
       const expression = params.expression;
       if (typeof expression !== "string") throw new Error("expression is required");
-      const result = await executeInTab(tabId, (code: string) => {
-        // eslint-disable-next-line no-eval
-        return eval(code);
-      }, [expression]);
+      const result = await executeInTab(
+        tabId,
+        (code: string) => {
+          // eslint-disable-next-line no-eval
+          return eval(code);
+        },
+        [expression],
+      );
       return { result };
     }
 
@@ -220,19 +224,56 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
       const value = params.value;
       if (typeof selector !== "string") throw new Error("selector is required");
       if (typeof value !== "string") throw new Error("value is required");
-      await executeInTab(
+
+      const kind = await executeInTab(
         tabId,
-        (sel: string, val: string) => {
-          const el = document.querySelector(sel) as HTMLInputElement | HTMLTextAreaElement | null;
+        (sel: string) => {
+          const el = document.querySelector(sel);
           if (!el) throw new Error(`Element not found: ${sel}`);
-          el.focus();
-          el.value = val;
-          el.dispatchEvent(new Event("input", { bubbles: true }));
-          el.dispatchEvent(new Event("change", { bubbles: true }));
-          return true;
+          const target = el as HTMLElement;
+          if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
+            return "input";
+          }
+          if (target.isContentEditable) {
+            return "contenteditable";
+          }
+          throw new Error(`Element is not fillable: ${sel}`);
         },
-        [selector, value],
+        [selector],
       );
+
+      if (kind === "input") {
+        await executeInTab(
+          tabId,
+          (sel: string, val: string) => {
+            const el = document.querySelector(sel) as HTMLInputElement | HTMLTextAreaElement;
+            el.focus();
+            el.value = val;
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            el.dispatchEvent(new Event("change", { bubbles: true }));
+            return true;
+          },
+          [selector, value],
+        );
+      } else {
+        await executeInTab(
+          tabId,
+          (sel: string) => {
+            const el = document.querySelector(sel) as HTMLElement;
+            el.focus();
+            const doc = el.ownerDocument;
+            const selection = doc.getSelection();
+            const range = doc.createRange();
+            range.selectNodeContents(el);
+            selection?.removeAllRanges();
+            selection?.addRange(range);
+            return true;
+          },
+          [selector],
+        );
+        await sendDebuggerCommand(tabId, "Input.insertText", { text: value });
+      }
+
       return { filled: selector };
     }
 

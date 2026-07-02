@@ -58,7 +58,9 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     return true;
   }
   if (message?.type === "setBridgeConfig") {
-    void saveConfig(message.config as BridgeConfig).then(() => startBridge()).then(() => sendResponse({ ok: true }));
+    void saveConfig(message.config as BridgeConfig)
+      .then(() => startBridge())
+      .then(() => sendResponse({ ok: true }));
     return true;
   }
   return false;
