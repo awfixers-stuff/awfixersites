@@ -1,3 +1,5 @@
+const POPUP_BUILD_STAMP = "__POPUP_BUILD_STAMP__";
+
 const dot = document.getElementById("dot");
 const statusText = document.getElementById("status-text");
 const portInput = document.getElementById("port");
@@ -18,9 +20,16 @@ function renderStatus(status) {
   }
 }
 
+const logsEl = document.getElementById("logs");
+
 async function refresh() {
   const response = await chrome.runtime.sendMessage({ type: "getBridgeStatus" });
   renderStatus(response?.bridgeStatus ?? "disconnected");
+  if (logsEl && response?.recentLogs?.length) {
+    logsEl.textContent = response.recentLogs
+      .map((e) => `${e.ts} [${e.level}] ${e.msg}`)
+      .join("\n");
+  }
 }
 
 revealButton.addEventListener("click", () => {
@@ -47,5 +56,20 @@ chrome.storage.local.get("bridgeConfig").then((stored) => {
   if (config.token) tokenInput.value = config.token;
 });
 
-void refresh();
-setInterval(() => void refresh(), 2000);
+async function maybeReloadForNewBuild() {
+  const stored = await chrome.storage.local.get("popupBuildStamp");
+  if (stored.popupBuildStamp && stored.popupBuildStamp !== POPUP_BUILD_STAMP) {
+    await chrome.storage.local.set({ popupBuildStamp: POPUP_BUILD_STAMP });
+    chrome.runtime.reload();
+    return true;
+  }
+  await chrome.storage.local.set({ popupBuildStamp: POPUP_BUILD_STAMP });
+  return false;
+}
+
+void maybeReloadForNewBuild().then((reloaded) => {
+  if (!reloaded) {
+    void refresh();
+    setInterval(() => void refresh(), 2000);
+  }
+});

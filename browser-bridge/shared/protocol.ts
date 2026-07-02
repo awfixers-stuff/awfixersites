@@ -25,6 +25,7 @@ export type BridgeMessage = BridgeRequest | BridgeResponse | BridgeEvent;
 export const BRIDGE_METHODS = [
   "bridge.ping",
   "bridge.status",
+  "bridge.logs",
   "tabs.list",
   "tabs.get",
   "tabs.create",
@@ -52,6 +53,19 @@ export const BRIDGE_METHODS = [
   "downloads.search",
   "clipboard.read",
   "clipboard.write",
+  "console.get",
+  "console.batch",
+  "observability.enable",
+  "observability.get",
+  "observability.disable",
+  "observability.batch",
+  "extension.getInfo",
+  "extension.openSettings",
+  "extension.reload",
+  "extension.clearErrors",
+  "extension.reloadFromUI",
+  "overlay.find",
+  "overlay.click",
 ] as const;
 
 export type BridgeMethod = (typeof BRIDGE_METHODS)[number];

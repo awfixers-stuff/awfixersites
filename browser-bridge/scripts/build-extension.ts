@@ -14,6 +14,8 @@ await mkdir(dist, { recursive: true });
 await mkdir(join(dist, "popup"), { recursive: true });
 await mkdir(join(dist, "icons"), { recursive: true });
 
+const buildStamp = new Date().toISOString();
+
 const result = await Bun.build({
   entrypoints: [
     join(root, "extension/src/background.ts"),
@@ -24,6 +26,9 @@ const result = await Bun.build({
   format: "esm",
   sourcemap: "inline",
   naming: "[name].[ext]",
+  define: {
+    __BUILD_STAMP__: JSON.stringify(buildStamp),
+  },
 });
 
 if (!result.success) {
@@ -34,8 +39,17 @@ if (!result.success) {
 await cp(join(root, "extension", "manifest.json"), join(dist, "manifest.json"));
 await cp(join(root, "extension", "popup"), join(dist, "popup"), { recursive: true });
 
+const popupJsPath = join(dist, "popup", "popup.js");
+const popupJs = await Bun.file(popupJsPath).text();
+await writeFile(
+  popupJsPath,
+  popupJs.replace("__POPUP_BUILD_STAMP__", buildStamp),
+);
+
 for (const size of [16, 48, 128] as const) {
   await writeFile(join(dist, "icons", `icon${size}.png`), ICON_PNG);
 }
 
-console.log(`Extension built at ${dist}`);
+await writeFile(join(dist, "build-stamp.json"), JSON.stringify({ stamp: buildStamp }, null, 2));
+
+console.log(`Extension built at ${dist} (stamp ${buildStamp})`);

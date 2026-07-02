@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir, userInfo } from "node:os";
 import { dirname, join } from "node:path";
+import type { Logger } from "../../shared/logger";
 
 const HOST = process.env.BROWSER_BRIDGE_HOST ?? "127.0.0.1";
 const PORT = Number(process.env.BROWSER_BRIDGE_PORT ?? "18793");
@@ -41,12 +42,17 @@ function logFilePath(): string {
   return logFile;
 }
 
-export async function ensureExtensionBridge(): Promise<void> {
-  if (await isHealthy()) return;
+export async function ensureExtensionBridge(logger?: Logger): Promise<void> {
+  if (await isHealthy()) {
+    logger?.debug("WebSocket bridge already healthy", { url: HEALTH_URL });
+    return;
+  }
 
   const logFile = logFilePath();
   const bridgeServer = join(import.meta.dir, "bridge-server.ts");
   const token = loadToken();
+
+  logger?.info("Starting WebSocket bridge", { url: HEALTH_URL, logFile });
 
   const proc = Bun.spawn({
     cmd: ["bun", bridgeServer],
@@ -57,8 +63,8 @@ export async function ensureExtensionBridge(): Promise<void> {
       BROWSER_BRIDGE_PORT: String(PORT),
       ...(token ? { BROWSER_BRIDGE_TOKEN: token } : {}),
     },
-    stdout: Bun.file(logFile),
-    stderr: Bun.file(logFile),
+    stdout: "ignore",
+    stderr: "ignore",
     detached: true,
   });
   proc.unref();
@@ -70,10 +76,14 @@ export async function ensureExtensionBridge(): Promise<void> {
   }
 
   for (let attempt = 0; attempt < 40; attempt++) {
-    if (await isHealthy()) return;
+    if (await isHealthy()) {
+      logger?.info("WebSocket bridge ready", { pid: proc.pid, attempt: attempt + 1 });
+      return;
+    }
     await Bun.sleep(250);
   }
 
+  logger?.error("WebSocket bridge failed to start", { url: HEALTH_URL, logFile, pid: proc.pid });
   throw new Error(
     `WebSocket bridge failed to start at ${HEALTH_URL}. Check ${logFile} and load browser-bridge/extension/dist in Chrome.`,
   );

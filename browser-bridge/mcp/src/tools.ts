@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import type { Logger } from "../../shared/logger";
 import type { RemoteExtensionBridge } from "./bridge";
 
 function textResult(data: unknown) {
@@ -8,14 +9,43 @@ function textResult(data: unknown) {
   };
 }
 
-export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionBridge) {
+function withToolLogging<T extends Record<string, unknown>>(
+  logger: Logger,
+  toolName: string,
+  handler: (args: T) => Promise<ReturnType<typeof textResult>>,
+) {
+  return async (args: T) => {
+    const started = Date.now();
+    logger.info("MCP tool invoked", { tool: toolName, args });
+    try {
+      const result = await handler(args);
+      logger.info("MCP tool completed", { tool: toolName, durationMs: Date.now() - started });
+      return result;
+    } catch (error) {
+      logger.error("MCP tool failed", {
+        tool: toolName,
+        durationMs: Date.now() - started,
+        error: error instanceof Error ? error.message : String(error),
+      });
+      throw error;
+    }
+  };
+}
+
+export function registerBrowserTools(
+  server: McpServer,
+  bridge: RemoteExtensionBridge,
+  logger: Logger,
+) {
+  const toolLog = logger.child("tool");
+
   server.registerTool(
     "bridge_status",
     {
       description: "Check MCP bridge and Chrome extension connection status.",
       inputSchema: {},
     },
-    async () => {
+    withToolLogging(toolLog, "bridge_status", async () => {
       await bridge.refreshStatus();
       const status = await bridge.call("bridge.status").catch((error) => ({
         extensionConnected: bridge.isExtensionConnected,
@@ -27,7 +57,30 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
         extensionConnected: bridge.isExtensionConnected,
         extension: status,
       });
+    }),
+  );
+
+  server.registerTool(
+    "bridge_logs",
+    {
+      description:
+        "Fetch recent structured logs from the WebSocket bridge (connections, auth, tool calls, extension events).",
+      inputSchema: {
+        limit: z.number().int().min(1).max(500).optional(),
+        component: z.string().optional(),
+      },
     },
+    withToolLogging(toolLog, "bridge_logs", async ({ limit, component }) => {
+      const [bridgeLogs, extensionLogs] = await Promise.all([
+        bridge.getLogs(limit ?? 100, component).catch((error) => ({
+          error: error instanceof Error ? error.message : String(error),
+        })),
+        bridge.call("bridge.logs", { limit: limit ?? 50 }).catch((error) => ({
+          error: error instanceof Error ? error.message : String(error),
+        })),
+      ]);
+      return textResult({ bridge: bridgeLogs, extension: extensionLogs });
+    }),
   );
 
   server.registerTool(
@@ -38,7 +91,9 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
         query: z.record(z.string(), z.unknown()).optional(),
       },
     },
-    async ({ query }) => textResult(await bridge.call("tabs.list", { query })),
+    withToolLogging(toolLog, "list_tabs", async ({ query }) =>
+      textResult(await bridge.call("tabs.list", { query })),
+    ),
   );
 
   server.registerTool(
@@ -49,7 +104,9 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
         tabId: z.number().int().optional(),
       },
     },
-    async ({ tabId }) => textResult(await bridge.call("tabs.get", { tabId })),
+    withToolLogging(toolLog, "get_tab", async ({ tabId }) =>
+      textResult(await bridge.call("tabs.get", { tabId })),
+    ),
   );
 
   server.registerTool(
@@ -273,5 +330,152 @@ export function registerBrowserTools(server: McpServer, bridge: RemoteExtensionB
       },
     },
     async (params) => textResult(await bridge.call("cookies.set", params)),
+  );
+
+  server.registerTool(
+    "remove_cookie",
+    {
+      description: "Remove a cookie for a URL.",
+      inputSchema: {
+        url: z.string().url(),
+        name: z.string(),
+      },
+    },
+    withToolLogging(toolLog, "remove_cookie", async ({ url, name }) =>
+      textResult(await bridge.call("cookies.remove", { url, name })),
+    ),
+  );
+
+  server.registerTool(
+    "read_clipboard",
+    {
+      description: "Read clipboard text via the page context.",
+      inputSchema: {
+        tabId: z.number().int().optional(),
+      },
+    },
+    withToolLogging(toolLog, "read_clipboard", async ({ tabId }) =>
+      textResult(await bridge.call("clipboard.read", { tabId })),
+    ),
+  );
+
+  server.registerTool(
+    "write_clipboard",
+    {
+      description: "Write text to the clipboard via the page context.",
+      inputSchema: {
+        text: z.string(),
+        tabId: z.number().int().optional(),
+      },
+    },
+    withToolLogging(toolLog, "write_clipboard", async ({ text, tabId }) =>
+      textResult(await bridge.call("clipboard.write", { text, tabId })),
+    ),
+  );
+
+  server.registerTool(
+    "get_console_logs",
+    {
+      description: "Get buffered console logs from a tab's content script.",
+      inputSchema: {
+        tabId: z.number().int().optional(),
+        limit: z.number().int().min(1).max(500).optional(),
+      },
+    },
+    withToolLogging(toolLog, "get_console_logs", async (params) =>
+      textResult(await bridge.call("console.get", params)),
+    ),
+  );
+
+  server.registerTool(
+    "batch_inspect",
+    {
+      description:
+        "Batch snapshot of all tabs: page console logs, CDP network/console/log events, and optional accessibility trees.",
+      inputSchema: {
+        tabIds: z.array(z.number().int()).optional(),
+        includeNetwork: z.boolean().optional(),
+        includeConsole: z.boolean().optional(),
+        includeAccessibility: z.boolean().optional(),
+        limit: z.number().int().min(1).max(500).optional(),
+      },
+    },
+    withToolLogging(toolLog, "batch_inspect", async (params) =>
+      textResult(await bridge.call("observability.batch", params)),
+    ),
+  );
+
+  server.registerTool(
+    "manage_extension",
+    {
+      description:
+        "Open chrome://extensions for this extension, optionally clear service worker errors, and reload the extension.",
+      inputSchema: {
+        clearErrors: z.boolean().optional(),
+        reload: z.boolean().optional(),
+        useUiReload: z.boolean().optional(),
+      },
+    },
+    withToolLogging(toolLog, "manage_extension", async ({ clearErrors, reload, useUiReload }) => {
+      const steps: Record<string, unknown>[] = [];
+
+      const settings = await bridge.call("extension.openSettings");
+      steps.push({ step: "openSettings", result: settings });
+
+      if (clearErrors !== false) {
+        const cleared = await bridge.call("extension.clearErrors");
+        steps.push({ step: "clearErrors", result: cleared });
+      }
+
+      if (reload !== false) {
+        if (useUiReload) {
+          const uiReload = await bridge.call("extension.reloadFromUI");
+          steps.push({ step: "reloadFromUI", result: uiReload });
+        } else {
+          const reloaded = await bridge.call("extension.reload");
+          steps.push({ step: "reload", result: reloaded });
+        }
+      }
+
+      return textResult({
+        ok: true,
+        note: "Extension reload disconnects MCP briefly; wait ~3s then call bridge_status.",
+        steps,
+      });
+    }),
+  );
+
+  server.registerTool(
+    "find_overlay",
+    {
+      description:
+        "Find in-page overlay UI candidates (e.g. 1Password autofill menus) by text/keyword search with shadow-DOM piercing.",
+      inputSchema: {
+        tabId: z.number().int().optional(),
+        text: z.string().optional(),
+        keywords: z.array(z.string()).optional(),
+      },
+    },
+    withToolLogging(toolLog, "find_overlay", async (params) =>
+      textResult(await bridge.call("overlay.find", params)),
+    ),
+  );
+
+  server.registerTool(
+    "click_overlay",
+    {
+      description:
+        "Click an in-page overlay element by CSS selector, text match, or screen coordinates.",
+      inputSchema: {
+        tabId: z.number().int().optional(),
+        selector: z.string().optional(),
+        text: z.string().optional(),
+        x: z.number().optional(),
+        y: z.number().optional(),
+      },
+    },
+    withToolLogging(toolLog, "click_overlay", async (params) =>
+      textResult(await bridge.call("overlay.click", params)),
+    ),
   );
 }

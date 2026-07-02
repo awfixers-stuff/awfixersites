@@ -1,4 +1,22 @@
 import type { BridgeRequest } from "../../shared/protocol";
+import {
+  disableCdpSession,
+  enableCdpSession,
+  getCdpAttachedTabs,
+  getCdpEvents,
+  isCdpSessionActive,
+  sendCdpCommand,
+  type CdpEventType,
+} from "./cdp-session";
+import {
+  cdpClickAt,
+  cdpClickBySelector,
+  cdpClickByText,
+  clearExtensionErrors,
+  findOverlayCandidates,
+  reloadExtensionFromUI,
+} from "./chrome-ui";
+import { getRecentLogs } from "./logger";
 
 type TabSummary = {
   id: number;
@@ -14,8 +32,7 @@ type TabSummary = {
   status?: string;
 };
 
-const debuggerAttached = new Set<number>();
-const consoleLogs = new Map<number, Array<{ level: string; message: string; timestamp: number }>>();
+type PageConsoleLog = { level: string; message: string; timestamp: number };
 
 function tabSummary(tab: chrome.tabs.Tab): TabSummary {
   return {
@@ -40,25 +57,30 @@ async function requireTabId(tabId: unknown): Promise<number> {
   return active.id;
 }
 
-async function ensureDebugger(tabId: number): Promise<void> {
-  if (debuggerAttached.has(tabId)) return;
-  await chrome.debugger.attach({ tabId }, "1.3");
-  debuggerAttached.add(tabId);
+async function getTabConsoleLogs(
+  tabId: number,
+): Promise<{ logs: PageConsoleLog[] } | { error: string }> {
+  try {
+    const response = (await chrome.tabs.sendMessage(tabId, { type: "getConsoleLogs" })) as
+      | { logs?: PageConsoleLog[] }
+      | undefined;
+    return { logs: response?.logs ?? [] };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : String(error) };
+  }
 }
 
-async function sendDebuggerCommand(
-  tabId: number,
-  method: string,
-  params?: Record<string, unknown>,
-): Promise<unknown> {
-  await ensureDebugger(tabId);
-  return new Promise((resolve, reject) => {
-    chrome.debugger.sendCommand({ tabId }, method, params ?? {}, (result) => {
-      const err = chrome.runtime.lastError;
-      if (err) reject(new Error(err.message));
-      else resolve(result);
-    });
-  });
+async function findOrOpenExtensionsTab(): Promise<number> {
+  const extensionId = chrome.runtime.id;
+  const targetUrl = `chrome://extensions/?id=${extensionId}`;
+  const existing = await chrome.tabs.query({ url: "chrome://extensions/*" });
+  if (existing[0]?.id) {
+    await chrome.tabs.update(existing[0].id, { active: true, url: targetUrl });
+    return existing[0].id;
+  }
+  const tab = await chrome.tabs.create({ url: targetUrl, active: true });
+  if (!tab.id) throw new Error("Failed to open chrome://extensions");
+  return tab.id;
 }
 
 async function executeInTab<T extends unknown[]>(
@@ -85,9 +107,17 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
     case "bridge.status":
       return {
         connected: true,
-        debuggerAttached: [...debuggerAttached],
+        debuggerAttached: getCdpAttachedTabs(),
         version: chrome.runtime.getManifest().version,
       };
+
+    case "bridge.logs": {
+      const limit =
+        typeof params.limit === "number" && Number.isInteger(params.limit)
+          ? Math.min(Math.max(params.limit, 1), 200)
+          : 50;
+      return { logs: getRecentLogs(limit) };
+    }
 
     case "tabs.list": {
       const query = (params.query as chrome.tabs.QueryInfo | undefined) ?? {};
@@ -111,8 +141,8 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
 
     case "tabs.close": {
       const tabId = await requireTabId(params.tabId);
+      await disableCdpSession(tabId);
       await chrome.tabs.remove(tabId);
-      debuggerAttached.delete(tabId);
       return { closed: tabId };
     }
 
@@ -169,7 +199,7 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
 
     case "dom.snapshot": {
       const tabId = await requireTabId(params.tabId);
-      const tree = await sendDebuggerCommand(tabId, "Accessibility.getFullAXTree");
+      const tree = await sendCdpCommand(tabId, "Accessibility.getFullAXTree");
       return tree;
     }
 
@@ -271,7 +301,7 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
           },
           [selector],
         );
-        await sendDebuggerCommand(tabId, "Input.insertText", { text: value });
+        await sendCdpCommand(tabId, "Input.insertText", { text: value });
       }
 
       return { filled: selector };
@@ -336,16 +366,13 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
 
     case "debugger.attach": {
       const tabId = await requireTabId(params.tabId);
-      await ensureDebugger(tabId);
+      await sendCdpCommand(tabId, "Runtime.enable");
       return { attached: tabId };
     }
 
     case "debugger.detach": {
       const tabId = await requireTabId(params.tabId);
-      if (debuggerAttached.has(tabId)) {
-        await chrome.debugger.detach({ tabId });
-        debuggerAttached.delete(tabId);
-      }
+      await disableCdpSession(tabId);
       return { detached: tabId };
     }
 
@@ -354,8 +381,200 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
       const method = params.method;
       if (typeof method !== "string") throw new Error("method is required");
       const commandParams = (params.params as Record<string, unknown> | undefined) ?? {};
-      const result = await sendDebuggerCommand(tabId, method, commandParams);
+      const result = await sendCdpCommand(tabId, method, commandParams);
       return { result };
+    }
+
+    case "console.get": {
+      const tabId = await requireTabId(params.tabId);
+      const limit =
+        typeof params.limit === "number" && Number.isInteger(params.limit)
+          ? Math.min(Math.max(params.limit, 1), 500)
+          : 100;
+      const result = await getTabConsoleLogs(tabId);
+      if ("error" in result) return { tabId, error: result.error, logs: [] };
+      return { tabId, logs: result.logs.slice(-limit) };
+    }
+
+    case "console.batch": {
+      const limit =
+        typeof params.limit === "number" && Number.isInteger(params.limit)
+          ? Math.min(Math.max(params.limit, 1), 500)
+          : 100;
+      const query = (params.query as chrome.tabs.QueryInfo | undefined) ?? {};
+      const tabs = await chrome.tabs.query(query);
+      const results = await Promise.all(
+        tabs.map(async (tab) => {
+          if (!tab.id) return null;
+          const consoleResult = await getTabConsoleLogs(tab.id);
+          return {
+            tab: tabSummary(tab),
+            ...("error" in consoleResult
+              ? { error: consoleResult.error, logs: [] }
+              : { logs: consoleResult.logs.slice(-limit) }),
+          };
+        }),
+      );
+      return { tabs: results.filter(Boolean) };
+    }
+
+    case "observability.enable": {
+      const tabId = await requireTabId(params.tabId);
+      const domains = Array.isArray(params.domains)
+        ? (params.domains as string[])
+        : ["Runtime", "Network", "Log"];
+      return enableCdpSession(tabId, domains);
+    }
+
+    case "observability.get": {
+      const tabId = await requireTabId(params.tabId);
+      const types = Array.isArray(params.types) ? (params.types as CdpEventType[]) : undefined;
+      const limit =
+        typeof params.limit === "number" && Number.isInteger(params.limit)
+          ? Math.min(Math.max(params.limit, 1), 500)
+          : 100;
+      const since = typeof params.since === "number" ? params.since : undefined;
+      const pageConsole = await getTabConsoleLogs(tabId);
+      return {
+        tabId,
+        cdpActive: isCdpSessionActive(tabId),
+        cdpEvents: getCdpEvents(tabId, { types, limit, since }),
+        pageConsole: "error" in pageConsole ? { error: pageConsole.error } : { logs: pageConsole.logs },
+      };
+    }
+
+    case "observability.disable": {
+      const tabId = await requireTabId(params.tabId);
+      return disableCdpSession(tabId);
+    }
+
+    case "observability.batch": {
+      const limit =
+        typeof params.limit === "number" && Number.isInteger(params.limit)
+          ? Math.min(Math.max(params.limit, 1), 500)
+          : 50;
+      const includeNetwork = params.includeNetwork !== false;
+      const includeConsole = params.includeConsole !== false;
+      const includeAccessibility = params.includeAccessibility === true;
+      const tabIds = Array.isArray(params.tabIds) ? (params.tabIds as number[]) : undefined;
+
+      let tabs = await chrome.tabs.query({});
+      if (tabIds?.length) {
+        const idSet = new Set(tabIds);
+        tabs = tabs.filter((t) => t.id && idSet.has(t.id));
+      }
+
+      const results = await Promise.all(
+        tabs.map(async (tab) => {
+          if (!tab.id) return null;
+          const tabId = tab.id;
+          const entry: Record<string, unknown> = { tab: tabSummary(tab) };
+
+          if (includeConsole) {
+            const pageConsole = await getTabConsoleLogs(tabId);
+            entry.pageConsole =
+              "error" in pageConsole
+                ? { error: pageConsole.error }
+                : { logs: pageConsole.logs.slice(-limit) };
+          }
+
+          if (includeNetwork && !isCdpSessionActive(tabId)) {
+            try {
+              await enableCdpSession(tabId);
+            } catch (error) {
+              entry.cdpError = error instanceof Error ? error.message : String(error);
+            }
+          }
+
+          if (includeNetwork || isCdpSessionActive(tabId)) {
+            entry.cdpEvents = getCdpEvents(tabId, { limit });
+          }
+
+          if (includeAccessibility) {
+            try {
+              entry.accessibility = await sendCdpCommand(tabId, "Accessibility.getFullAXTree");
+            } catch (error) {
+              entry.accessibilityError = error instanceof Error ? error.message : String(error);
+            }
+          }
+
+          return entry;
+        }),
+      );
+
+      return { tabs: results.filter(Boolean) };
+    }
+
+    case "extension.getInfo": {
+      const manifest = chrome.runtime.getManifest();
+      return {
+        id: chrome.runtime.id,
+        name: manifest.name,
+        version: manifest.version,
+      };
+    }
+
+    case "extension.openSettings": {
+      const tabId = await findOrOpenExtensionsTab();
+      await new Promise((r) => setTimeout(r, 500));
+      return { tabId, url: `chrome://extensions/?id=${chrome.runtime.id}` };
+    }
+
+    case "extension.reload": {
+      setTimeout(() => chrome.runtime.reload(), 250);
+      return { reloading: true, deferredMs: 250 };
+    }
+
+    case "extension.clearErrors": {
+      const tabId = await findOrOpenExtensionsTab();
+      await new Promise((r) => setTimeout(r, 800));
+      try {
+        const result = await clearExtensionErrors(tabId, chrome.runtime.id);
+        return { tabId, ...result };
+      } catch (error) {
+        return {
+          tabId,
+          cleared: false,
+          steps: [],
+          error: error instanceof Error ? error.message : String(error),
+          note: "CDP cannot attach to chrome:// pages; reloading the extension clears service worker errors.",
+        };
+      }
+    }
+
+    case "extension.reloadFromUI": {
+      const tabId = await findOrOpenExtensionsTab();
+      await new Promise((r) => setTimeout(r, 500));
+      const extensionId = chrome.runtime.id;
+      setTimeout(() => {
+        void reloadExtensionFromUI(tabId, extensionId);
+      }, 300);
+      return { tabId, scheduled: true, deferredMs: 300 };
+    }
+
+    case "overlay.find": {
+      const tabId = await requireTabId(params.tabId);
+      const text = typeof params.text === "string" ? params.text : undefined;
+      const keywords = Array.isArray(params.keywords) ? (params.keywords as string[]) : undefined;
+      const candidates = await findOverlayCandidates(tabId, { text, keywords });
+      return { tabId, candidates };
+    }
+
+    case "overlay.click": {
+      const tabId = await requireTabId(params.tabId);
+      if (typeof params.x === "number" && typeof params.y === "number") {
+        await cdpClickAt(tabId, params.x, params.y);
+        return { clicked: true, method: "coordinates", x: params.x, y: params.y };
+      }
+      if (typeof params.selector === "string") {
+        const result = await cdpClickBySelector(tabId, params.selector);
+        return { tabId, ...result, method: "selector" };
+      }
+      if (typeof params.text === "string") {
+        const result = await cdpClickByText(tabId, params.text);
+        return { tabId, ...result, method: "text" };
+      }
+      throw new Error("overlay.click requires x/y, selector, or text");
     }
 
     case "cookies.get": {
@@ -438,13 +657,4 @@ export async function handleBridgeRequest(request: BridgeRequest): Promise<unkno
     default:
       throw new Error(`Unknown method: ${request.method}`);
   }
-}
-
-chrome.debugger.onDetach.addListener((source, reason) => {
-  if (source.tabId) debuggerAttached.delete(source.tabId);
-  console.warn("[browser-bridge] debugger detached", source.tabId, reason);
-});
-
-export function getConsoleLogs(tabId: number) {
-  return consoleLogs.get(tabId) ?? [];
 }

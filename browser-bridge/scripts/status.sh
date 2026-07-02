@@ -14,5 +14,16 @@ else
   echo "Gateway: not running"
 fi
 
+BRIDGE_LOG="${BROWSER_BRIDGE_BRIDGE_LOG_FILE:-${HOME}/.grok/logs/browser-bridge-ws.log}"
+MCP_LOG="${BROWSER_BRIDGE_LOG_FILE:-${HOME}/.grok/logs/browser-bridge-mcp.log}"
+
 curl -sf "http://127.0.0.1:${BRIDGE_PORT}/healthz" 2>/dev/null | jq . || echo "Extension bridge: unreachable"
 curl -sf "http://127.0.0.1:${PORT}/healthz" 2>/dev/null | jq . || echo "MCP gateway health: unreachable"
+
+echo ""
+echo "Logs:"
+echo "  Bridge: ${BRIDGE_LOG}"
+echo "  MCP:    ${MCP_LOG}"
+echo ""
+echo "Recent bridge logs (in-memory):"
+curl -sf "http://127.0.0.1:${BRIDGE_PORT}/logs?limit=10" 2>/dev/null | jq '.logs[] | "\(.ts) [\(.level)] \(.component): \(.msg)"' -r || echo "  (unavailable)"
